@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nosotros · Metrik Guard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0b1d35;--ink-2:#0e2642;--ink-3:#133055;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--accent-2:#3a9fff;--danger:#ff4757;--warn:#ffa502;--white:#f0f6ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(206,255,71,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(206,255,71,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:rgba(11,29,53,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.12em;color:var(--white);text-decoration:none;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.nav-cta{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.6rem 1.4rem;text-decoration:none;transition:opacity .2s;}
+.nav-cta:hover{opacity:.85;}
+
+/* HERO */
+.page-hero{position:relative;padding:10rem 4rem 6rem;min-height:50vh;display:flex;flex-direction:column;justify-content:flex-end;border-bottom:1px solid var(--border);overflow:hidden;z-index:1;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 30% 60%,rgba(206,255,71,.06) 0%,transparent 65%);pointer-events:none;}
+.breadcrumb{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;}
+.breadcrumb a{color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:var(--accent);}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,8vw,8rem);line-height:.9;letter-spacing:.02em;color:var(--white);margin-bottom:2rem;}
+.page-title em{font-style:normal;color:var(--accent);}
+.page-intro{max-width:620px;color:var(--text-dim);font-size:1.1rem;line-height:1.85;}
+
+/* LABEL */
+.label{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem;}
+.label::before{content:'';display:block;width:24px;height:1px;background:var(--accent);}
+
+/* MANIFESTO */
+.manifesto{position:relative;z-index:1;padding:7rem 4rem;border-bottom:1px solid var(--border);background:var(--ink-2);}
+.manifesto-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;}
+.manifesto-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,4vw,4rem);line-height:.95;letter-spacing:.03em;color:var(--white);margin-bottom:2rem;}
+.manifesto-title em{font-style:normal;color:var(--accent);}
+.manifesto-body p{color:var(--text-dim);font-size:1rem;line-height:1.9;margin-bottom:1.2rem;}
+.manifesto-body strong{color:var(--text);font-weight:400;}
+.manifesto-values{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);}
+.value-item{padding:2rem 2.5rem;border-bottom:1px solid var(--border);transition:background .3s;}
+.value-item:last-child{border-bottom:none;}
+.value-item:hover{background:rgba(206,255,71,.03);}
+.value-num{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
+.value-item h4{font-family:'DM Sans',sans-serif;font-weight:500;font-size:.95rem;color:var(--white);margin-bottom:.4rem;}
+.value-item p{font-size:.87rem;color:var(--text-dim);line-height:1.7;}
+
+/* TEAM */
+.team-section{position:relative;z-index:1;padding:7rem 4rem;border-bottom:1px solid var(--border);}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:4rem;}
+.partner-card{background:var(--ink-2);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:background .3s;}
+.partner-card:hover{background:rgba(206,255,71,.04);}
+.partner-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.partner-card:hover::after{transform:scaleX(1);}
+.partner-avatar{width:72px;height:72px;border:1px solid var(--border);margin-bottom:2rem;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--accent);background:var(--ink-3);}
+.partner-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;color:var(--white);margin-bottom:.3rem;}
+.partner-role{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
+.partner-bio{font-size:.88rem;color:var(--text-dim);line-height:1.75;margin-bottom:1.5rem;}
+.partner-skills{display:flex;flex-wrap:wrap;gap:.5rem;}
+.skill-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);border:1px solid var(--border);padding:.25rem .65rem;}
+
+/* NOT-GUARDS BAND */
+.not-guards{position:relative;z-index:1;padding:5rem 4rem;border-bottom:1px solid var(--border);background:rgba(206,255,71,.03);border-top:1px solid rgba(206,255,71,.15);}
+.ng-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.ng-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.5vw,3.5rem);line-height:.95;letter-spacing:.03em;color:var(--white);margin-bottom:1.5rem;}
+.ng-title em{font-style:normal;color:var(--accent);}
+.ng-body p{color:var(--text-dim);font-size:1rem;line-height:1.9;margin-bottom:1rem;}
+.ng-body strong{color:var(--text);font-weight:400;}
+.contrast-list{list-style:none;display:flex;flex-direction:column;gap:0;border:1px solid var(--border);}
+.contrast-row{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--border);}
+.contrast-row:last-child{border-bottom:none;}
+.contrast-cell{padding:1.2rem 1.5rem;font-size:.87rem;line-height:1.5;}
+.contrast-cell.no{color:var(--text-dim);border-right:1px solid var(--border);}
+.contrast-cell.no::before{content:'✕ ';color:var(--danger);}
+.contrast-cell.yes{color:var(--text);}
+.contrast-cell.yes::before{content:'✓ ';color:var(--accent);}
+.contrast-header{display:grid;grid-template-columns:1fr 1fr;background:var(--ink-3);}
+.contrast-header span{padding:.7rem 1.5rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);border-right:1px solid var(--border);}
+.contrast-header span:last-child{border-right:none;}
+
+/* CTA */
+.cta-strip{position:relative;z-index:1;padding:5rem 4rem;background:rgba(206,255,71,.04);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:3rem;flex-wrap:wrap;}
+.cta-strip h3{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:.03em;max-width:500px;line-height:1.05;}
+.cta-strip p{color:var(--text-dim);font-size:.95rem;max-width:400px;margin-top:.5rem;}
+.cta-btns{display:flex;gap:1rem;flex-shrink:0;}
+.btn-p{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);border:none;padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:opacity .2s;display:inline-block;}
+.btn-p:hover{opacity:.88;}
+.btn-g{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block;}
+.btn-g:hover{border-color:var(--accent);color:var(--accent);}
+
+footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;}
+.footer-logo span{color:var(--accent);}
+.footer-info{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;}
+.footer-links{display:flex;gap:2rem;list-style:none;}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--accent);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp .8s ease forwards;}
+.fu-1{animation-delay:.1s;opacity:0;}
+.fu-2{animation-delay:.25s;opacity:0;}
+.fu-3{animation-delay:.4s;opacity:0;}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 2rem;}
+  .nav-links{display:none;}
+  .page-hero{padding:8rem 2rem 4rem;}
+  .manifesto,.team-section,.not-guards,.cta-strip{padding:5rem 2rem;}
+  .manifesto-grid{grid-template-columns:1fr;gap:3rem;}
+  .team-grid{grid-template-columns:1fr;}
+  .ng-grid{grid-template-columns:1fr;gap:3rem;}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html" style="display:flex;align-items:center"><svg width="28" height="44" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <ul class="nav-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+    <li><a href="nosotros.html" class="active">Nosotros</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#contacto">Solicitar diagnóstico</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>Nosotros</span></div>
+  <h1 class="page-title fu fu-2">QUIÉNES<br><em>SOMOS</em></h1>
+  <p class="page-intro fu fu-3">Un equipo de consultores e investigadores independientes. Sin conflictos de interés, sin vender guardas, sin vender cámaras. Solo asesoría, análisis y resultados verificables.</p>
+</div>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div class="manifesto-grid">
+    <div>
+      <div class="label">Nuestra razón de ser</div>
+      <h2 class="manifesto-title">Seguridad sin<br><em>conflictos</em> de interés</h2>
+      <div class="manifesto-body">
+        <p>La mayoría de las empresas que ofrecen "consultoría en seguridad" también venden el hardware, los guardas o el software que recomiendan. Eso crea un conflicto de interés evidente: sus recomendaciones no son neutrales, son ventas.</p>
+        <p><strong>Metrik Guard no vende ningún insumo operativo.</strong> No tenemos guardas en planilla, no comercializamos cámaras ni alarmas, no somos representantes de ningún fabricante. Eso nos permite decirle la verdad sobre su proveedor actual — incluso si esa verdad incomoda.</p>
+        <p>Somos la capa de gobierno, auditoría e inteligencia que su organización necesita para tomar decisiones sobre seguridad con datos reales en la mano.</p>
+      </div>
+    </div>
+    <div>
+      <div class="manifesto-values">
+        <div class="value-item">
+          <div class="value-num">01 · Principio</div>
+          <h4>Independencia absoluta</h4>
+          <p>No recibimos comisiones de proveedores. Nuestros ingresos provienen exclusivamente de nuestros clientes. Eso garantiza que nuestras recomendaciones sean siempre imparciales.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-num">02 · Principio</div>
+          <h4>Datos sobre opiniones</h4>
+          <p>Cada hallazgo, cada recomendación y cada reporte está respaldado por evidencia documentada. No operamos con intuiciones ni generalizaciones.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-num">03 · Principio</div>
+          <h4>Resultados medibles</h4>
+          <p>Si no se puede medir, no se puede mejorar. Definimos KPIs desde el día uno y los reportamos de forma transparente, incluso cuando los números no son los esperados.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-num">04 · Principio</div>
+          <h4>Confidencialidad sin excepción</h4>
+          <p>La información de nuestros clientes, sus incidentes y sus investigaciones nunca se divulga. Firmamos acuerdos de confidencialidad en todos nuestros contratos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section">
+  <div class="label">El equipo</div>
+  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,4vw,4rem);line-height:.95;letter-spacing:.03em;color:var(--white);margin-bottom:.5rem;">Socios <em style="font-style:normal;color:var(--accent);">Fundadores</em></h2>
+  <p style="color:var(--text-dim);font-size:1rem;max-width:580px;margin-top:.8rem;">Tres especialistas con trayectorias complementarias en seguridad física, investigación y gestión de riesgos.</p>
+
+  <div class="team-grid">
+
+    <!-- SOCIO 1 -->
+    <div class="partner-card">
+      <div class="partner-avatar">S1</div>
+      <div class="partner-name">Nombre Apellido</div>
+      <div class="partner-role">Socio Fundador · Director de Auditoría</div>
+      <p class="partner-bio">Especialista en auditoría de sistemas de seguridad física y gestión de riesgos operativos. Más de [X] años evaluando proveedores, diseñando protocolos y dirigiendo diagnósticos integrales para condominios y empresas en Costa Rica.</p>
+      <div class="partner-skills">
+        <span class="skill-tag">Auditoría de seguridad</span>
+        <span class="skill-tag">Gestión de riesgos</span>
+        <span class="skill-tag">Protocolos operativos</span>
+      </div>
+    </div>
+
+    <!-- SOCIO 2 -->
+    <div class="partner-card">
+      <div class="partner-avatar">S2</div>
+      <div class="partner-name">Nombre Apellido</div>
+      <div class="partner-role">Socio Fundador · Director de Investigaciones</div>
+      <p class="partner-bio">Investigador privado certificado con experiencia en casos de fraude interno, due diligence corporativo y peritajes técnicos. Ha elaborado dictámenes periciales presentados en procesos judiciales y administrativos a nivel nacional.</p>
+      <div class="partner-skills">
+        <span class="skill-tag">Investigación privada</span>
+        <span class="skill-tag">Peritajes técnicos</span>
+        <span class="skill-tag">Due diligence</span>
+      </div>
+    </div>
+
+    <!-- SOCIO 3 -->
+    <div class="partner-card">
+      <div class="partner-avatar">S3</div>
+      <div class="partner-name">Nombre Apellido</div>
+      <div class="partner-role">Socio Fundador · Director de Operaciones y KPIs</div>
+      <p class="partner-bio">Responsable de la metodología de medición y los dashboards de desempeño que sustentan el modelo Security PMO. Combina formación en gestión de proyectos con experiencia operativa en seguridad corporativa y análisis de datos.</p>
+      <div class="partner-skills">
+        <span class="skill-tag">Security PMO</span>
+        <span class="skill-tag">KPIs y métricas</span>
+        <span class="skill-tag">Gestión de proyectos</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NOT GUARDS SECTION -->
+<section class="not-guards">
+  <div class="ng-grid">
+    <div>
+      <div class="label">Una aclaración importante</div>
+      <h2 class="ng-title">Somos asesores.<br><em>No somos guardas.</em></h2>
+      <div class="ng-body">
+        <p>El mercado de seguridad en Costa Rica tiende a confundir a las empresas operativas (guardas, cámaras, alarmas) con las de asesoría e inteligencia. Somos de las segundas.</p>
+        <p><strong>No contratamos, no operamos ni supervisamos guardas de seguridad.</strong> No instalamos tecnología. No somos un proveedor operativo. Somos el fiscalizador independiente que evalúa si su proveedor operativo está rindiendo — y le da datos para actuar.</p>
+        <p>Si necesita guardas, nosotros podemos ayudarle a licitar correctamente y a evaluar propuestas. Pero la contratación es de usted con su proveedor.</p>
+      </div>
+    </div>
+    <div>
+      <div class="contrast-header">
+        <span>Empresa de guardas / cámaras</span>
+        <span>Metrik Guard</span>
+      </div>
+      <ul class="contrast-list">
+        <li class="contrast-row">
+          <span class="contrast-cell no">Opera personal en su instalación</span>
+          <span class="contrast-cell yes">Audita al personal de su proveedor</span>
+        </li>
+        <li class="contrast-row">
+          <span class="contrast-cell no">Vende equipos y tecnología</span>
+          <span class="contrast-cell yes">Evalúa si su tecnología actual funciona</span>
+        </li>
+        <li class="contrast-row">
+          <span class="contrast-cell no">Cobra por horas de guarda o cámara</span>
+          <span class="contrast-cell yes">Cobra por asesoría, auditoría e informes</span>
+        </li>
+        <li class="contrast-row">
+          <span class="contrast-cell no">Tiene interés en venderle más</span>
+          <span class="contrast-cell yes">Tiene interés en que su inversión rinda</span>
+        </li>
+        <li class="contrast-row">
+          <span class="contrast-cell no">Califica mal a la competencia</span>
+          <span class="contrast-cell yes">Evalúa a su proveedor con datos objetivos</span>
+        </li>
+        <li class="contrast-row">
+          <span class="contrast-cell no">No hace investigaciones privadas</span>
+          <span class="contrast-cell yes">Investiga, documenta y elabora peritajes</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div>
+    <h3>¿Hablamos sobre su situación?</h3>
+    <p>30 minutos sin costo. Le explicamos qué podemos hacer, qué no, y si encajamos con lo que necesita.</p>
+  </div>
+  <div class="cta-btns">
+    <a class="btn-p" href="mailto:hola@metrikguard.com">Agendar conversación</a>
+    <a class="btn-g" href="servicios.html">Ver servicios →</a>
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="index.html" style="display:flex;align-items:center"><svg width="20" height="32" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;opacity:0.7">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <div class="footer-info">Inteligencia en Seguridad · Costa Rica<br>© 2026 Metrik Guard. Todos los derechos reservados.</div>
+  <ul class="footer-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
