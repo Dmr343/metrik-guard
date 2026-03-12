@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KPIs · Metrik Guard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0b1d35;--ink-2:#0e2642;--ink-3:#133055;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--accent-2:#3a9fff;--danger:#ff4757;--warn:#ffa502;--white:#f0f6ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(206,255,71,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(206,255,71,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:rgba(11,29,53,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.12em;color:var(--white);text-decoration:none;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.nav-cta{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.6rem 1.4rem;text-decoration:none;transition:opacity .2s;}
+.nav-cta:hover{opacity:.85;}
+
+/* HERO */
+.page-hero{position:relative;padding:10rem 4rem 6rem;border-bottom:1px solid var(--border);z-index:1;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 90% 60%,rgba(206,255,71,.07) 0%,transparent 65%),radial-gradient(ellipse 40% 40% at 10% 20%,rgba(0,130,255,.05) 0%,transparent 60%);pointer-events:none;}
+.breadcrumb{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;}
+.breadcrumb a{color:var(--text-dim);text-decoration:none;}
+.breadcrumb span{color:var(--accent);}
+.hero-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:end;}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,7vw,7.5rem);line-height:.9;letter-spacing:.02em;color:var(--white);margin-bottom:1rem;}
+.page-title em{font-style:normal;-webkit-text-stroke:1px rgba(206,255,71,.4);color:transparent;}
+.page-intro{color:var(--text-dim);font-size:1.05rem;line-height:1.85;margin-bottom:2rem;}
+.hero-ticker{display:flex;gap:3rem;}
+.tick{text-align:center;}
+.tick-num{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;line-height:1;color:var(--white);}
+.tick-num span{color:var(--accent);}
+.tick-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-top:.2rem;}
+
+/* LIVE DASHBOARD MOCK */
+.dashboard-preview{position:relative;border:1px solid var(--border);background:var(--ink-2);overflow:hidden;}
+.dash-header{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.dash-title{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);}
+.live-dot{display:flex;align-items:center;gap:.4rem;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--accent);}
+.live-dot::before{content:'';display:block;width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.dash-stat{background:var(--ink-2);padding:1.2rem 1rem;}
+.ds-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.3rem;}
+.ds-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;color:var(--white);}
+.ds-val.good{color:var(--accent);}
+.ds-val.warn{color:var(--warn);}
+.ds-val.bad{color:var(--danger);}
+.ds-delta{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--text-dim);margin-top:.2rem;}
+.ds-delta.up{color:var(--accent);}
+.ds-delta.dn{color:var(--danger);}
+
+/* MINI CHART */
+.sparkline{width:100%;height:40px;display:flex;align-items:flex-end;gap:3px;padding-top:8px;}
+.spark-bar{flex:1;border-radius:2px 2px 0 0;background:var(--border);transition:background .3s;}
+.spark-bar.hi{background:var(--accent);}
+.spark-bar.lo{background:var(--danger);}
+.spark-bar.md{background:var(--warn);}
+
+/* SECTIONS */
+section{position:relative;z-index:1;padding:7rem 4rem;border-bottom:1px solid var(--border);}
+section.alt{background:var(--ink-2);}
+
+.section-head{margin-bottom:4rem;}
+.label{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem;}
+.label::before{content:'';display:block;width:24px;height:1px;background:var(--accent);}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,4.5vw,4rem);line-height:.95;letter-spacing:.03em;color:var(--white);margin-bottom:1rem;}
+.section-intro{max-width:580px;color:var(--text-dim);font-size:1rem;line-height:1.85;}
+
+/* KPI CATALOG */
+.kpi-category{margin-bottom:4rem;}
+.cat-title{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);padding-bottom:.8rem;border-bottom:1px solid var(--border);margin-bottom:0;}
+.kpi-table{width:100%;border-collapse:collapse;}
+.kpi-table tr{border-bottom:1px solid var(--border);transition:background .2s;}
+.kpi-table tr:last-child{border-bottom:none;}
+.kpi-table tr:hover{background:rgba(206,255,71,.03);}
+.kpi-table td{padding:1.2rem 1rem;font-size:.9rem;vertical-align:middle;}
+.kpi-table td:first-child{color:var(--white);font-weight:400;width:35%;}
+.kpi-table td:nth-child(2){color:var(--text-dim);font-size:.85rem;line-height:1.6;}
+.kpi-table td:last-child{text-align:right;width:15%;}
+.freq-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .6rem;border:1px solid var(--border);color:var(--text-dim);}
+.freq-tag.diario{border-color:rgba(206,255,71,.3);color:var(--accent);background:rgba(206,255,71,.05);}
+.freq-tag.mensual{border-color:rgba(0,130,255,.3);color:var(--accent-2);background:rgba(0,130,255,.05);}
+.freq-tag.auditoría{border-color:rgba(255,165,2,.3);color:var(--warn);background:rgba(255,165,2,.05);}
+
+/* BENCHMARK TABLE */
+.bench{border:1px solid var(--border);overflow:hidden;}
+.bench-head{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;background:var(--ink-2);border-bottom:1px solid var(--border);}
+.bh{font-family:'DM Mono',monospace;font-size:.63rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);padding:1rem 1.2rem;}
+.bench-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;border-bottom:1px solid var(--border);transition:background .2s;}
+.bench-row:last-child{border-bottom:none;}
+.bench-row:hover{background:rgba(206,255,71,.03);}
+.bc{padding:1rem 1.2rem;font-size:.88rem;color:var(--text);display:flex;align-items:center;}
+.bc.accent{color:var(--accent);font-weight:400;}
+.bc.warn{color:var(--warn);}
+.bc.bad{color:var(--danger);}
+.trend-up::before{content:'▲ ';font-size:.65rem;color:var(--accent);}
+.trend-dn::before{content:'▼ ';font-size:.65rem;color:var(--danger);}
+
+/* GAUGE SECTION */
+.gauges{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;margin-top:3rem;}
+.gauge-wrap{display:flex;flex-direction:column;align-items:center;gap:1rem;}
+.gauge-ring{position:relative;width:120px;height:120px;}
+.gauge-ring svg{transform:rotate(-90deg);}
+.gauge-ring .bg{stroke:var(--border);fill:none;}
+.gauge-ring .fill{fill:none;stroke-linecap:round;stroke-dasharray:314;animation:fillGauge 1.5s ease forwards;}
+@keyframes fillGauge{from{stroke-dashoffset:314;}  }
+.gauge-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.gauge-num{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--white);line-height:1;}
+.gauge-unit{font-family:'DM Mono',monospace;font-size:.6rem;color:var(--text-dim);}
+.gauge-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-align:center;max-width:110px;}
+
+/* OUTCOME STATS */
+.outcomes{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:4rem;}
+.outcome{background:var(--ink-2);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:background .3s;}
+.outcome:hover{background:rgba(206,255,71,.04);}
+.outcome::after{content:attr(data-icon);position:absolute;bottom:-1rem;right:1.5rem;font-size:5rem;opacity:.05;line-height:1;pointer-events:none;}
+.out-num{font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:1;color:var(--white);letter-spacing:.02em;margin-bottom:.5rem;}
+.out-num span{color:var(--accent);}
+.out-title{font-size:1rem;font-weight:500;color:var(--white);margin-bottom:.5rem;}
+.out-desc{font-size:.88rem;color:var(--text-dim);line-height:1.7;max-width:400px;}
+
+.btn-p{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);border:none;padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:opacity .2s,transform .2s;display:inline-block;}
+.btn-p:hover{opacity:.88;transform:translateY(-1px);}
+.btn-g{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block;}
+.btn-g:hover{border-color:var(--accent);color:var(--accent);}
+.cta-strip{position:relative;z-index:1;padding:5rem 4rem;background:rgba(206,255,71,.04);border-top:1px solid rgba(206,255,71,.15);display:flex;align-items:center;justify-content:space-between;gap:3rem;flex-wrap:wrap;}
+.cta-strip h3{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:.03em;}
+.cta-strip p{color:var(--text-dim);font-size:.95rem;margin-top:.5rem;}
+.cta-btns{display:flex;gap:1rem;}
+footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;}
+.footer-logo span{color:var(--accent);}
+.footer-info{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;}
+.footer-links{display:flex;gap:2rem;list-style:none;}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--accent);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp .8s ease forwards;}.fu-1{animation-delay:.1s;opacity:0;}.fu-2{animation-delay:.25s;opacity:0;}.fu-3{animation-delay:.4s;opacity:0;}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 2rem;}.nav-links{display:none;}
+  .page-hero,.hero-layout{display:block;padding:8rem 2rem 4rem;}
+  .hero-layout .dashboard-preview{margin-top:3rem;}
+  section{padding:5rem 2rem;}
+  .gauges{grid-template-columns:1fr 1fr;}
+  .outcomes{grid-template-columns:1fr;}
+  .bench-head,.bench-row{grid-template-columns:2fr 1fr 1fr;}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+  .cta-strip{flex-direction:column;padding:4rem 2rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html" style="display:flex;align-items:center"><svg width="28" height="44" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <ul class="nav-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html" class="active">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#contacto">Solicitar diagnóstico</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>KPIs & Métricas</span></div>
+  <div class="hero-layout">
+    <div class="fu fu-2">
+      <h1 class="page-title">MÉTRICAS<br>QUE <em>IMPORTAN</em></h1>
+      <p class="page-intro">En Metrik Guard no entregamos opiniones. Entregamos datos. Más de 20 KPIs operativos que transforman su seguridad en un sistema medible y mejorable.</p>
+      <div class="hero-ticker">
+        <div class="tick"><div class="tick-num">20<span>+</span></div><div class="tick-label">KPIs activos</div></div>
+        <div class="tick"><div class="tick-num"><span>–</span>40<span>%</span></div><div class="tick-label">Incidentes / 90d</div></div>
+        <div class="tick"><div class="tick-num">4</div><div class="tick-label">Categorías</div></div>
+      </div>
+    </div>
+    <div class="dashboard-preview fu fu-3">
+      <div class="dash-header">
+        <div class="dash-title">Dashboard · Condominio Modelo</div>
+        <div class="live-dot">En vivo</div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-stat">
+          <div class="ds-label">Incidentes / mes</div>
+          <div class="ds-val good">3</div>
+          <div class="ds-delta dn">▼ –58% vs baseline</div>
+        </div>
+        <div class="dash-stat">
+          <div class="ds-label">Rondas cumplidas</div>
+          <div class="ds-val good">97<span style="font-size:1.2rem;color:var(--text-dim);">%</span></div>
+          <div class="ds-delta up">▲ +22pp vs mes anterior</div>
+        </div>
+        <div class="dash-stat">
+          <div class="ds-label">T. respuesta prom.</div>
+          <div class="ds-val">4.2<span style="font-size:1.2rem;color:var(--text-dim);">min</span></div>
+          <div class="ds-delta up">▲ Dentro de SLA</div>
+        </div>
+        <div class="dash-stat">
+          <div class="ds-label">Protocolos OK</div>
+          <div class="ds-val good">92<span style="font-size:1.2rem;color:var(--text-dim);">%</span></div>
+          <div class="ds-delta up">▲ +14pp</div>
+        </div>
+        <div class="dash-stat">
+          <div class="ds-label">Hallazgos abiertos</div>
+          <div class="ds-val warn">2</div>
+          <div class="ds-delta">Menores · en proceso</div>
+        </div>
+        <div class="dash-stat">
+          <div class="ds-label">Correctivas cerradas</div>
+          <div class="ds-val good">8<span style="font-size:1.2rem;color:var(--text-dim)">/8</span></div>
+          <div class="ds-delta up">100% en plazo</div>
+        </div>
+      </div>
+      <div style="padding:1rem 1.5rem;border-top:1px solid var(--border);">
+        <div style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.5rem;">Tendencia de incidentes (6 meses)</div>
+        <div class="sparkline">
+          <div class="spark-bar lo" style="height:100%"></div>
+          <div class="spark-bar lo" style="height:85%"></div>
+          <div class="spark-bar md" style="height:70%"></div>
+          <div class="spark-bar md" style="height:55%"></div>
+          <div class="spark-bar hi" style="height:35%"></div>
+          <div class="spark-bar hi" style="height:20%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GAUGES: RESULTADOS TÍPICOS 90 DÍAS -->
+<section>
+  <div class="section-head">
+    <div class="label">Resultados típicos · 90 días</div>
+    <h2 class="section-title">Lo que cambia cuando<br>se mide la seguridad</h2>
+    <p class="section-intro">Datos representativos de clientes en operación. Los resultados varían según el estado inicial, pero la dirección es consistente: a mayor medición, mayor cumplimiento.</p>
+  </div>
+
+  <div class="gauges">
+    <div class="gauge-wrap">
+      <div class="gauge-ring">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle class="bg" cx="60" cy="60" r="50" stroke-width="8"/>
+          <circle class="fill" cx="60" cy="60" r="50" stroke-width="8" stroke="var(--accent)" style="stroke-dashoffset:125;"/>
+        </svg>
+        <div class="gauge-center"><div class="gauge-num">60<span style="font-size:1rem;color:var(--accent);">%</span></div><div class="gauge-unit">reducción</div></div>
+      </div>
+      <div class="gauge-label">Reducción de incidentes recurrentes</div>
+    </div>
+    <div class="gauge-wrap">
+      <div class="gauge-ring">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle class="bg" cx="60" cy="60" r="50" stroke-width="8"/>
+          <circle class="fill" cx="60" cy="60" r="50" stroke-width="8" stroke="var(--accent-2)" style="stroke-dashoffset:31;"/>
+        </svg>
+        <div class="gauge-center"><div class="gauge-num">90<span style="font-size:1rem;color:var(--accent-2);">%</span></div><div class="gauge-unit">cumplimiento</div></div>
+      </div>
+      <div class="gauge-label">Cumplimiento de rondas programadas</div>
+    </div>
+    <div class="gauge-wrap">
+      <div class="gauge-ring">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle class="bg" cx="60" cy="60" r="50" stroke-width="8"/>
+          <circle class="fill" cx="60" cy="60" r="50" stroke-width="8" stroke="var(--accent)" style="stroke-dashoffset:63;"/>
+        </svg>
+        <div class="gauge-center"><div class="gauge-num">80<span style="font-size:1rem;color:var(--accent);">%</span></div><div class="gauge-unit">acción correctiva</div></div>
+      </div>
+      <div class="gauge-label">Acciones correctivas cerradas en plazo</div>
+    </div>
+    <div class="gauge-wrap">
+      <div class="gauge-ring">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle class="bg" cx="60" cy="60" r="50" stroke-width="8"/>
+          <circle class="fill" cx="60" cy="60" r="50" stroke-width="8" stroke="var(--warn)" style="stroke-dashoffset:47;"/>
+        </svg>
+        <div class="gauge-center"><div class="gauge-num">85<span style="font-size:1rem;color:var(--warn);">%</span></div><div class="gauge-unit">protocolo</div></div>
+      </div>
+      <div class="gauge-label">Protocolos cumplidos vs línea base</div>
+    </div>
+  </div>
+</section>
+
+<!-- KPI CATALOG -->
+<section class="alt">
+  <div class="section-head">
+    <div class="label">Catálogo de métricas</div>
+    <h2 class="section-title">Los KPIs que<br>medimos por usted</h2>
+    <p class="section-intro">Organizados en cuatro categorías. Cada KPI tiene una frecuencia de medición, un responsable y un umbral de alerta definido desde el diagnóstico.</p>
+  </div>
+
+  <div class="kpi-category">
+    <div class="cat-title">Categoría A · KPIs Operativos de Respuesta</div>
+    <table class="kpi-table">
+      <tr>
+        <td>Tiempo de respuesta a incidentes</td>
+        <td>Minutos desde la alerta hasta la intervención del guardia. SLA definido por contrato.</td>
+        <td><span class="freq-tag diario">Diario</span></td>
+      </tr>
+      <tr>
+        <td>Tiempo de respuesta de supervisión</td>
+        <td>Tiempo que tarda el supervisor en llegar ante un incidente reportado.</td>
+        <td><span class="freq-tag auditoría">Auditoría</span></td>
+      </tr>
+      <tr>
+        <td>Falsas alarmas por mes</td>
+        <td>Cantidad de alertas que no correspondieron a incidentes reales. Indicador de calidad operativa.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+      <tr>
+        <td>Accesos rechazados vs total</td>
+        <td>Tasa de control de acceso efectivo. Revela si los protocolos de ingreso se aplican.</td>
+        <td><span class="freq-tag diario">Diario</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="kpi-category">
+    <div class="cat-title">Categoría B · KPIs de Cumplimiento Operativo</div>
+    <table class="kpi-table">
+      <tr>
+        <td>% Cumplimiento de rondas programadas</td>
+        <td>Porcentaje de rondas ejecutadas vs rondas programadas en el turno. Meta: ≥95%.</td>
+        <td><span class="freq-tag diario">Diario</span></td>
+      </tr>
+      <tr>
+        <td>% Protocolos cumplidos</td>
+        <td>Porcentaje de procedimientos aplicados correctamente durante las auditorías de campo.</td>
+        <td><span class="freq-tag auditoría">Auditoría</span></td>
+      </tr>
+      <tr>
+        <td>Cobertura de bitácoras</td>
+        <td>% de eventos registrados en bitácora vs eventos ocurridos. Mide disciplina de documentación.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+      <tr>
+        <td>Asistencia y puntualidad del personal</td>
+        <td>% de turnos cubiertos a tiempo sin ausencias no justificadas. Indicador de gestión del proveedor.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="kpi-category">
+    <div class="cat-title">Categoría C · KPIs de Eficacia y Tendencia</div>
+    <table class="kpi-table">
+      <tr>
+        <td>Incidentes por 100 unidades/mes</td>
+        <td>Métrica normalizada que permite comparar entre períodos y entre propiedades de distinto tamaño.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+      <tr>
+        <td>Tendencia de incidentes (3 meses)</td>
+        <td>Variación porcentual del promedio móvil de incidentes. El indicador más importante de eficacia.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+      <tr>
+        <td>Tasa de reincidencia</td>
+        <td>% de incidentes del mismo tipo que ocurren por segunda o tercera vez. Mide aprendizaje organizacional.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+      <tr>
+        <td>Incidentes nocturnos vs diurnos</td>
+        <td>Distribución horaria para identificar ventanas de mayor exposición y ajustar cobertura.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="kpi-category">
+    <div class="cat-title">Categoría D · KPIs de Gobernanza del Proveedor</div>
+    <table class="kpi-table">
+      <tr>
+        <td>Cumplimiento de SLA del proveedor</td>
+        <td>% de compromisos contractuales cumplidos: tiempos, cobertura, equipamiento, reportes.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+      <tr>
+        <td>Rotación de personal de seguridad</td>
+        <td>% de cambios de guardas por mes. Alta rotación impacta directamente la calidad del servicio.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+      <tr>
+        <td>Hallazgos de auditoría por categoría</td>
+        <td>Clasificación de hallazgos: críticos, mayores y menores. Permite seguimiento de tendencias.</td>
+        <td><span class="freq-tag auditoría">Auditoría</span></td>
+      </tr>
+      <tr>
+        <td>% Acciones correctivas cerradas en plazo</td>
+        <td>De todas las correctivas asignadas al proveedor, cuántas se cerraron dentro del plazo acordado.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+      <tr>
+        <td>Capacitaciones completadas</td>
+        <td>% del personal de seguridad que completó los módulos de capacitación requeridos.</td>
+        <td><span class="freq-tag mensual">Mensual</span></td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- BENCHMARK -->
+<section>
+  <div class="section-head">
+    <div class="label">Benchmarks de referencia</div>
+    <h2 class="section-title">¿Su seguridad está<br>por encima o por debajo?</h2>
+    <p class="section-intro">Rangos de referencia para condominios y PYMEs en Costa Rica. El diagnóstico posiciona exactamente dónde está usted.</p>
+  </div>
+
+  <div class="bench">
+    <div class="bench-head">
+      <div class="bh">Métrica</div>
+      <div class="bh">Bajo riesgo</div>
+      <div class="bh">Riesgo medio</div>
+      <div class="bh">Alto riesgo</div>
+    </div>
+    <div class="bench-row">
+      <div class="bc">Cumplimiento de rondas</div>
+      <div class="bc accent trend-up">≥ 95%</div>
+      <div class="bc warn">75–94%</div>
+      <div class="bc bad trend-dn">< 75%</div>
+    </div>
+    <div class="bench-row">
+      <div class="bc">Tiempo de respuesta</div>
+      <div class="bc accent">&lt; 5 min</div>
+      <div class="bc warn">5–15 min</div>
+      <div class="bc bad">&gt; 15 min</div>
+    </div>
+    <div class="bench-row">
+      <div class="bc">Incidentes / 100 uds / mes</div>
+      <div class="bc accent">&lt; 2</div>
+      <div class="bc warn">2–5</div>
+      <div class="bc bad">&gt; 5</div>
+    </div>
+    <div class="bench-row">
+      <div class="bc">Rotación mensual de guardas</div>
+      <div class="bc accent">&lt; 5%</div>
+      <div class="bc warn">5–15%</div>
+      <div class="bc bad">&gt; 15%</div>
+    </div>
+    <div class="bench-row">
+      <div class="bc">Correctivas cerradas en plazo</div>
+      <div class="bc accent">≥ 90%</div>
+      <div class="bc warn">60–89%</div>
+      <div class="bc bad">&lt; 60%</div>
+    </div>
+    <div class="bench-row">
+      <div class="bc">Protocolos cumplidos</div>
+      <div class="bc accent">≥ 85%</div>
+      <div class="bc warn">60–84%</div>
+      <div class="bc bad">&lt; 60%</div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section class="alt">
+  <div class="section-head">
+    <div class="label">Impacto documentado</div>
+    <h2 class="section-title">Qué cambia cuando<br>tiene métricas reales</h2>
+  </div>
+  <div class="outcomes">
+    <div class="outcome" data-icon="📊">
+      <div class="out-num">–<span>40</span>%</div>
+      <div class="out-title">Reducción de incidentes recurrentes</div>
+      <div class="out-desc">El solo hecho de medir y publicar métricas mejora el desempeño del proveedor. Lo que no se mide, no mejora. Lo que sí se mide, mejora por sí solo.</div>
+    </div>
+    <div class="outcome" data-icon="💰">
+      <div class="out-num"><span>+</span>ROI</div>
+      <div class="out-title">Justificación de inversión en seguridad</div>
+      <div class="out-desc">Con datos históricos puede demostrar a su junta que la inversión en seguridad rinde resultados. Y puede justificar cambios de proveedor o aumentos de presupuesto con evidencia concreta.</div>
+    </div>
+    <div class="outcome" data-icon="🏛️">
+      <div class="out-num">100<span>%</span></div>
+      <div class="out-title">Reportes listos para junta directiva</div>
+      <div class="out-desc">Cada mes, su junta recibe un documento ejecutivo con métricas, hallazgos y recomendaciones. Cero improvisación. Cero tiempo perdido preparando información de último minuto.</div>
+    </div>
+    <div class="outcome" data-icon="🔒">
+      <div class="out-num">0</div>
+      <div class="out-title">Conflictos de interés</div>
+      <div class="out-desc">Somos completamente independientes de su proveedor de guardas, cámaras o alarmas. No vendemos hardware ni personal. Nuestro único interés es que su sistema funcione bien.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div>
+    <h3>¿Quiere ver su propio dashboard?</h3>
+    <p>El diagnóstico establece su baseline en menos de 15 días. Luego los datos empiezan a hablar.</p>
+  </div>
+  <div class="cta-btns">
+    <a class="btn-p" href="/cdn-cgi/l/email-protection#d2babdbeb392bfb7a6a0bbb9b5a7b3a0b6fcb1bdbf">Solicitar diagnóstico</a>
+    <a class="btn-g" href="clientes.html">Ver clientes →</a>
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="index.html" style="display:flex;align-items:center"><svg width="20" height="32" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;opacity:0.7">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <div class="footer-info">Inteligencia en Seguridad · Costa Rica<br>© 2026 Metrik Guard. Todos los derechos reservados.</div>
+  <ul class="footer-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes<
