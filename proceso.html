@@ -39,17 +39,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .page-intro{color:var(--text-dim);font-size:1.05rem;line-height:1.85;}
 .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 100% 50%,rgba(0,130,255,.06) 0%,transparent 70%);pointer-events:none;}
 
-/* PHASE BAR */
-.phase-bar{position:sticky;top:72px;z-index:90;background:var(--ink-2);border-bottom:1px solid var(--border);display:flex;gap:0;}
-.ph-tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:1rem;border-right:1px solid var(--border);cursor:pointer;text-decoration:none;transition:background .2s;border-bottom:3px solid transparent;}
-.ph-tab:last-child{border-right:none;}
-.ph-tab:hover{background:rgba(206,255,71,.04);}
-.ph-tab.active{border-bottom-color:var(--accent);background:rgba(206,255,71,.05);}
-.ph-days{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);}
-.ph-name{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;color:var(--text);margin-top:.15rem;}
-.ph-tab.active .ph-days{color:var(--accent);}
-.ph-tab.active .ph-name{color:var(--white);}
-
 /* PHASE SECTIONS */
 .phase{position:relative;z-index:1;padding:7rem 4rem;border-bottom:1px solid var(--border);}
 .phase:nth-child(even){background:var(--ink-2);}
@@ -130,8 +119,6 @@ footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-i
   .matrix-head,.matrix-row{grid-template-columns:2fr 1fr;}
   /* Ocultar 3ª columna de la matriz en mobile */
   .matrix-head .mh-cell:nth-child(3),.matrix-row .mc:nth-child(3){display:none;}
-  .ph-tab .ph-name{display:none;}
-  .ph-tab{padding:.7rem .5rem;}
   footer{grid-template-columns:1fr;gap:1.5rem;text-align:center;padding:2rem;}
   .footer-links{justify-content:center;}
   .cta-strip{flex-direction:column;padding:4rem 2rem;}
@@ -210,14 +197,6 @@ footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-i
       </div>
     </div>
   </div>
-</div>
-
-<!-- PHASE BAR -->
-<div class="phase-bar">
-  <a class="ph-tab active" href="#fase1"><div class="ph-days" data-i18n="proceso.tab1.days">Días 0–30</div><div class="ph-name" data-i18n="proceso.tab1.name">Fundaciones</div></a>
-  <a class="ph-tab" href="#fase2"><div class="ph-days" data-i18n="proceso.tab2.days">Días 31–60</div><div class="ph-name" data-i18n="proceso.tab2.name">Implementación</div></a>
-  <a class="ph-tab" href="#fase3"><div class="ph-days" data-i18n="proceso.tab3.days">Días 61–90</div><div class="ph-name" data-i18n="proceso.tab3.name">Optimización</div></a>
-  <a class="ph-tab" href="#continuo"><div class="ph-days" data-i18n="proceso.tab4.days">Mes 4+</div><div class="ph-name" data-i18n="proceso.tab4.name">PMO Continuo</div></a>
 </div>
 
 <!-- ── FASE 1 ── -->
@@ -461,13 +440,5 @@ mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
   document.body.style.overflow='';
 }));
 </script>
-<script>
-// Phase tab active state on scroll
-const phases=['fase1','fase2','fase3','continuo'];
-window.addEventListener('scroll',()=>{
-  let current='';
-  phases.forEach(id=>{
-    const el=document.getElementById(id);
-    if(el&&el.getBoundingClientRect().top<200)current=id;
-  });
-  docume
+</body>
+</html>
