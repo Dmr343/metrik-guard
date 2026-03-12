@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Clientes · Metrik Guard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0b1d35;--ink-2:#0e2642;--ink-3:#133055;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--accent-2:#3a9fff;--danger:#ff4757;--warn:#ffa502;--white:#f0f6ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(206,255,71,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(206,255,71,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:rgba(11,29,53,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.12em;color:var(--white);text-decoration:none;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.nav-cta{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.6rem 1.4rem;text-decoration:none;transition:opacity .2s;}
+.nav-cta:hover{opacity:.85;}
+
+/* HERO */
+.page-hero{position:relative;padding:10rem 4rem 0;border-bottom:1px solid var(--border);z-index:1;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 80%,rgba(206,255,71,.05) 0%,transparent 60%);pointer-events:none;}
+.breadcrumb{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;}
+.breadcrumb a{color:var(--text-dim);text-decoration:none;}
+.breadcrumb span{color:var(--accent);}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,7vw,7.5rem);line-height:.9;letter-spacing:.02em;color:var(--white);margin-bottom:2rem;text-align:center;}
+.page-title em{font-style:normal;color:var(--accent);}
+.page-intro{color:var(--text-dim);font-size:1.1rem;line-height:1.85;text-align:center;max-width:600px;margin:0 auto 4rem;}
+
+/* SEG SWITCHER */
+.seg-switcher{display:flex;justify-content:center;gap:0;border:1px solid var(--border);width:fit-content;margin:0 auto 0;}
+.sw-btn{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:none;padding:1.2rem 3rem;cursor:pointer;transition:color .2s,background .2s;border-right:1px solid var(--border);}
+.sw-btn:last-child{border-right:none;}
+.sw-btn:hover{color:var(--text);}
+.sw-btn.active{color:#0b1d35;background:var(--accent);}
+
+/* SEGMENT PANELS */
+.seg-panels{position:relative;}
+.seg-panel{display:none;padding:7rem 4rem;border-bottom:1px solid var(--border);}
+.seg-panel.active{display:block;}
+
+/* PAIN MAP */
+.pain-gain{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);margin-bottom:4rem;}
+.pg-col{padding:3rem;}
+.pg-col:first-child{border-right:1px solid var(--border);}
+.pg-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.pg-icon{font-size:1.2rem;}
+.pg-title{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;}
+.pain .pg-title{color:var(--danger);}
+.gain .pg-title{color:var(--accent);}
+.pg-items{list-style:none;display:flex;flex-direction:column;gap:.9rem;}
+.pg-items li{font-size:.9rem;padding-left:1.5rem;position:relative;line-height:1.6;}
+.pain .pg-items li{color:var(--text);}
+.pain .pg-items li::before{content:'✕';position:absolute;left:0;color:var(--danger);font-size:.75rem;}
+.gain .pg-items li{color:var(--text);}
+.gain .pg-items li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-size:.75rem;}
+
+/* SCENARIO CARDS */
+.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:4rem;}
+.sc-card{background:var(--ink-2);padding:2.5rem 2rem;transition:background .3s;position:relative;overflow:hidden;}
+.sc-card:hover{background:rgba(206,255,71,.04);}
+.sc-tag{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem;}
+.sc-tag::before{content:'';display:block;width:16px;height:1px;background:var(--accent);}
+.sc-card h4{font-family:'DM Sans',sans-serif;font-weight:500;font-size:1rem;color:var(--white);margin-bottom:.6rem;}
+.sc-card p{font-size:.87rem;color:var(--text-dim);line-height:1.7;}
+.sc-card .sc-result{margin-top:1.2rem;font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.08em;color:var(--accent);border-top:1px solid var(--border);padding-top:1rem;}
+
+/* TESTIMONIAL */
+.quote-block{border:1px solid var(--border);padding:3.5rem;position:relative;margin-bottom:4rem;}
+.quote-block::before{content:'"';font-family:'Bebas Neue',sans-serif;font-size:8rem;color:rgba(206,255,71,.08);position:absolute;top:-1rem;left:2rem;line-height:1;pointer-events:none;}
+.quote-text{font-size:1.2rem;color:var(--white);line-height:1.7;font-style:italic;max-width:700px;position:relative;z-index:1;}
+.quote-attr{margin-top:1.5rem;font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);}
+.quote-attr span{color:var(--accent);}
+
+/* TRUST SIGNALS */
+.trust-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.trust-item{background:var(--ink-2);padding:2rem 1.5rem;text-align:center;transition:background .3s;}
+.trust-item:hover{background:rgba(206,255,71,.04);}
+.trust-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;line-height:1;color:var(--white);margin-bottom:.3rem;}
+.trust-num span{color:var(--accent);}
+.trust-label{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);}
+
+/* LABELS & SECTIONS */
+.label{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem;}
+.label::before{content:'';display:block;width:24px;height:1px;background:var(--accent);}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,4.5vw,4rem);line-height:.95;letter-spacing:.03em;color:var(--white);margin-bottom:1.2rem;}
+.section-intro{max-width:580px;color:var(--text-dim);font-size:1rem;line-height:1.85;margin-bottom:3rem;}
+
+/* FAQ */
+section{position:relative;z-index:1;padding:7rem 4rem;border-bottom:1px solid var(--border);}
+section.alt{background:var(--ink-2);}
+.faq-item{border-top:1px solid var(--border);}
+.faq-q{width:100%;background:transparent;border:none;text-align:left;padding:1.5rem 0;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:400;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:2rem;}
+.faq-q:hover{color:var(--white);}
+.faq-icon{font-family:'DM Mono',monospace;font-size:1.2rem;color:var(--accent);flex-shrink:0;}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.faq-a.open{max-height:300px;}
+.faq-a p{padding:0 0 1.5rem;font-size:.92rem;color:var(--text-dim);line-height:1.85;max-width:700px;}
+
+/* NOT FOR US */
+.nfu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);}
+.nfu-item{background:var(--ink);padding:2rem 2rem;transition:background .2s;}
+.nfu-item:hover{background:rgba(206,255,71,.02);}
+.nfu-icon{font-size:1.2rem;margin-bottom:.8rem;display:block;}
+.nfu-item h4{font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:.4rem;}
+.nfu-item p{font-size:.85rem;color:var(--text-dim);line-height:1.6;}
+
+/* BUTTONS */
+.btn-p{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);border:none;padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:opacity .2s,transform .2s;display:inline-block;}
+.btn-p:hover{opacity:.88;transform:translateY(-1px);}
+.btn-g{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block;}
+.btn-g:hover{border-color:var(--accent);color:var(--accent);}
+.cta-strip{position:relative;z-index:1;padding:5rem 4rem;background:rgba(206,255,71,.04);border-top:1px solid rgba(206,255,71,.15);display:flex;align-items:center;justify-content:space-between;gap:3rem;flex-wrap:wrap;}
+.cta-strip h3{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:.03em;}
+.cta-strip p{color:var(--text-dim);font-size:.95rem;margin-top:.5rem;}
+.cta-btns{display:flex;gap:1rem;}
+footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;}
+.footer-logo span{color:var(--accent);}
+.footer-info{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;}
+.footer-links{display:flex;gap:2rem;list-style:none;}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--accent);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp .8s ease forwards;}.fu-1{animation-delay:.1s;opacity:0;}.fu-2{animation-delay:.25s;opacity:0;}.fu-3{animation-delay:.4s;opacity:0;}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 2rem;}.nav-links{display:none;}
+  .page-hero{padding:8rem 2rem 0;}
+  .seg-panel{padding:5rem 2rem;}
+  section{padding:5rem 2rem;}
+  .pain-gain,.scenarios,.nfu-grid{grid-template-columns:1fr;}
+  .pg-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
+  .trust-row{grid-template-columns:1fr 1fr;}
+  .sw-btn{padding:1.2rem 1.5rem;font-size:.62rem;}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+  .cta-strip{flex-direction:column;padding:4rem 2rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html" style="display:flex;align-items:center"><svg width="28" height="44" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <ul class="nav-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html" class="active">Clientes</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#contacto">Solicitar diagnóstico</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>Clientes</span></div>
+  <h1 class="page-title fu fu-2">¿ES <em>USTED</em><br>NUESTRO CLIENTE?</h1>
+  <p class="page-intro fu fu-3">Trabajamos con dos perfiles que comparten el mismo problema central: seguridad sin gobierno, sin métricas y sin control. Seleccione su perfil para ver cómo le ayudamos.</p>
+  <div class="seg-switcher fu fu-3">
+    <button class="sw-btn active" onclick="switchSeg('condominios',this)">🏘️ Administradoras de Condominios</button>
+    <button class="sw-btn" onclick="switchSeg('pymes',this)">🏢 PYMEs y Empresas</button>
+  </div>
+</div>
+
+<!-- SEGMENT PANELS -->
+<div class="seg-panels">
+
+  <!-- CONDOMINIOS -->
+  <div class="seg-panel active" id="panel-condominios">
+    <div class="label">Segmento A · Principal</div>
+    <h2 class="section-title">Administradoras<br>de Condominios</h2>
+    <p class="section-intro">Usted gestiona propiedades con decenas o cientos de unidades, recibe quejas constantes de propietarios y depende de proveedores de guardas cuyo desempeño nadie mide. Su junta directiva exige resultados que hoy no tiene cómo demostrar.</p>
+
+    <div class="pain-gain">
+      <div class="pg-col pain">
+        <div class="pg-header"><span class="pg-icon">⚠️</span><span class="pg-title">Lo que está viviendo hoy</span></div>
+        <ul class="pg-items">
+          <li>Incidentes nocturnos sin protocolo de respuesta claro</li>
+          <li>Control de accesos inconsistente según el turno del guarda</li>
+          <li>Alta rotación de personal de seguridad sin consecuencias para el proveedor</li>
+          <li>Quejas de propietarios que no puede responder con datos</li>
+          <li>Reuniones de junta donde la seguridad es siempre un punto sin resolver</li>
+          <li>Imposibilidad de comparar el desempeño entre propiedades</li>
+          <li>Contratos con proveedores que no tienen SLAs medibles</li>
+          <li>Sin evidencia para justificar o cambiar proveedores</li>
+        </ul>
+      </div>
+      <div class="pg-col gain">
+        <div class="pg-header"><span class="pg-icon">✦</span><span class="pg-title">Lo que logra con Metrik Guard</span></div>
+        <ul class="pg-items">
+          <li>Mapa de riesgos claro por propiedad, actualizado mensualmente</li>
+          <li>Dashboard de KPIs listo para presentar en junta directiva</li>
+          <li>Protocolos estandarizados que aplican todos los turnos por igual</li>
+          <li>Auditorías independientes que responsabilizan al proveedor</li>
+          <li>Respuestas con datos cuando un propietario presenta una queja</li>
+          <li>Comparativa de desempeño entre propiedades del portafolio</li>
+          <li>Soporte experto en licitaciones para cambiar o renegociar proveedores</li>
+          <li>Reputación de administración profesional y documentada</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="label">Escenarios reales</div>
+    <div class="scenarios">
+      <div class="sc-card">
+        <div class="sc-tag">Escenario 1</div>
+        <h4>Incidente sin protocolo</h4>
+        <p>Un vehículo fue robado en el estacionamiento a las 2am. El guarda no sabía exactamente qué hacer ni cómo documentar el evento. Nadie avisó a la administración hasta el día siguiente.</p>
+        <div class="sc-result">→ Metrik Guard: protocolo de respuesta nocturna + bitácora estandarizada + reporte inmediato.</div>
+      </div>
+      <div class="sc-card">
+        <div class="sc-tag">Escenario 2</div>
+        <h4>Junta pide resultados</h4>
+        <p>En la asamblea, tres propietarios cuestionan el gasto en seguridad. La administradora no tiene datos de cuántos incidentes hubo, ni si el proveedor cumplió su contrato.</p>
+        <div class="sc-result">→ Metrik Guard: reporte mensual listo, KPIs por trimestre y comparativa vs metas.</div>
+      </div>
+      <div class="sc-card">
+        <div class="sc-tag">Escenario 3</div>
+        <h4>Rotación de proveedor</h4>
+        <p>El proveedor lleva 8 meses cambiando guardas constantemente. La calidad bajó. Pero la administradora no tiene datos objetivos para justificar un cambio ante la junta.</p>
+        <div class="sc-result">→ Metrik Guard: tasa de rotación documentada + hallazgos de auditoría + apoyo en licitación.</div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p class="quote-text">Con un reporte mensual claro y datos reales, las reuniones de junta dejaron de ser debates sobre seguridad para convertirse en sesiones de decisión. Esa diferencia no tiene precio.</p>
+      <div class="quote-attr">Administradora de portafolio · <span>San José, Costa Rica</span></div>
+    </div>
+
+    <div class="label">¿Qué tipo de propiedades atendemos?</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);">
+      <div style="background:var(--ink-2);padding:2rem 1.8rem;"><div style="font-size:1.5rem;margin-bottom:.8rem;">🏘️</div><h4 style="font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:.4rem;">Condominios Residenciales</h4><p style="font-size:.85rem;color:var(--text-dim);">Desde 30 hasta 300+ unidades. Atendemos residenciales horizontales y verticales.</p></div>
+      <div style="background:var(--ink-2);padding:2rem 1.8rem;"><div style="font-size:1.5rem;margin-bottom:.8rem;">🏢</div><h4 style="font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:.4rem;">Condominios Mixtos</h4><p style="font-size:.85rem;color:var(--text-dim);">Propiedades con uso residencial y comercial que requieren protocolos diferenciados.</p></div>
+      <div style="background:var(--ink-2);padding:2rem 1.8rem;"><div style="font-size:1.5rem;margin-bottom:.8rem;">📁</div><h4 style="font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:.4rem;">Portafolios Múltiples</h4><p style="font-size:.85rem;color:var(--text-dim);">Administradoras con 3+ propiedades que necesitan métricas comparativas entre sitios.</p></div>
+    </div>
+  </div>
+
+  <!-- PYMES -->
+  <div class="seg-panel" id="panel-pymes">
+    <div class="label">Segmento B · Suscripción</div>
+    <h2 class="section-title">PYMEs y<br>Empresas</h2>
+    <p class="section-intro">No tiene un jefe de seguridad interno. Invirtió en cámaras, alarmas y tal vez guardas, pero sin un sistema de gestión que haga que todo funcione junto. Los incidentes siguen ocurriendo y afectan su operación y reputación.</p>
+
+    <div class="pain-gain">
+      <div class="pg-col pain">
+        <div class="pg-header"><span class="pg-icon">⚠️</span><span class="pg-title">Lo que está viviendo hoy</span></div>
+        <ul class="pg-items">
+          <li>Tecnología de seguridad instalada pero sin gestión ni seguimiento</li>
+          <li>Sin protocolos escritos: cada empleado hace lo que cree correcto</li>
+          <li>Incidentes que se repiten sin que se aprenda de ellos</li>
+          <li>No sabe si su proveedor de guardas está cumpliendo el contrato</li>
+          <li>Cuando ocurre un incidente, no hay documentación adecuada</li>
+          <li>Inversiones en seguridad tomadas sin análisis de necesidad</li>
+          <li>Vulnerabilidades conocidas pero sin priorización ni plan</li>
+          <li>Nadie con responsabilidad clara sobre la seguridad de la empresa</li>
+        </ul>
+      </div>
+      <div class="pg-col gain">
+        <div class="pg-header"><span class="pg-icon">✦</span><span class="pg-title">Lo que logra con Metrik Guard</span></div>
+        <ul class="pg-items">
+          <li>Un "CISO externo" sin costo de contratación de tiempo completo</li>
+          <li>Diagnóstico claro de qué está fallando y qué arreglar primero</li>
+          <li>Protocolos escritos para visitas, emergencias e incidentes</li>
+          <li>Proveedor de seguridad con SLAs medidos y responsabilidad documentada</li>
+          <li>Reportes para gerencia o socios con datos reales de seguridad</li>
+          <li>Decisiones de inversión justificadas con análisis de riesgo</li>
+          <li>Reducción de incidentes recurrentes con acciones correctivas</li>
+          <li>Continuidad operativa protegida ante incidentes de seguridad</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="label">Escenarios reales</div>
+    <div class="scenarios">
+      <div class="sc-card">
+        <div class="sc-tag">Escenario 1</div>
+        <h4>Robo interno sin evidencia</h4>
+        <p>Un empleado detecta que hay faltantes de inventario. Las cámaras están instaladas pero nadie sabe si apuntan al área correcta ni cómo revisar grabaciones. No hay protocolo de investigación interna.</p>
+        <div class="sc-result">→ Metrik Guard: diagnóstico de cobertura CCTV + protocolo de investigación + documentación de incidente.</div>
+      </div>
+      <div class="sc-card">
+        <div class="sc-tag">Escenario 2</div>
+        <h4>Visita de cliente afectada</h4>
+        <p>Durante una reunión importante, una alarma falsa activa a los guardas y crea una situación caótica frente al cliente. No existe protocolo de manejo de alarmas ni comunicación en emergencias.</p>
+        <div class="sc-result">→ Metrik Guard: protocolo de alarmas + script de comunicación ante visitantes + reducción de falsas alarmas.</div>
+      </div>
+      <div class="sc-card">
+        <div class="sc-tag">Escenario 3</div>
+        <h4>Renovación de contrato sin datos</h4>
+        <p>El contrato del proveedor de guardas vence. El gerente no tiene evidencia del desempeño actual. Renueva sin negociar porque no tiene argumentos para pedir mejoras o cambiar proveedor.</p>
+        <div class="sc-result">→ Metrik Guard: auditoría previa al vencimiento + datos para negociar + apoyo en licitación si aplica.</div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p class="quote-text">No necesitaba contratar un director de seguridad. Necesitaba alguien que me dijera exactamente qué estaba mal, qué arreglar primero y que me demostrara mes a mes que las cosas estaban mejorando.</p>
+      <div class="quote-attr">Gerente General · <span>Empresa de distribución, San José</span></div>
+    </div>
+
+    <div class="label">¿Qué tipo de empresas atendemos?</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);">
+      <div style="background:var(--ink-2);padding:2rem 1.8rem;"><div style="font-size:1.5rem;margin-bottom:.8rem;">🏬</div><h4 style="font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:.4rem;">Comercio y Retail</h4><p style="font-size:.85rem;color:var(--text-dim);">Tiendas, locales y centros comerciales pequeños con necesidad de control de acceso y prevención de hurto.</p></div>
+      <div style="background:var(--ink-2);padding:2rem 1.8rem;"><div style="font-size:1.5rem;margin-bottom:.8rem;">🏭</div><h4 style="font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:.4rem;">Industria y Logística</h4><p style="font-size:.85rem;color:var(--text-dim);">Bodegas, plantas y empresas de distribución con múltiples turnos y zonas de acceso diferenciado.</p></div>
+      <div style="background:var(--ink-2);padding:2rem 1.8rem;"><div style="font-size:1.5rem;margin-bottom:.8rem;">💼</div><h4 style="font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:.4rem;">Oficinas y Servicios</h4><p style="font-size:.85rem;color:var(--text-dim);">Empresas con oficinas que atienden clientes externos y necesitan protocolos de visitas y emergencias.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST SIGNALS -->
+<section class="alt">
+  <div class="label">Por qué elegirnos</div>
+  <h2 class="section-title">Lo que nos diferencia</h2>
+  <div class="trust-row" style="margin-top:3rem;">
+    <div class="trust-item">
+      <div class="trust-num">100<span>%</span></div>
+      <div class="trust-label">Independientes de<br>proveedores de hardware</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num"><span>+</span>15</div>
+      <div class="trust-label">KPIs operativos<br>por cliente activo</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">90</div>
+      <div class="trust-label">Días para resultados<br>visibles y medibles</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-num">0</div>
+      <div class="trust-label">Opiniones sin datos.<br>Solo métricas reales.</div>
+    </div>
+  </div>
+</section>
+
+<!-- NOT FOR US -->
+<section>
+  <div class="label">Transparencia</div>
+  <h2 class="section-title">¿No somos para usted?</h2>
+  <p class="section-intro">Preferimos ser honestos. Hay perfiles con los que Metrik Guard no es el socio correcto — todavía.</p>
+  <div class="nfu-grid" style="margin-top:2rem;">
+    <div class="nfu-item">
+      <span class="nfu-icon">🔧</span>
+      <h4>Busca instalar cámaras o contratar guardas</h4>
+      <p>Somos consultoría de gobernanza, no empresa de hardware ni de personal. Si necesita proveedor operativo, le podemos orientar pero no ejecutamos ese servicio.</p>
+    </div>
+    <div class="nfu-item">
+      <span class="nfu-icon">📋</span>
+      <h4>Quiere un checklist genérico, no un sistema</h4>
+      <p>Nuestro valor está en la continuidad y las métricas. Si busca un documento único sin seguimiento, hay opciones más simples y económicas para usted.</p>
+    </div>
+    <div class="nfu-item">
+      <span class="nfu-icon">⚡</span>
+      <h4>Necesita respuesta ante un incidente activo</h4>
+      <p>En emergencias activas, debe contactar directamente a las autoridades. Metrik Guard es prevención y control — no respuesta operativa en tiempo real.</p>
+    </div>
+    <div class="nfu-item">
+      <span class="nfu-icon">💰</span>
+      <h4>Espera cero inversión futura en seguridad</h4>
+      <p>El diagnóstico puede revelar vulnerabilidades que requieren inversión para resolverse. Si la empresa no puede destinar recursos, el impacto de nuestro trabajo será limitado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="alt">
+  <div class="label">Dudas frecuentes</div>
+  <h2 class="section-title">Preguntas antes de<br>tomar la decisión</h2>
+  <div style="margin-top:2rem;max-width:800px;">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto tiempo tarda en ver resultados? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Los quick wins del diagnóstico se implementan en las primeras 2 semanas. Los primeros datos comparativos los tiene a los 30 días. A los 90 días tiene un sistema estabilizado con tendencias claras.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Tienen que cambiar a mi proveedor de seguridad actual? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>No. Trabajamos sobre lo que usted ya tiene. Si el proveedor es bueno, lo demostramos con datos. Si hay problemas, los documentamos y le ayudamos a tomar la mejor decisión — cambiar, renegociar o complementar.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto tiempo nos requiere a nosotros cada mes? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Mínimo. Nosotros ejecutamos las auditorías de forma independiente. Usted dedica aproximadamente 1 hora mensual para revisar el reporte y tomar decisiones. En fases de implementación, puede ser 2–3 horas adicionales.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Trabajan con propiedades fuera del Gran Área Metropolitana? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Sí, aunque los costos de desplazamiento para auditorías presenciales se evalúan caso a caso. Para propiedades remotas, parte del trabajo de revisión documental y reporting se hace de forma remota.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Manejan información confidencial de mi empresa? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Sí, y lo tomamos muy en serio. Firmamos acuerdo de confidencialidad desde el kick-off. Toda la información de incidentes, proveedores y vulnerabilidades se maneja bajo estricta reserva y nunca se comparte con terceros.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div>
+    <h3>¿Se identifica con alguno de estos perfiles?</h3>
+    <p>El primer paso es una conversación de 30 minutos. Sin costo. Sin compromiso.</p>
+  </div>
+  <div class="cta-btns">
+    <a class="btn-p" href="/cdn-cgi/l/email-protection#96fef9faf7d6fbf3e2e4fffdf1e3f7e4f2b8f5f9fb">Agendar conversación</a>
+    <a class="btn-g" href="servicios.html">Ver servicios →</a>
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="index.html" style="display:flex;align-items:center"><svg width="20" height="32" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;opacity:0.7">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <div class="footer-info">Inteligencia en Seguridad · Costa Rica<br>© 2026 Metrik Guard. Todos los derechos reservados.</div>
+  <ul class="footer-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+function switchSeg(id,btn){
+  document.querySelectorAll('.sw-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.seg-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+}
+function toggleFaq(btn){
+  const ans=btn.nextElementSibling;
+  const icon=btn.querySelector('.faq-icon');
+  const isOpen=ans.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(a=>{a.classList.remove('open');a.previousElem
