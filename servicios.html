@@ -116,14 +116,6 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 .footer-links a{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
 .footer-links a:hover{color:var(--accent);}
 
-/* DISAMBIGUATION BAND */
-.disambiguation{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--border);background:var(--ink-2);}
-.dis-item{display:flex;align-items:center;gap:.8rem;padding:1.4rem 2.5rem;border-right:1px solid var(--border);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.08em;flex:1;min-width:200px;}
-.dis-item:last-child{border-right:none;}
-.dis-no{color:var(--danger);font-size:.9rem;flex-shrink:0;}
-.dis-ok{color:var(--accent);font-size:.9rem;flex-shrink:0;}
-.dis-item span:last-child{color:var(--text-dim);line-height:1.4;}
-
 /* PMO CALLOUT */
 .pmo-callout{background:rgba(206,255,71,.04);border:1px solid rgba(206,255,71,.2);padding:2.5rem;margin-bottom:4rem;}
 .pmo-callout-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
@@ -169,7 +161,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
     <li><a href="clientes.html">Clientes</a></li>
     <li><a href="nosotros.html">Nosotros</a></li>
   </ul>
-  <a class="nav-cta" href="index.html#contacto">Solicitar diagnóstico</a>
+  <a class="nav-cta" href="contacto.html">Solicitar diagnóstico</a>
 </nav>
 
 <!-- PAGE HERO -->
@@ -177,17 +169,8 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   <div class="hero-bg"></div>
   <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>Servicios</span></div>
   <h1 class="page-title fu fu-2">NUESTROS<br><em>SERVICIOS</em></h1>
-  <p class="page-intro fu fu-3">Cuatro servicios de asesoría e inteligencia en seguridad, diseñados para trabajar en secuencia o de forma independiente. Somos consultores independientes — no una empresa de guardas ni de cámaras.</p>
+  <p class="page-intro fu fu-3">Cuatro servicios de asesoría e inteligencia en seguridad, diseñados para trabajar en secuencia o de forma independiente. Cada uno entrega valor medible desde la primera semana.</p>
   <div class="hero-scroll-hint">Explorar servicios</div>
-</div>
-
-<!-- DISAMBIGUATION BAND -->
-<div class="disambiguation">
-  <div class="dis-item"><span class="dis-no">✕</span><span>No operamos ni contratamos guardas de seguridad</span></div>
-  <div class="dis-item"><span class="dis-no">✕</span><span>No instalamos cámaras ni sistemas de alarma</span></div>
-  <div class="dis-item"><span class="dis-ok">✓</span><span>Auditamos y gobernamos su sistema de seguridad</span></div>
-  <div class="dis-item"><span class="dis-ok">✓</span><span>Investigamos, documentamos y elaboramos peritajes</span></div>
-  <div class="dis-item"><span class="dis-ok">✓</span><span>Somos su asesoría de inteligencia en seguridad</span></div>
 </div>
 
 <!-- SERVICE TABS -->
@@ -566,7 +549,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
     <p>El diagnóstico es el primer paso. Conversemos 30 minutos y le explicamos exactamente qué esperar.</p>
   </div>
   <div class="cta-btns">
-    <a class="btn-p" href="/cdn-cgi/l/email-protection#fb9394979abb969e8f8992909c8e9a899fd5989496">Agendar diagnóstico</a>
+    <a class="btn-p" href="contacto.html">Agendar diagnóstico</a>
     <a class="btn-g" href="proceso.html">Ver proceso →</a>
   </div>
 </div>
