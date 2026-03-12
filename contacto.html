@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Contacto · Metrik Guard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0b1d35;--ink-2:#0e2642;--ink-3:#133055;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--accent-2:#3a9fff;--danger:#ff4757;--warn:#ffa502;--white:#f0f6ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(206,255,71,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(206,255,71,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:rgba(11,29,53,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.12em;color:var(--white);text-decoration:none;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.nav-cta{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.6rem 1.4rem;text-decoration:none;transition:opacity .2s;}
+.nav-cta:hover{opacity:.85;}
+
+/* HERO */
+.page-hero{position:relative;padding:10rem 4rem 6rem;border-bottom:1px solid var(--border);overflow:hidden;z-index:1;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 70% 50%,rgba(206,255,71,.06) 0%,transparent 65%);pointer-events:none;}
+.breadcrumb{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;}
+.breadcrumb a{color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:var(--accent);}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,8vw,8rem);line-height:.9;letter-spacing:.02em;color:var(--white);margin-bottom:2rem;}
+.page-title em{font-style:normal;color:var(--accent);}
+.page-intro{max-width:600px;color:var(--text-dim);font-size:1.1rem;line-height:1.85;}
+
+/* CONTACT LAYOUT */
+.contact-section{position:relative;z-index:1;padding:7rem 4rem;border-bottom:1px solid var(--border);}
+.contact-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:6rem;align-items:start;}
+
+/* SIDEBAR INFO */
+.contact-info{}
+.label{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem;}
+.label::before{content:'';display:block;width:24px;height:1px;background:var(--accent);}
+.info-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;line-height:.95;letter-spacing:.03em;color:var(--white);margin-bottom:1.5rem;}
+.info-body{color:var(--text-dim);font-size:.95rem;line-height:1.85;margin-bottom:2.5rem;}
+.info-body strong{color:var(--text);font-weight:400;}
+
+.contact-details{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);}
+.detail-row{display:flex;align-items:flex-start;gap:1rem;padding:1.3rem 1.5rem;border-bottom:1px solid var(--border);}
+.detail-row:last-child{border-bottom:none;}
+.detail-icon{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);width:60px;flex-shrink:0;padding-top:.1rem;}
+.detail-text{font-size:.88rem;color:var(--text-dim);line-height:1.5;}
+.detail-text strong{color:var(--text);font-weight:400;display:block;margin-bottom:.1rem;}
+
+.promise-box{margin-top:2.5rem;background:rgba(206,255,71,.04);border:1px solid rgba(206,255,71,.18);padding:2rem;}
+.promise-box p{font-size:.87rem;color:var(--text-dim);line-height:1.75;}
+.promise-box strong{color:var(--accent);font-weight:400;}
+
+/* FORM */
+.contact-form{background:var(--ink-2);border:1px solid var(--border);padding:3.5rem;}
+.form-title{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:2.5rem;padding-bottom:1.2rem;border-bottom:1px solid var(--border);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.form-group{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem;}
+.form-label{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);}
+.form-label span{color:var(--accent);margin-left:.2rem;}
+.form-input,.form-select,.form-textarea{background:var(--ink);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:300;padding:.85rem 1rem;outline:none;transition:border-color .2s;width:100%;appearance:none;-webkit-appearance:none;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text-dim);opacity:.6;}
+.form-select{cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a9ab8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;}
+.form-textarea{min-height:120px;resize:vertical;}
+.form-note{font-size:.78rem;color:var(--text-dim);margin-top:.3rem;line-height:1.4;}
+
+.form-divider{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin:2rem 0 1.5rem;padding-top:2rem;border-top:1px solid var(--border);}
+
+.form-submit{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);border:none;padding:1.1rem 2.5rem;cursor:pointer;transition:opacity .2s,transform .2s;width:100%;margin-top:2rem;}
+.form-submit:hover{opacity:.88;transform:translateY(-1px);}
+.form-submit:active{transform:translateY(0);}
+
+/* SUCCESS STATE */
+.form-success{display:none;text-align:center;padding:4rem 2rem;}
+.form-success.visible{display:block;}
+.success-icon{font-size:3rem;margin-bottom:1.5rem;display:block;}
+.success-title{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--white);letter-spacing:.03em;margin-bottom:1rem;}
+.success-body{color:var(--text-dim);font-size:1rem;line-height:1.8;max-width:400px;margin:0 auto 2rem;}
+
+footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;}
+.footer-logo span{color:var(--accent);}
+.footer-info{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;}
+.footer-links{display:flex;gap:2rem;list-style:none;}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--accent);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp .8s ease forwards;}
+.fu-1{animation-delay:.1s;opacity:0;}
+.fu-2{animation-delay:.25s;opacity:0;}
+.fu-3{animation-delay:.4s;opacity:0;}
+
+@media(max-width:960px){
+  nav{padding:1.2rem 2rem;}
+  .nav-links{display:none;}
+  .page-hero{padding:8rem 2rem 4rem;}
+  .contact-section{padding:5rem 2rem;}
+  .contact-grid{grid-template-columns:1fr;gap:3rem;}
+  .form-row{grid-template-columns:1fr;}
+  .contact-form{padding:2.5rem 1.5rem;}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html" style="display:flex;align-items:center"><svg width="28" height="44" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <ul class="nav-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+  </ul>
+  <a class="nav-cta" href="contacto.html" class="active">Solicitar diagnóstico</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>Contacto</span></div>
+  <h1 class="page-title fu fu-2">SOLICITAR<br><em>DIAGNÓSTICO</em></h1>
+  <p class="page-intro fu fu-3">Complete el formulario y le contactaremos en menos de 24 horas hábiles para coordinar una conversación de 30 minutos sin costo ni compromiso.</p>
+</div>
+
+<!-- CONTACT SECTION -->
+<div class="contact-section">
+  <div class="contact-grid">
+
+    <!-- INFO SIDEBAR -->
+    <div class="contact-info">
+      <div class="label">Primer paso</div>
+      <h2 class="info-title">Una conversación,<br>no una venta.</h2>
+      <p class="info-body">Le escuchamos, entendemos su situación y le decimos con honestidad si podemos ayudarle. Si el diagnóstico aplica a su caso, le explicamos exactamente qué esperar. <strong>Sin presión, sin compromisos.</strong></p>
+
+      <div class="contact-details">
+        <div class="detail-row">
+          <span class="detail-icon">Email</span>
+          <div class="detail-text"><strong>Correo</strong>hola@metrikguard.com</div>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">País</span>
+          <div class="detail-text"><strong>Ubicación</strong>Costa Rica · Atención en toda LATAM</div>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">Horario</span>
+          <div class="detail-text"><strong>Disponibilidad</strong>Lunes a viernes, 8:00 – 18:00 (CST)</div>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon">Respuesta</span>
+          <div class="detail-text"><strong>Tiempo de respuesta</strong>Menos de 24 horas hábiles</div>
+        </div>
+      </div>
+
+      <div class="promise-box">
+        <p>Toda la información que comparta en este formulario es <strong>estrictamente confidencial</strong> y se utilizará únicamente para coordinar su diagnóstico inicial.</p>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="contact-form" id="form-container">
+      <div class="form-title">Formulario de diagnóstico</div>
+
+      <form id="diagForm" onsubmit="submitForm(event)" novalidate>
+
+        <!-- DATOS PERSONALES -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="nombre">Nombre completo <span>*</span></label>
+            <input class="form-input" type="text" id="nombre" name="nombre" placeholder="Su nombre y apellidos" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="empresa">Organización</label>
+            <input class="form-input" type="text" id="empresa" name="empresa" placeholder="Nombre del condominio o empresa"/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="telefono">Teléfono <span>*</span></label>
+            <input class="form-input" type="tel" id="telefono" name="telefono" placeholder="+506 0000-0000" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="correo">Correo electrónico <span>*</span></label>
+            <input class="form-input" type="email" id="correo" name="correo" placeholder="correo@empresa.com" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="tipo">Tipo de organización</label>
+          <select class="form-select" id="tipo" name="tipo">
+            <option value="" disabled selected>Seleccione una opción</option>
+            <option value="condominio">Condominio o Residencial</option>
+            <option value="pyme">PYME</option>
+            <option value="empresa">Empresa mediana o grande</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <!-- UBICACIÓN -->
+        <div class="form-divider">Ubicación</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="provincia">Provincia <span>*</span></label>
+            <select class="form-select" id="provincia" name="provincia" required onchange="actualizarCantones()">
+              <option value="" disabled selected>Seleccione provincia</option>
+              <option value="san-jose">San José</option>
+              <option value="alajuela">Alajuela</option>
+              <option value="cartago">Cartago</option>
+              <option value="heredia">Heredia</option>
+              <option value="guanacaste">Guanacaste</option>
+              <option value="puntarenas">Puntarenas</option>
+              <option value="limon">Limón</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="canton">Cantón</label>
+            <input class="form-input" type="text" id="canton" name="canton" placeholder="Cantón"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="distrito">Distrito</label>
+          <input class="form-input" type="text" id="distrito" name="distrito" placeholder="Distrito (opcional)"/>
+          <span class="form-note">La ubicación nos ayuda a estimar la logística del diagnóstico presencial.</span>
+        </div>
+
+        <!-- CONTEXTO -->
+        <div class="form-divider">Su situación</div>
+
+        <div class="form-group">
+          <label class="form-label" for="servicio">Servicio de interés</label>
+          <select class="form-select" id="servicio" name="servicio">
+            <option value="" disabled selected>¿Qué le interesa explorar?</option>
+            <option value="diagnostico">Diagnóstico Integral de Seguridad</option>
+            <option value="pmo">Security PMO — Auditoría Continua</option>
+            <option value="protocolos">Protocolos y Capacitación</option>
+            <option value="investigacion">Investigaciones Privadas y Peritajes</option>
+            <option value="no-se">No estoy seguro / necesito orientación</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="mensaje">Descripción breve de su situación</label>
+          <textarea class="form-textarea" id="mensaje" name="mensaje" placeholder="Cuéntenos brevemente qué está pasando o qué quiere mejorar en su sistema de seguridad. No es necesario dar detalles confidenciales en este punto."></textarea>
+        </div>
+
+        <button class="form-submit" type="submit">Enviar solicitud de diagnóstico →</button>
+
+      </form>
+
+      <!-- SUCCESS MESSAGE -->
+      <div class="form-success" id="successMsg">
+        <span class="success-icon">✓</span>
+        <div class="success-title">Solicitud recibida</div>
+        <p class="success-body">Nos pondremos en contacto dentro de las próximas 24 horas hábiles para coordinar su diagnóstico. Revise su correo electrónico.</p>
+        <a href="index.html" style="font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;">← Volver al inicio</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="index.html" style="display:flex;align-items:center"><svg width="20" height="32" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;opacity:0.7">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <div class="footer-info">Inteligencia en Seguridad · Costa Rica<br>© 2026 Metrik Guard. Todos los derechos reservados.</div>
+  <ul class="footer-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
+  </ul>
+</footer>
+
+<script>
+function submitForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('diagForm');
+  const nombre = document.getElementById('nombre').value.trim();
+  const telefono = document.getElementById('telefono').value.trim();
+  const correo = document.getElementById('correo').value.trim();
+  const provincia = document.getElementById('provincia').value;
+
+  // Basic validation
+  if (!nombre || !telefono || !correo || !provincia) {
+    const fields = [
+      {val: nombre, id: 'nombre', label: 'Nombre'},
+      {val: telefono, id: 'telefono', label: 'Teléfono'},
+      {val: correo, id: 'correo', label: 'Correo'},
+      {val: provincia, id: 'provincia', label: 'Provincia'}
+    ];
+    fields.forEach(f => {
+      const el = document.getElementById(f.id);
+      if (!f.val) {
+        el.style.borderColor = 'var(--danger)';
+        el.addEventListener('input', () => el.style.borderColor = '', {once: true});
+      }
+    });
+    return;
+  }
+
+  // Email validation
+  const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailReg.test(correo)) {
+    const el = document.getElementById('correo');
+    el.style.borderColor = 'var(--danger)';
+    el.focus();
+    return;
+  }
+
+  // Show success (in production, replace with actual form submission)
+  form.style.display = 'none';
+  document.querySelector('.form-title').style.display = 'none';
+  document.getElementById('successMsg').classList.add('visible');
+}
+</script>
+
+</body>
+</html>
