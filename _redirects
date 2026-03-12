@@ -1,8 +1,4 @@
 # Cloudflare Pages — Redirects
-# Formato: origen  destino  código_HTTP
-
-# Página de error 404
-/404              /404.html          404
-
-# Compatibilidad: cualquier ruta no encontrada → 404 personalizada
-/*                /404.html          404
+# Los códigos válidos son: 200, 301, 302, 303, 307, 308
+# La página 404.html en la raíz es servida automáticamente por Cloudflare Pages
+# sin necesidad de reglas aquí.
