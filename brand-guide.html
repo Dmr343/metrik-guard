@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Metrik Guard · Guía de Marca</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink:     #0b1d35;
+    --ink-2:   #0e2642;
+    --ink-3:   #133055;
+    --border:  #1a3d5c;
+    --text:    #d4e4f2;
+    --text-dim:#7a9ab8;
+    --accent:  #ceff47;
+    --white:   #f0f6ff;
+    --danger:  #ff4757;
+    --warn:    #ffa502;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* GRID OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(206,255,71,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(206,255,71,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 4rem;
+    background: rgba(11,29,53,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+  .nav-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(206,255,71,0.1);
+    border: 1px solid rgba(206,255,71,0.3);
+    padding: 0.25rem 0.7rem;
+    margin-left: 1.5rem;
+  }
+  .nav-back {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--accent); }
+
+  /* ── PAGE WRAPPER ── */
+  .page { position: relative; z-index: 1; }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 4rem 6rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(206,255,71,0.07) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cover-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+  }
+  .cover-logo-mark {
+    margin-bottom: 2.5rem;
+  }
+  .cover h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .cover h1 span { color: var(--accent); }
+  .cover-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-top: 1.5rem;
+  }
+  .cover-version {
+    position: absolute;
+    bottom: 2rem;
+    right: 4rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--border);
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 7rem 4rem;
+    border-bottom: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .section-intro {
+    font-size: 1.05rem;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin-bottom: 3.5rem;
+    line-height: 1.8;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--ink-2);
+    border: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+  }
+  .card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+  }
+
+  /* ── GRID LAYOUTS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+
+  /* ── LOGO SHOWCASE ── */
+  .logo-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .logo-box {
+    padding: 3.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .logo-box-label {
+    position: absolute;
+    top: 1rem; left: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+  }
+  .logo-box.dark  { background: #0b1d35; }
+  .logo-box.light { background: #f0f6ff; }
+  .logo-box.lime  { background: #ceff47; }
+  .logo-box.black { background: #060e1a; }
+
+  .logo-wordmark {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.1em;
+    line-height: 1;
+  }
+  .logo-tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* ── CLEARSPACE DIAGRAM ── */
+  .clearspace-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    background: var(--ink-2);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .clearspace-box {
+    position: relative;
+    padding: 2.5rem;
+    border: 1.5px dashed rgba(206,255,71,0.35);
+  }
+  .clearspace-arrow {
+    position: absolute;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+  }
+  .cs-top    { top: -1.4rem; left: 50%; transform: translateX(-50%); }
+  .cs-bottom { bottom: -1.4rem; left: 50%; transform: translateX(-50%); }
+  .cs-left   { left: -3.8rem; top: 50%; transform: translateY(-50%); }
+  .cs-right  { right: -3.8rem; top: 50%; transform: translateY(-50%); }
+
+  /* ── COLORS ── */
+  .color-swatch {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.2rem;
+    border: 1px solid var(--border);
+  }
+  .swatch-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    font-weight: 400;
+    margin-bottom: 0.15rem;
+  }
+  .swatch-hex {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+  }
+  .swatch-role {
+    font-size: 0.68rem;
+    opacity: 0.55;
+    margin-top: 0.3rem;
+  }
+
+  /* ── TYPOGRAPHY SPECIMENS ── */
+  .type-row {
+    border-bottom: 1px solid var(--border);
+    padding: 1.8rem 0;
+    display: grid;
+    grid-template-columns: 180px 1fr 160px;
+    align-items: center;
+    gap: 2rem;
+  }
+  .type-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    line-height: 1.8;
+  }
+  .type-meta strong { color: var(--accent); display: block; }
+  .type-usage {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  /* ── DO / DON'T ── */
+  .do-dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .do-box, .dont-box {
+    padding: 2rem 2.5rem;
+    border: 1px solid;
+  }
+  .do-box   { border-color: var(--accent); }
+  .dont-box { border-color: var(--danger); }
+  .do-box   .rule-label { color: var(--accent); }
+  .dont-box .rule-label { color: var(--danger); }
+  .rule-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .rule-label::before {
+    content: '';
+    display: inline-block;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+  }
+  .do-box   .rule-label::before { background: var(--accent); }
+  .dont-box .rule-label::before { background: var(--danger); }
+  .rule-text {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+  }
+
+  /* ── ICON GRID ── */
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .icon-cell {
+    background: var(--ink-2);
+    border: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+  .icon-cell-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+  }
+  .icon-cell.on-lime { background: #ceff47; }
+  .icon-cell.on-white { background: #f0f6ff; }
+  .icon-cell.on-black { background: #060e1a; }
+
+  /* ── SIZING TABLE ── */
+  .size-table { width: 100%; border-collapse: collapse; }
+  .size-table th, .size-table td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+  .size-table th {
+    color: var(--accent);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .size-table td { color: var(--text); }
+  .size-table tr:last-child td { border-bottom: none; }
+  .size-table td:first-child { color: var(--white); font-weight: 400; }
+
+  /* ── TONE PILLS ── */
+  .tone-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  .tone-pill {
+    padding: 1.5rem;
+    background: var(--ink-2);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+  }
+  .tone-pill h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+  .tone-pill p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ── TAGLINE VARIANTS ── */
+  .tagline-row {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .tagline-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    color: var(--white);
+  }
+  .tagline-use {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    text-align: right;
+    min-width: 200px;
+  }
+
+  /* ── DIVIDER LINE ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--border);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+  }
+  .footer-confidential {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--border);
+    text-transform: uppercase;
+  }
+
+  /* WATCHTOWER ICON INLINE SVG helper */
+  .wt-icon { display: inline-block; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── NAV ── -->
+<nav>
+  <a class="nav-logo" href="metrikguard-website.html" style="display:flex;align-items:center">
+    <svg width="28" height="44" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0">
+      <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+      <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+      <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+      <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+      <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+    </svg>
+    METRIK GUARD
+  </a>
+  <span class="nav-badge">Guía de Marca</span>
+  <a class="nav-back" href="metrikguard-website.html">← Volver al sitio</a>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     COVER
+══════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-eyebrow">Documento interno · Confidencial</div>
+  <div class="cover-logo-mark">
+    <svg width="90" height="138" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="40,0 80,30 40,60 0,30" fill="#ceff47"/>
+      <polygon points="40,10 64,30 40,50 16,30" fill="#0b1d35"/>
+      <circle cx="40" cy="30" r="11" fill="#ceff47"/>
+      <rect x="30" y="60" width="20" height="48" fill="#ceff47"/>
+      <rect x="14" y="106" width="52" height="10" fill="#ceff47"/>
+    </svg>
+  </div>
+  <h1>METRIK<span> GUARD</span></h1>
+  <p class="cover-sub">Guía de Identidad de Marca · Brand Guidelines · v1.0</p>
+  <div class="cover-version">Versión 1.0 · 2026 · Confidencial</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     01 · INTRODUCCIÓN
+══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-num">01 · INTRODUCCIÓN</div>
+  <h2 class="section-title">Nuestra Marca</h2>
+  <p class="section-intro">Metrik Guard es una firma de consultoría estratégica en seguridad. Actuamos como una capa de gobierno independiente — medimos, auditamos y optimizamos sistemas de seguridad con KPIs reales. Esta guía define cómo se presenta nuestra marca en todos los contextos.</p>
+
+  <div class="grid-2" style="gap:1.5rem">
+    <div class="card">
+      <div class="card-label">Misión</div>
+      <p>Transformar la seguridad de condominios y PYMEs en un sistema medible, controlado y en mejora continua — sin reemplazar a los proveedores existentes.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Posicionamiento</div>
+      <p>La PMO externa de seguridad de Costa Rica. Aportamos visibilidad, control y gobierno donde antes solo había gasto no medido.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Público objetivo</div>
+      <p>Administradoras de condominios y PYMEs en Costa Rica que buscan profesionalizar su gestión de seguridad con métricas e informes ejecutivos.</p>
+    </div>
+    <div class="card">
+      <div class="card-label">Personalidad de marca</div>
+      <p>Precisa · Confiable · Directa · Técnica sin ser fría · Orientada a resultados. Hablamos como consultores, no como vendedores.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     02 · LOGOTIPO
+══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-num">02 · LOGOTIPO</div>
+  <h2 class="section-title">El Logo</h2>
+  <p class="section-intro">El ícono Watchtower es una torre de vigilancia abstracta: un diamante (visión / ojo de auditoría) sobre una columna vertical (torre de datos / control permanente). Simple, ownable, memorable en cualquier tamaño.</p>
+
+  <!-- Logo variations -->
+  <div class="logo-showcase">
+
+    <!-- Dark background — preferred -->
+    <div class="logo-box dark">
+      <span class="logo-box-label">USO PRINCIPAL · Fondo Oscuro</span>
+      <svg width="60" height="92" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="40,0 80,30 40,60 0,30" fill="#ceff47"/>
+        <polygon points="40,10 64,30 40,50 16,30" fill="#0b1d35"/>
+        <circle cx="40" cy="30" r="11" fill="#ceff47"/>
+        <rect x="30" y="60" width="20" height="48" fill="#ceff47"/>
+        <rect x="14" y="106" width="52" height="10" fill="#ceff47"/>
+      </svg>
+      <div style="text-align:center">
+        <div class="logo-wordmark" style="font-size:2rem;color:#ceff47">METRIK</div>
+        <div class="logo-wordmark" style="font-size:2rem;color:#f0f6ff">GUARD</div>
+        <div class="logo-tagline" style="color:#7a9ab8;margin-top:0.5rem">INTELIGENCIA EN SEGURIDAD</div>
+      </div>
+    </div>
+
+    <!-- Lime background -->
+    <div class="logo-box lime">
+      <span class="logo-box-label" style="color:#0b1d3580">USO SECUNDARIO · Fondo Lima</span>
+      <svg width="60" height="92" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="40,0 80,30 40,60 0,30" fill="#0b1d35"/>
+        <polygon points="40,10 64,30 40,50 16,30" fill="#ceff47"/>
+        <circle cx="40" cy="30" r="11" fill="#0b1d35"/>
+        <rect x="30" y="60" width="20" height="48" fill="#0b1d35"/>
+        <rect x="14" y="106" width="52" height="10" fill="#0b1d35"/>
+      </svg>
+      <div style="text-align:center">
+        <div class="logo-wordmark" style="font-size:2rem;color:#0b1d35">METRIK</div>
+        <div class="logo-wordmark" style="font-size:2rem;color:#0b1d35">GUARD</div>
+        <div class="logo-tagline" style="color:#0b1d3566;margin-top:0.5rem">INTELIGENCIA EN SEGURIDAD</div>
+      </div>
+    </div>
+
+    <!-- White background -->
+    <div class="logo-box light">
+      <span class="logo-box-label" style="color:#0b1d3580">USO TERCIARIO · Fondo Claro</span>
+      <svg width="60" height="92" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="40,0 80,30 40,60 0,30" fill="#0b1d35"/>
+        <polygon points="40,10 64,30 40,50 16,30" fill="#f0f6ff"/>
+        <circle cx="40" cy="30" r="11" fill="#0b1d35"/>
+        <rect x="30" y="60" width="20" height="48" fill="#0b1d35"/>
+        <rect x="14" y="106" width="52" height="10" fill="#0b1d35"/>
+      </svg>
+      <div style="text-align:center">
+        <div class="logo-wordmark" style="font-size:2rem;color:#0b1d35">METRIK</div>
+        <div class="logo-wordmark" style="font-size:2rem;color:#0b1d35">GUARD</div>
+        <div class="logo-tagline" style="color:#7a9ab8;margin-top:0.5rem">INTELIGENCIA EN SEGURIDAD</div>
+      </div>
+    </div>
+
+    <!-- Black / max contrast -->
+    <div class="logo-box black">
+      <span class="logo-box-label">MONOCROMÁTICO · Máximo Contraste</span>
+      <svg width="60" height="92" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="40,0 80,30 40,60 0,30" fill="#ffffff"/>
+        <polygon points="40,10 64,30 40,50 16,30" fill="#060e1a"/>
+        <circle cx="40" cy="30" r="11" fill="#ffffff"/>
+        <rect x="30" y="60" width="20" height="48" fill="#ffffff"/>
+        <rect x="14" y="106" width="52" height="10" fill="#ffffff"/>
+      </svg>
+      <div style="text-align:center">
+        <div class="logo-wordmark" style="font-size:2rem;color:#ffffff">METRIK</div>
+        <div class="logo-wordmark" style="font-size:2rem;color:#ffffff">GUARD</div>
+        <div class="logo-tagline" style="color:#4a6a7a;margin-top:0.5rem">INTELIGENCIA EN SEGURIDAD</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Icon-only row -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-label">Ícono solo — Usos aceptados (favicon, sello, app icon)</div>
+    <div class="icon-grid">
+      <div class="icon-cell">
+        <svg width="48" height="74" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,0 80,30 40,60 0,30" fill="#ceff47"/>
+          <polygon points="40,10 64,30 40,50 16,30" fill="#0b1d35"/>
+          <circle cx="40" cy="30" r="11" fill="#ceff47"/>
+          <rect x="30" y="60" width="20" height="48" fill="#ceff47"/>
+          <rect x="14" y="106" width="52" height="10" fill="#ceff47"/>
+        </svg>
+        <span class="icon-cell-label">En navy</span>
+      </div>
+      <div class="icon-cell on-lime">
+        <svg width="48" height="74" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,0 80,30 40,60 0,30" fill="#0b1d35"/>
+          <polygon points="40,10 64,30 40,50 16,30" fill="#ceff47"/>
+          <circle cx="40" cy="30" r="11" fill="#0b1d35"/>
+          <rect x="30" y="60" width="20" height="48" fill="#0b1d35"/>
+          <rect x="14" y="106" width="52" height="10" fill="#0b1d35"/>
+        </svg>
+        <span class="icon-cell-label" style="color:#0b1d3580">En lima</span>
+      </div>
+      <div class="icon-cell on-white">
+        <svg width="48" height="74" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,0 80,30 40,60 0,30" fill="#0b1d35"/>
+          <polygon points="40,10 64,30 40,50 16,30" fill="#f0f6ff"/>
+          <circle cx="40" cy="30" r="11" fill="#0b1d35"/>
+          <rect x="30" y="60" width="20" height="48" fill="#0b1d35"/>
+          <rect x="14" y="106" width="52" height="10" fill="#0b1d35"/>
+        </svg>
+        <span class="icon-cell-label" style="color:#7a9ab8">En blanco</span>
+      </div>
+      <div class="icon-cell on-black">
+        <svg width="48" height="74" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,0 80,30 40,60 0,30" fill="#ffffff"/>
+          <polygon points="40,10 64,30 40,50 16,30" fill="#060e1a"/>
+          <circle cx="40" cy="30" r="11" fill="#ffffff"/>
+          <rect x="30" y="60" width="20" height="48" fill="#ffffff"/>
+          <rect x="14" y="106" width="52" height="10" fill="#ffffff"/>
+        </svg>
+        <span class="icon-cell-label">Monocromático</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clearspace -->
+  <div class="card" style="margin-bottom:3rem">
+    <div class="card-label">Espacio mínimo (clearspace) — Zona de protección = altura "X" del ícono</div>
+    <div class="clearspace-wrap">
+      <div class="clearspace-box">
+        <span class="clearspace-arrow cs-top">← X →</span>
+        <span class="clearspace-arrow cs-bottom">← X →</span>
+        <span class="clearspace-arrow cs-left">X</span>
+        <span class="clearspace-arrow cs-right">X</span>
+        <svg width="48" height="74" viewBox="0 0 80 124" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,0 80,30 40,60 0,30" fill="#ceff47"/>
+          <polygon points="40,10 64,30 40,50 16,30" fill="#0b1d35"/>
+          <circle cx="40" cy="30" r="11" fill="#ceff47"/>
+          <rect x="30" y="60" width="20" height="48" fill="#ceff47"/>
+          <rect x="14" y="106" width="52" height="10" fill="#ceff47"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimum sizes -->
+  <div class="card" style="margin-bottom:3rem">
+    <div class="card-label">Tamaños mínimos</div>
+    <table class="size-table">
+      <thead>
+        <tr>
+          <th>Contexto</th>
+          <th>Tamaño mínimo ícono</th>
+          <th>Tamaño mínimo logo completo</th>
+          <th>Formato recomendado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Digital / Web</td><td>16 × 24 px</td><td>120 px de ancho</td><td>SVG · PNG</td></tr>
+        <tr><td>Impresión</td><td>8 mm alto</td><td>40 mm de ancho</td><td>SVG · PDF · EPS</td></tr>
+        <tr><td>Bordado / grabado</td><td>15 mm alto</td><td>60 mm de ancho</td><td>Vectorial simplificado</td></tr>
+        <tr><td>Favicon</td><td>16 × 16 px (ícono solo)</td><td>—</td><td>ICO · PNG</td></tr>
+        <tr><td>Redes sociales (avatar)</td><td>ícono solo, centrado</td><td>—</td><td>PNG 800×800 px</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Do / Don't -->
+  <div class="do-dont">
+    <div class="do-box">
+      <div class="rule-label">Correcto</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.7rem">
+        <li class="rule-text">✓ Usar el logo sobre los fondos aprobados (navy, lima, blanco, negro)</li>
+        <li class="rule-text">✓ Mantener la proporción original ícono / texto</li>
+        <li class="rule-text">✓ Respetar el clearspace en todo momento</li>
+        <li class="rule-text">✓ Usar la versión monocromática cuando no hay opción de color</li>
+        <li class="rule-text">✓ Usar solo el ícono en contextos pequeños (favicon, sello)</li>
+      </ul>
+    </div>
+    <div class="dont-box">
+      <div class="rule-label">Incorrecto</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.7rem">
+        <li class="rule-text">✗ No rotar, inclinar ni distorsionar el logo</li>
+        <li class="rule-text">✗ No cambiar los colores por colores no aprobados</li>
+        <li class="rule-text">✗ No separar el ícono del texto excepto en usos aprobados</li>
+        <li class="rule-text">✗ No usar sobre fondos con bajo contraste o fotografías sin overlay</li>
+        <li class="rule-text">✗ No agregar sombras, degradados o efectos al logo</li>
+        <li class="rule-text">✗ No recrear el logo con otras tipografías</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     03 · PALETA DE COLORES
+══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-num">03 · PALETA DE COLORES</div>
+  <h2 class="section-title">Colores de Marca</h2>
+  <p class="section-intro">Dos colores primarios de alto contraste. La combinación navy + lima genera autoridad técnica y energía moderna — distinguible en el mercado de seguridad centroamericano.</p>
+
+  <!-- Primary colors -->
+  <div style="margin-bottom:1rem">
+    <div class="card-label" style="margin-bottom:1rem">Colores primarios</div>
+    <div class="grid-2" style="gap:1.5rem;margin-bottom:1.5rem">
+
+      <div class="color-swatch" style="background:#ceff47;aspect-ratio:auto;padding:2.5rem 2rem 1.5rem">
+        <div class="swatch-name" style="color:#0b1d35">Lima Metrik</div>
+        <div class="swatch-hex" style="color:#0b1d3599">#CEFF47</div>
+        <div class="swatch-role" style="color:#0b1d3566">RGB 206 · 255 · 71 &nbsp;·&nbsp; CMYK 19 · 0 · 72 · 0</div>
+        <div class="swatch-role" style="color:#0b1d3566">Pantone 381 C (aprox)</div>
+      </div>
+
+      <div class="color-swatch" style="background:#0b1d35;border-color:#1a3d5c;aspect-ratio:auto;padding:2.5rem 2rem 1.5rem">
+        <div class="swatch-name" style="color:#f0f6ff">Navy Metrik</div>
+        <div class="swatch-hex" style="color:#7a9ab8">#0B1D35</div>
+        <div class="swatch-role" style="color:#7a9ab866">RGB 11 · 29 · 53 &nbsp;·&nbsp; CMYK 79 · 45 · 0 · 79</div>
+        <div class="swatch-role" style="color:#7a9ab866">Pantone 296 C (aprox)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Secondary palette -->
+  <div class="card-label" style="margin-bottom:1rem">Colores secundarios y funcionales</div>
+  <div class="grid-4" style="margin-bottom:3rem">
+    <div class="color-swatch" style="background:#f0f6ff;aspect-ratio:auto;padding:1.5rem">
+      <div class="swatch-name" style="color:#0b1d35;font-size:0.68rem">Blanco Frio</div>
+      <div class="swatch-hex" style="color:#0b1d3580;font-size:0.6rem">#F0F6FF</div>
+      <div class="swatch-role" style="color:#0b1d3550;font-size:0.6rem">Texto principal sobre navy</div>
+    </div>
+    <div class="color-swatch" style="background:#7a9ab8;aspect-ratio:auto;padding:1.5rem">
+      <div class="swatch-name" style="color:#0b1d35;font-size:0.68rem">Azul Texto</div>
+      <div class="swatch-hex" style="color:#0b1d3580;font-size:0.6rem">#7A9AB8</div>
+      <div class="swatch-role" style="color:#0b1d3550;font-size:0.6rem">Texto secundario / labels</div>
+    </div>
+    <div class="color-swatch" style="background:#ff4757;aspect-ratio:auto;padding:1.5rem">
+      <div class="swatch-name" style="color:#fff;font-size:0.68rem">Rojo Alerta</div>
+      <div class="swatch-hex" style="color:#ffffff80;font-size:0.6rem">#FF4757</div>
+      <div class="swatch-role" style="color:#ffffff50;font-size:0.6rem">Indicadores de riesgo alto</div>
+    </div>
+    <div class="color-swatch" style="background:#ffa502;aspect-ratio:auto;padding:1.5rem">
+      <div class="swatch-name" style="color:#0b1d35;font-size:0.68rem">Ámbar</div>
+      <div class="swatch-hex" style="color:#0b1d3580;font-size:0.6rem">#FFA502</div>
+      <div class="swatch-role" style="color:#0b1d3550;font-size:0.6rem">Indicadores de riesgo medio</div>
+    </div>
+  </div>
+
+  <!-- Contrast ratios -->
+  <div class="card">
+    <div class="card-label">Relaciones de contraste (WCAG 2.1)</div>
+    <table class="size-table">
+      <thead>
+        <tr><th>Combinación</th><th>Ratio de contraste</th><th>WCAG AA (texto normal)</th><th>WCAG AAA</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Lima #CEFF47 sobre Navy #0B1D35</td><td>12.4 : 1</td><td style="color:#ceff47">✓ Pasa</td><td style="color:#ceff47">✓ Pasa</td></tr>
+        <tr><td>Blanco #F0F6FF sobre Navy #0B1D35</td><td>14.8 : 1</td><td style="color:#ceff47">✓ Pasa</td><td style="color:#ceff47">✓ Pasa</td></tr>
+        <tr><td>Navy #0B1D35 sobre Lima #CEFF47</td><td>12.4 : 1</td><td style="color:#ceff47">✓ Pasa</td><td style="color:#ceff47">✓ Pasa</td></tr>
+        <tr><td>Azul texto #7A9AB8 sobre Navy #0B1D35</td><td>4.6 : 1</td><td style="color:#ceff47">✓ Pasa</td><td style="color:#ffa502">✗ No pasa</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     04 · TIPOGRAFÍA
+══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-num">04 · TIPOGRAFÍA</div>
+  <h2 class="section-title">Sistema Tipográfico</h2>
+  <p class="section-intro">Tres tipografías con roles distintos. Bebas Neue para impacto display, DM Sans para legibilidad en cuerpo, DM Mono para datos técnicos y etiquetas.</p>
+
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="type-row" style="padding: 2rem 2.5rem">
+      <div class="type-meta">
+        <strong>Bebas Neue</strong>
+        Display · Títulos<br/>
+        Google Fonts<br/>
+        Gratis / Open Source
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;letter-spacing:0.06em;color:#f0f6ff;line-height:1">
+          METRIK GUARD
+        </div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.12em;color:#7a9ab8;margin-top:0.3rem">
+          INTELIGENCIA EN SEGURIDAD
+        </div>
+      </div>
+      <div class="type-usage">
+        Logotipo · H1 · H2<br/>
+        Etiquetas display<br/>
+        CTAs destacados
+      </div>
+    </div>
+
+    <div class="type-row" style="padding: 2rem 2.5rem">
+      <div class="type-meta">
+        <strong>DM Sans</strong>
+        Body · UI<br/>
+        Google Fonts<br/>
+        Gratis / Open Source
+      </div>
+      <div>
+        <div style="font-family:'DM Sans',sans-serif;font-weight:300;font-size:1.1rem;color:#d4e4f2;line-height:1.7;max-width:480px">
+          Auditamos, medimos y optimizamos su sistema de seguridad con KPIs reales — sin reemplazar a sus proveedores actuales.
+        </div>
+        <div style="font-family:'DM Sans',sans-serif;font-weight:500;font-size:1rem;color:#f0f6ff;margin-top:0.5rem">
+          Seguridad medible. Controlada.
+        </div>
+      </div>
+      <div class="type-usage">
+        Cuerpo de texto<br/>
+        Párrafos<br/>
+        UI elements<br/>
+        300 · 400 · 500
+      </div>
+    </div>
+
+    <div class="type-row" style="padding: 2rem 2.5rem;border-bottom:none">
+      <div class="type-meta">
+        <strong>DM Mono</strong>
+        Técnica · Datos<br/>
+        Google Fonts<br/>
+        Gratis / Open Source
+      </div>
+      <div>
+        <div style="font-family:'DM Mono',monospace;font-size:0.95rem;letter-spacing:0.1em;color:#ceff47;line-height:1.8">
+          KPI_001 · RONDAS_CUMPLIMIENTO<br/>
+          <span style="color:#7a9ab8">01 · DIAGNÓSTICO INTEGRAL · ₡ 850,000</span><br/>
+          <span style="color:#d4e4f2">hola@metrikguard.com · v1.0.2026</span>
+        </div>
+      </div>
+      <div class="type-usage">
+        Labels / tags<br/>
+        Números · KPIs<br/>
+        Metadatos · Código<br/>
+        300 · 400
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- Type scale -->
+  <div class="card-label" style="margin-bottom:1.5rem">Escala tipográfica</div>
+  <table class="size-table" style="margin-bottom:0">
+    <thead>
+      <tr><th>Nivel</th><th>Fuente</th><th>Tamaño</th><th>Peso</th><th>Uso</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Display XL</td><td>Bebas Neue</td><td>clamp(4rem, 8vw, 8rem)</td><td>400</td><td>Hero principal</td></tr>
+      <tr><td>H1</td><td>Bebas Neue</td><td>clamp(2.5rem, 5vw, 4.5rem)</td><td>400</td><td>Títulos de sección</td></tr>
+      <tr><td>H2</td><td>Bebas Neue</td><td>clamp(1.8rem, 3vw, 2.8rem)</td><td>400</td><td>Subtítulos</td></tr>
+      <tr><td>Body L</td><td>DM Sans</td><td>1.1rem</td><td>300</td><td>Párrafos principales</td></tr>
+      <tr><td>Body M</td><td>DM Sans</td><td>0.95rem</td><td>300–400</td><td>Contenido general</td></tr>
+      <tr><td>Label</td><td>DM Mono</td><td>0.7rem</td><td>400</td><td>Etiquetas, tags, KPIs</td></tr>
+      <tr><td>Caption</td><td>DM Mono</td><td>0.62rem</td><td>300</td><td>Metadatos, notas</td></tr>
+    </tbody>
+  </table>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     05 · VOZ Y TONO
+══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-num">05 · VOZ Y TONO</div>
+  <h2 class="section-title">Voz de Marca</h2>
+  <p class="section-intro">Metrik Guard habla como un consultor técnico de confianza. Directo, sin rodeos, basado en datos. Nunca agresivo ni vendedor. Siempre orientado a resultados medibles.</p>
+
+  <div class="tone-grid">
+    <div class="tone-pill">
+      <h4>Directo</h4>
+      <p>Vamos al punto. Sin introduciones largas. Los datos hablan por sí solos. Usamos frases cortas y activas.</p>
+    </div>
+    <div class="tone-pill">
+      <h4>Técnico sin ser frío</h4>
+      <p>Usamos terminología de seguridad y gestión, pero siempre explicamos el impacto en términos de negocio.</p>
+    </div>
+    <div class="tone-pill">
+      <h4>Orientado a resultados</h4>
+      <p>Cada afirmación se ancla en métricas. "–40% de incidentes" en lugar de "mejoramos la seguridad."</p>
+    </div>
+    <div class="tone-pill">
+      <h4>Confiable</h4>
+      <p>No prometemos lo que no podemos medir. Somos honestos sobre el alcance y los tiempos reales.</p>
+    </div>
+    <div class="tone-pill">
+      <h4>Independiente</h4>
+      <p>No somos el proveedor de seguridad. Somos el auditor. Ese conflicto cero de interés define todo.</p>
+    </div>
+    <div class="tone-pill">
+      <h4>Local y cercano</h4>
+      <p>Conocemos el mercado costarricense. Hablamos el idioma de condominios y PYMEs, no de Fortune 500.</p>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- Taglines -->
+  <div class="card-label" style="margin-bottom:1.2rem">Taglines aprobados</div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="tagline-row">
+      <div class="tagline-text">SEGURIDAD MEDIBLE. CONTROLADA.</div>
+      <div class="tagline-use">Hero principal · Uso primario</div>
+    </div>
+    <div class="tagline-row">
+      <div class="tagline-text">INTELIGENCIA EN SEGURIDAD</div>
+      <div class="tagline-use">Subtítulo del logo · Tagline corporativo</div>
+    </div>
+    <div class="tagline-row">
+      <div class="tagline-text">LO QUE NO SE MIDE, NO SE CONTROLA.</div>
+      <div class="tagline-use">Materiales de venta · Presentaciones</div>
+    </div>
+    <div class="tagline-row">
+      <div class="tagline-text">SU PMO EXTERNA DE SEGURIDAD.</div>
+      <div class="tagline-use">Posicionamiento B2B · Propuestas</div>
+    </div>
+    <div class="tagline-row" style="border-bottom:none">
+      <div class="tagline-text">VISIBILIDAD · CONTROL · MEJORA CONTINUA</div>
+      <div class="tagline-use">Propuesta de valor · Tríptico de servicios</div>
+    </div>
+  </div>
+
+  <hr class="divider"/>
+
+  <!-- Writing do/don't -->
+  <div class="card-label" style="margin-bottom:1.2rem">Ejemplos de redacción</div>
+  <div class="do-dont">
+    <div class="do-box">
+      <div class="rule-label">Correcto</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.8rem">
+        <li class="rule-text">✓ "Reducimos incidentes de seguridad en un 40% en los primeros 90 días."</li>
+        <li class="rule-text">✓ "Auditamos a su proveedor actual. No lo reemplazamos."</li>
+        <li class="rule-text">✓ "Cada mes recibe un informe ejecutivo con KPIs reales."</li>
+        <li class="rule-text">✓ "Nuestro diagnóstico identifica las brechas en 5 a 10 días hábiles."</li>
+      </ul>
+    </div>
+    <div class="dont-box">
+      <div class="rule-label">Incorrecto</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.8rem">
+        <li class="rule-text">✗ "Somos los mejores en seguridad de Costa Rica." (sin datos)</li>
+        <li class="rule-text">✗ "¡Proteja su negocio hoy!" (lenguaje de venta agresivo)</li>
+        <li class="rule-text">✗ "Tenemos soluciones innovadoras de vanguardia." (genérico)</li>
+        <li class="rule-text">✗ "Garantizamos cero incidentes." (promesa no medible)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     06 · APLICACIONES
+══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-num">06 · APLICACIONES</div>
+  <h2 class="section-title">Aplicaciones de Marca</h2>
+  <p class="section-intro">Cómo y dónde se aplica la identidad en materiales físicos y digitales.</p>
+
+  <div class="grid-2" style="gap:1.5rem;margin-bottom:3rem">
+
+    <div class="card">
+      <div class="card-label">Digital</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem">
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Sitio web</strong> — fondo navy, acento lima</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Firma de email</strong> — logo horizontal sobre blanco, navy + lima</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Presentaciones</strong> — slides en navy con texto blanco y lima</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">LinkedIn / RRSS</strong> — avatar: ícono solo sobre navy</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Reportes PDF</strong> — portada navy, interiores blancos con acento lima</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">WhatsApp Business</strong> — ícono solo como avatar</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Impreso</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.6rem">
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Tarjetas de presentación</strong> — fondo navy, texto blanco, logo lima</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Propuestas comerciales</strong> — portada navy impresa, interiores blancos</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Papelería</strong> — membrete en navy con franja lima inferior</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Folder corporativo</strong> — navy con logo estampado en relieve o lima</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Camisa / uniforme</strong> — bordado blanco sobre navy o lima</li>
+        <li style="font-size:0.9rem;color:var(--text)">→ <strong style="color:var(--white)">Sellos / stickers</strong> — ícono solo monocromático</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Contact info spec -->
+  <div class="card">
+    <div class="card-label">Información de contacto oficial</div>
+    <table class="size-table">
+      <thead>
+        <tr><th>Campo</th><th>Valor</th><th>Formato de uso</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Nombre legal</td><td>Metrik Guard</td><td>Siempre con mayúscula en M y G</td></tr>
+        <tr><td>Sitio web</td><td>www.metrikguard.com</td><td>Minúsculas, sin https:// en material impreso</td></tr>
+        <tr><td>Email</td><td>hola@metrikguard.com</td><td>Minúsculas siempre</td></tr>
+        <tr><td>País</td><td>Costa Rica</td><td>No abreviar</td></tr>
+        <tr><td>Tagline oficial</td><td>Inteligencia en Seguridad</td><td>Capitalización de título</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     07 · ARCHIVOS DE MARCA
+══════════════════════════════════════════════ -->
+<section class="section">
+  <div class="section-num">07 · ARCHIVOS</div>
+  <h2 class="section-title">Archivos de Marca</h2>
+  <p class="section-intro">Los siguientes archivos forman el kit de marca oficial. Siempre use los archivos originales — nunca capturas de pantalla ni versiones recortadas.</p>
+
+  <div class="card">
+    <div class="card-label">Archivos incluidos en este paquete</div>
+    <table class="size-table">
+      <thead>
+        <tr><th>Archivo</th><th>Formato</th><th>Uso</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>metrikguard-logo-watchtower.svg</td><td>SVG vectorial</td><td>Logo principal — todo uso digital e impreso</td></tr>
+        <tr><td>metrikguard-website.html</td><td>HTML</td><td>Página principal del sitio web</td></tr>
+        <tr><td>servicios.html</td><td>HTML</td><td>Página de servicios</td></tr>
+        <tr><td>proceso.html</td><td>HTML</td><td>Página de proceso de trabajo</td></tr>
+        <tr><td>kpis.html</td><td>HTML</td><td>Dashboard de métricas y KPIs</td></tr>
+        <tr><td>clientes.html</td><td>HTML</td><td>Segmentos de clientes</td></tr>
+        <tr><td>brand-guide.html</td><td>HTML</td><td>Este documento</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="divider"/>
+
+  <div class="do-dont">
+    <div class="card">
+      <div class="card-label">Fuentes Google (gratuitas)</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem">
+        <li style="font-size:0.88rem;color:var(--text)">→ <a href="https://fonts.google.com/specimen/Bebas+Neue" style="color:var(--accent);text-decoration:none">Bebas Neue</a> — fonts.google.com</li>
+        <li style="font-size:0.88rem;color:var(--text)">→ <a href="https://fonts.google.com/specimen/DM+Sans" style="color:var(--accent);text-decoration:none">DM Sans</a> — fonts.google.com</li>
+        <li style="font-size:0.88rem;color:var(--text)">→ <a href="https://fonts.google.com/specimen/DM+Mono" style="color:var(--accent);text-decoration:none">DM Mono</a> — fonts.google.com</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-label">Colores para uso inmediato</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0.5rem">
+        <li style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--accent)">Lima Metrik &nbsp;&nbsp; #CEFF47</li>
+        <li style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text)">Navy Metrik &nbsp;&nbsp; #0B1D35</li>
+        <li style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text-dim)">Blanco Frío &nbsp;&nbsp; #F0F6FF</li>
+        <li style="font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text-dim)">Azul Texto &nbsp;&nbsp;&nbsp; #7A9AB8</li>
+        <li style="font-family:'DM Mono',monospace;font-size:0.78rem;color:#ff4757">Rojo Alerta &nbsp;&nbsp; #FF4757</li>
+        <li style="font-family:'DM Mono',monospace;font-size:0.78rem;color:#ffa502">Ámbar &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #FFA502</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-copy">© 2026 Metrik Guard · Todos los derechos reservados · hola@metrikguard.com</div>
+  <div class="footer-confidential">Documento confidencial · Uso interno</div>
+</footer>
+
+</div>
+</body>
+</html>
