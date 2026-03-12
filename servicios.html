@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Servicios · Metrik Guard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0b1d35;--ink-2:#0e2642;--ink-3:#133055;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--accent-2:#3a9fff;--danger:#ff4757;--warn:#ffa502;--white:#f0f6ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(206,255,71,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(206,255,71,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:rgba(11,29,53,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.12em;color:var(--white);text-decoration:none;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.nav-cta{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.6rem 1.4rem;text-decoration:none;transition:opacity .2s;}
+.nav-cta:hover{opacity:.85;}
+
+/* HERO */
+.page-hero{position:relative;padding:10rem 4rem 6rem;min-height:55vh;display:flex;flex-direction:column;justify-content:flex-end;border-bottom:1px solid var(--border);overflow:hidden;z-index:1;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(206,255,71,.07) 0%,transparent 70%);pointer-events:none;}
+.breadcrumb{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;}
+.breadcrumb a{color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:var(--accent);}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,8vw,8rem);line-height:.9;letter-spacing:.02em;color:var(--white);margin-bottom:2rem;}
+.page-title em{font-style:normal;color:var(--accent);}
+.page-intro{max-width:600px;color:var(--text-dim);font-size:1.1rem;line-height:1.85;}
+.hero-scroll-hint{position:absolute;bottom:2.5rem;right:4rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);display:flex;align-items:center;gap:.6rem;}
+.hero-scroll-hint::after{content:'';display:block;width:40px;height:1px;background:var(--text-dim);}
+
+/* SERVICE TABS NAV */
+.service-nav{position:sticky;top:72px;z-index:90;background:var(--ink-2);border-bottom:1px solid var(--border);display:flex;gap:0;overflow-x:auto;}
+.s-tab{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);padding:1.2rem 2.5rem;border:none;background:transparent;cursor:pointer;text-decoration:none;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;white-space:nowrap;}
+.s-tab:hover{color:var(--text);}
+.s-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+/* SERVICE SECTIONS */
+.svc-section{position:relative;z-index:1;padding:7rem 4rem;border-bottom:1px solid var(--border);}
+.svc-section:nth-child(even){background:var(--ink-2);}
+
+.svc-header{display:grid;grid-template-columns:1fr 1fr;gap:4rem;margin-bottom:5rem;align-items:start;}
+.svc-num{font-family:'Bebas Neue',sans-serif;font-size:9rem;line-height:1;color:rgba(206,255,71,.08);position:absolute;top:3rem;right:4rem;pointer-events:none;letter-spacing:.02em;}
+.label{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem;}
+.label::before{content:'';display:block;width:24px;height:1px;background:var(--accent);}
+.svc-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,4vw,4rem);line-height:.95;letter-spacing:.03em;color:var(--white);margin-bottom:1.5rem;}
+.svc-desc{color:var(--text-dim);font-size:1rem;line-height:1.9;margin-bottom:2rem;}
+.svc-tags{display:flex;flex-wrap:wrap;gap:.6rem;}
+.tag{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);border:1px solid var(--border);padding:.3rem .8rem;}
+.tag.a{color:var(--accent);border-color:rgba(206,255,71,.3);background:rgba(206,255,71,.05);}
+
+/* DELIVERABLES */
+.svc-deliverables{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:4rem;}
+.deliv-item{background:var(--ink);padding:2.5rem 2rem;transition:background .3s;}
+.deliv-item:hover{background:rgba(206,255,71,.03);}
+.deliv-icon{font-size:1.6rem;margin-bottom:1rem;display:block;}
+.deliv-item h4{font-family:'DM Sans',sans-serif;font-weight:500;font-size:.95rem;color:var(--white);margin-bottom:.5rem;}
+.deliv-item p{font-size:.85rem;color:var(--text-dim);line-height:1.7;}
+
+/* INCLUDES LIST */
+.includes-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);}
+.inc-col{padding:3rem;}
+.inc-col:first-child{border-right:1px solid var(--border);}
+.inc-col h4{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;padding-bottom:.8rem;border-bottom:1px solid var(--border);}
+.inc-list{list-style:none;display:flex;flex-direction:column;gap:.7rem;}
+.inc-list li{font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;}
+.inc-list li::before{content:'✓';position:absolute;left:0;color:var(--accent);font-size:.8rem;}
+.inc-list li.no{color:var(--text-dim);}
+.inc-list li.no::before{content:'—';color:var(--border);}
+
+/* PRICING TIERS */
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:4rem;}
+.tier{background:var(--ink-2);padding:2.5rem 2rem;position:relative;transition:background .3s;}
+.tier.featured{background:var(--ink-3);}
+.tier.featured::before{content:'RECOMENDADO';position:absolute;top:-1px;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.15em;background:#ceff47;color:#0b1d35;padding:.25rem .8rem;}
+.tier-name{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;}
+.tier-price{font-family:'Bebas Neue',sans-serif;font-size:3rem;line-height:1;color:var(--white);letter-spacing:.02em;margin-bottom:.4rem;}
+.tier-price sub{font-size:1rem;font-family:'DM Sans',sans-serif;font-weight:300;color:var(--text-dim);vertical-align:baseline;}
+.tier-note{font-size:.8rem;color:var(--text-dim);margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid var(--border);}
+.tier-features{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
+.tier-features li{font-size:.85rem;color:var(--text-dim);padding-left:1.3rem;position:relative;}
+.tier-features li::before{content:'→';position:absolute;left:0;color:var(--accent);}
+
+/* FAQ */
+.faq{margin-top:4rem;}
+.faq-title{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;}
+.faq-item{border-top:1px solid var(--border);}
+.faq-q{width:100%;background:transparent;border:none;text-align:left;padding:1.5rem 0;font-family:'DM Sans',sans-serif;font-size:1rem;font-weight:400;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:2rem;}
+.faq-q:hover{color:var(--white);}
+.faq-icon{font-family:'DM Mono',monospace;font-size:1.2rem;color:var(--accent);flex-shrink:0;transition:transform .3s;}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.faq-a.open{max-height:300px;}
+.faq-a p{padding:0 0 1.5rem;font-size:.92rem;color:var(--text-dim);line-height:1.85;max-width:700px;}
+
+/* CTA STRIP */
+.cta-strip{position:relative;z-index:1;padding:5rem 4rem;background:rgba(206,255,71,.04);border-top:1px solid rgba(206,255,71,.15);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:3rem;flex-wrap:wrap;}
+.cta-strip h3{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:.03em;max-width:500px;line-height:1.05;}
+.cta-strip p{color:var(--text-dim);font-size:.95rem;max-width:400px;margin-top:.5rem;}
+.cta-btns{display:flex;gap:1rem;flex-shrink:0;}
+.btn-p{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);border:none;padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:opacity .2s,transform .2s;display:inline-block;}
+.btn-p:hover{opacity:.88;transform:translateY(-1px);}
+.btn-g{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block;}
+.btn-g:hover{border-color:var(--accent);color:var(--accent);}
+
+footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;}
+.footer-logo span{color:var(--accent);}
+.footer-info{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;}
+.footer-links{display:flex;gap:2rem;list-style:none;}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--accent);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp .8s ease forwards;}
+.fu-1{animation-delay:.1s;opacity:0;}
+.fu-2{animation-delay:.25s;opacity:0;}
+.fu-3{animation-delay:.4s;opacity:0;}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 2rem;}
+  .nav-links{display:none;}
+  .page-hero{padding:8rem 2rem 4rem;}
+  .svc-section{padding:5rem 2rem;}
+  .svc-header{grid-template-columns:1fr;}
+  .svc-deliverables{grid-template-columns:1fr;}
+  .includes-grid{grid-template-columns:1fr;}
+  .inc-col:first-child{border-right:none;border-bottom:1px solid var(--border);}
+  .tiers{grid-template-columns:1fr;}
+  .cta-strip{flex-direction:column;padding:4rem 2rem;}
+  .svc-num{display:none;}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html" style="display:flex;align-items:center"><svg width="28" height="44" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <ul class="nav-links">
+    <li><a href="servicios.html" class="active">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#contacto">Solicitar diagnóstico</a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>Servicios</span></div>
+  <h1 class="page-title fu fu-2">NUESTROS<br><em>SERVICIOS</em></h1>
+  <p class="page-intro fu fu-3">Tres servicios diseñados para trabajar en secuencia o de forma independiente. Cada uno entrega valor medible desde la primera semana.</p>
+  <div class="hero-scroll-hint">Explorar servicios</div>
+</div>
+
+<!-- SERVICE TABS -->
+<div class="service-nav">
+  <a class="s-tab active" href="#s01">01 · Diagnóstico</a>
+  <a class="s-tab" href="#s02">02 · Security PMO</a>
+  <a class="s-tab" href="#s03">03 · Protocolos</a>
+</div>
+
+<!-- ────────────────── SERVICE 01 ────────────────── -->
+<section class="svc-section" id="s01">
+  <div class="svc-num">01</div>
+
+  <div class="svc-header">
+    <div>
+      <div class="label">Servicio 01</div>
+      <h2 class="svc-title">Diagnóstico Integral de Seguridad</h2>
+      <p class="svc-desc">El punto de partida de cualquier sistema de seguridad bien gestionado. En 5 a 10 días hábiles, realizamos una evaluación completa de su operación: inspeccionamos instalaciones, revisamos documentación, entrevistamos al personal clave y analizamos el historial de incidentes. El resultado es un mapa claro de dónde está su riesgo y qué hacer al respecto — en orden de prioridad.</p>
+      <div class="svc-tags">
+        <span class="tag a">Tarifa fija por proyecto</span>
+        <span class="tag">5–10 días hábiles</span>
+        <span class="tag">Condominios y PYMEs</span>
+        <span class="tag">Presencial + documental</span>
+      </div>
+    </div>
+    <div>
+      <div style="background:var(--ink-2);border:1px solid var(--border);padding:2.5rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;">¿Cuándo es urgente?</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:1rem;">
+          <li style="font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;"><span style="position:absolute;left:0;color:var(--danger);">!</span> Tuvo un incidente grave sin protocolo de respuesta</li>
+          <li style="font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;"><span style="position:absolute;left:0;color:var(--warn);">!</span> Cambió de proveedor y no tiene baseline</li>
+          <li style="font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;"><span style="position:absolute;left:0;color:var(--warn);">!</span> Su junta pide un informe de seguridad y no tiene nada</li>
+          <li style="font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">→</span> Quiere iniciar el PMO con datos reales</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELIVERABLES -->
+  <div style="font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;">Entregables incluidos</div>
+  <div class="svc-deliverables">
+    <div class="deliv-item">
+      <span class="deliv-icon">🗺️</span>
+      <h4>Mapa de Riesgos</h4>
+      <p>Visualización de vulnerabilidades priorizadas por probabilidad e impacto. Semáforo verde/amarillo/rojo por área.</p>
+    </div>
+    <div class="deliv-item">
+      <span class="deliv-icon">⚡</span>
+      <h4>Quick Wins (acción inmediata)</h4>
+      <p>Lista de mejoras ejecutables en menos de 2 semanas sin inversión adicional. Resultados visibles de inmediato.</p>
+    </div>
+    <div class="deliv-item">
+      <span class="deliv-icon">🗓️</span>
+      <h4>Roadmap 0–90 días</h4>
+      <p>Plan de acción priorizado con responsables, plazos y criterios de éxito para los primeros tres meses.</p>
+    </div>
+    <div class="deliv-item">
+      <span class="deliv-icon">📋</span>
+      <h4>Informe Ejecutivo</h4>
+      <p>Documento listo para presentar ante junta directiva: hallazgos, riesgos, recomendaciones y presupuesto estimado.</p>
+    </div>
+    <div class="deliv-item">
+      <span class="deliv-icon">📊</span>
+      <h4>Baseline de KPIs</h4>
+      <p>Establecemos las métricas de punto de partida para medir el progreso futuro del PMO mensual.</p>
+    </div>
+    <div class="deliv-item">
+      <span class="deliv-icon">🎯</span>
+      <h4>Sesión de presentación</h4>
+      <p>Presentamos los hallazgos al equipo directivo y priorizamos las acciones en conjunto.</p>
+    </div>
+  </div>
+
+  <!-- METHODOLOGY -->
+  <div class="includes-grid">
+    <div class="inc-col">
+      <h4>Alcance del diagnóstico</h4>
+      <ul class="inc-list">
+        <li>Inspección física de instalaciones y puntos de control</li>
+        <li>Evaluación de controles de acceso (manual y tecnológico)</li>
+        <li>Revisión de bitácoras e historial de incidentes</li>
+        <li>Entrevistas con guardas, supervisores y administración</li>
+        <li>Análisis de contratos con proveedores actuales</li>
+        <li>Evaluación de protocolos existentes (visitas, emergencias)</li>
+        <li>Revisión de cobertura de cámaras y alarmas</li>
+        <li>Evaluación de iluminación y barreras físicas</li>
+      </ul>
+    </div>
+    <div class="inc-col">
+      <h4>Lo que NO incluye</h4>
+      <ul class="inc-list">
+        <li class="no">Instalación o modificación de hardware</li>
+        <li class="no">Supervisión mensual continua (→ PMO)</li>
+        <li class="no">Capacitación de personal (→ Servicio 03)</li>
+        <li class="no">Representación legal ante incidentes</li>
+        <li class="no">Monitoreo en tiempo real</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="faq" style="margin-top:4rem;">
+    <div class="faq-title">Preguntas frecuentes · Diagnóstico</div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿El diagnóstico reemplaza a mi proveedor actual? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>No. Somos independientes de su proveedor de guardas o cámaras. El diagnóstico evalúa si su proveedor está rindiendo bien, identifica brechas y le da datos para tomar decisiones — incluyendo si vale la pena continuar con él o no.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto tiempo toma en sitio? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>La visita de campo toma entre 4 y 8 horas dependiendo del tamaño de la instalación. Luego tenemos un período de análisis de 3 a 5 días para preparar el informe completo.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿El diagnóstico es obligatorio para contratar el PMO? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Es altamente recomendado. El diagnóstico establece el baseline sin el cual el PMO no tiene punto de referencia para medir mejoras. Sin embargo, podemos discutir alternativas si ya tiene datos históricos disponibles.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── SERVICE 02 ────────────────── -->
+<section class="svc-section" id="s02">
+  <div class="svc-num">02</div>
+
+  <div class="svc-header">
+    <div>
+      <div class="label">Servicio 02 · Core</div>
+      <h2 class="svc-title">Security PMO<br>Auditoría Continua</h2>
+      <p class="svc-desc">La columna vertebral de Metrik Guard. Una Security PMO (Project Management Office) externa que supervisa, audita y mide el desempeño de su proveedor de seguridad mes a mes. Usted no pierde tiempo gestionando operativos — nosotros lo hacemos con datos, con independencia y con entregables listos para su junta directiva.</p>
+      <div class="svc-tags">
+        <span class="tag a">Suscripción mensual</span>
+        <span class="tag">3 niveles de servicio</span>
+        <span class="tag">Independiente del proveedor</span>
+        <span class="tag">Dashboard incluido</span>
+      </div>
+    </div>
+    <div>
+      <div style="background:rgba(206,255,71,.05);border:1px solid rgba(206,255,71,.2);padding:2.5rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;">Nuestra promesa mensual</div>
+        <p style="font-size:.95rem;color:var(--text);line-height:1.8;margin-bottom:1.5rem;">Cada mes, su junta recibe un reporte ejecutivo con métricas reales, hallazgos de auditoría y recomendaciones priorizadas. No opiniones. Datos.</p>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--white);line-height:1;">100<span style="color:var(--accent);">%</span></div>
+        <div style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);">REPORTES ENTREGADOS EN FECHA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING TIERS -->
+  <div style="font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;">Planes de servicio</div>
+  <div class="tiers">
+    <div class="tier">
+      <div class="tier-name">Básico</div>
+      <div class="tier-price">Desde <sub>consultar</sub></div>
+      <div class="tier-note">Ideal para condominios pequeños o PYMEs con bajo volumen de incidentes</div>
+      <ul class="tier-features">
+        <li>1 auditoría mensual programada</li>
+        <li>Revisión de bitácoras (remota)</li>
+        <li>Dashboard de KPIs básico</li>
+        <li>Reporte ejecutivo mensual (2 páginas)</li>
+        <li>Soporte vía email (48h)</li>
+        <li>Minuta para junta directiva</li>
+      </ul>
+    </div>
+    <div class="tier featured">
+      <div class="tier-name">Estándar</div>
+      <div class="tier-price">Desde <sub>consultar</sub></div>
+      <div class="tier-note">El más elegido. Para condominios medianos y PYMEs con operación continua</div>
+      <ul class="tier-features">
+        <li>2 auditorías mensuales (1 anunciada + 1 sorpresa)</li>
+        <li>Verificación presencial de rondas</li>
+        <li>Dashboard completo (+15 KPIs)</li>
+        <li>Reporte ejecutivo mensual (5 páginas)</li>
+        <li>Soporte prioritario (24h)</li>
+        <li>Revisión de SLAs del proveedor</li>
+        <li>Recomendaciones de acciones correctivas</li>
+        <li>Soporte en licitaciones</li>
+      </ul>
+    </div>
+    <div class="tier">
+      <div class="tier-name">Avanzado</div>
+      <div class="tier-price">Desde <sub>consultar</sub></div>
+      <div class="tier-note">Para portafolios de múltiples propiedades o empresas con alta exposición al riesgo</div>
+      <ul class="tier-features">
+        <li>Auditorías ilimitadas</li>
+        <li>Supervisión multi-sitio</li>
+        <li>Dashboard en tiempo real</li>
+        <li>Reporte semanal + mensual</li>
+        <li>Soporte 24/7 para incidentes</li>
+        <li>Gestor de cuenta dedicado</li>
+        <li>Capacitación trimestral incluida</li>
+        <li>Roadmap de inversión anual</li>
+        <li>Soporte completo en licitaciones</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="faq" style="margin-top:4rem;">
+    <div class="faq-title">Preguntas frecuentes · PMO</div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Mi proveedor de guardas sabe que los auditamos? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Sí. La transparencia es parte de nuestro modelo. Le informamos al proveedor de nuestra existencia como capa de auditoría. Esto solo en sí mejora el desempeño. Las auditorías sorpresa son adicionales y sin previo aviso al operativo.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa si encontramos problemas graves con el proveedor? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Documentamos los hallazgos, los clasificamos por severidad y le damos recomendaciones claras. Si la situación lo amerita, le apoyamos en el proceso de licitación para buscar un nuevo proveedor con mejores condiciones.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Puedo contratar el PMO sin el diagnóstico previo? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>En casos específicos sí, aunque siempre realizamos una evaluación inicial rápida (versión reducida del diagnóstico) antes de iniciar el PMO. Necesitamos conocer el punto de partida para que las métricas sean significativas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────── SERVICE 03 ────────────────── -->
+<section class="svc-section" id="s03">
+  <div class="svc-num">03</div>
+
+  <div class="svc-header">
+    <div>
+      <div class="label">Servicio 03 · Complementario</div>
+      <h2 class="svc-title">Protocolos y<br>Capacitación</h2>
+      <p class="svc-desc">Un buen sistema de seguridad necesita protocolos escritos, claros y practicados. Diseñamos los procedimientos operativos para su contexto específico — no plantillas genéricas. Luego capacitamos al personal y ejecutamos simulacros para asegurarnos de que los protocolos se aplican en la vida real.</p>
+      <div class="svc-tags">
+        <span class="tag">Proyecto complementario</span>
+        <span class="tag">Presencial</span>
+        <span class="tag">Manuales incluidos</span>
+        <span class="tag">Simulacros</span>
+      </div>
+    </div>
+    <div>
+      <div style="background:var(--ink-2);border:1px solid var(--border);padding:2.5rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;">Protocolos estándar que diseñamos</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:.8rem;">
+          <li style="display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:var(--text);"><span style="color:var(--accent);font-size:.75rem;">→</span>Control de visitas y contratistas</li>
+          <li style="display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:var(--text);"><span style="color:var(--accent);font-size:.75rem;">→</span>Manejo de paquetería y entregas</li>
+          <li style="display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:var(--text);"><span style="color:var(--accent);font-size:.75rem;">→</span>Respuesta a emergencias (incendio, robo, médica)</li>
+          <li style="display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:var(--text);"><span style="color:var(--accent);font-size:.75rem;">→</span>Gestión y documentación de incidentes</li>
+          <li style="display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:var(--text);"><span style="color:var(--accent);font-size:.75rem;">→</span>Rondas nocturnas y horarios críticos</li>
+          <li style="display:flex;align-items:center;gap:.8rem;font-size:.9rem;color:var(--text);"><span style="color:var(--accent);font-size:.75rem;">→</span>Comunicación con autoridades</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="svc-deliverables">
+    <div class="deliv-item">
+      <span class="deliv-icon">📄</span>
+      <h4>Manual de Protocolos v1</h4>
+      <p>Documento formal con todos los procedimientos, diagramas de flujo y responsables. Listo para distribuir e implementar.</p>
+    </div>
+    <div class="deliv-item">
+      <span class="deliv-icon">🎓</span>
+      <h4>Talleres de Capacitación</h4>
+      <p>Sesiones presenciales con guardas, recepcionistas y supervisores. Dinámica práctica, no teórica.</p>
+    </div>
+    <div class="deliv-item">
+      <span class="deliv-icon">🚨</span>
+      <h4>Simulacros documentados</h4>
+      <p>Ejecutamos escenarios reales y documentamos el desempeño del equipo para identificar brechas de aplicación.</p>
+    </div>
+  </div>
+
+  <div class="faq">
+    <div class="faq-title">Preguntas frecuentes · Protocolos</div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Los protocolos son genéricos o personalizados? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Completamente personalizados. Usamos como base las mejores prácticas del sector, pero los adaptamos a su infraestructura, tipo de instalación, horarios y riesgos específicos identificados en el diagnóstico.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Se puede contratar sin el diagnóstico? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Sí, aunque el diagnóstico nos permite diseñar protocolos mucho más pertinentes. Si decide no hacer el diagnóstico previo, realizamos una evaluación rápida in situ antes de iniciar el diseño de protocolos.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <div>
+    <h3>¿Listo para medir su seguridad?</h3>
+    <p>El diagnóstico es el primer paso. Conversemos 30 minutos y le explicamos exactamente qué esperar.</p>
+  </div>
+  <div class="cta-btns">
+    <a class="btn-p" href="/cdn-cgi/l/email-protection#fb9394979abb969e8f8992909c8e9a899fd5989496">Agendar diagnóstico</a>
+    <a class="btn-g" href="proceso.html">Ver proceso →</a>
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="index.html" style="display:flex;align-items:center"><svg width="20" height="32" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;opacity:0.7">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <div class="footer-info">Inteligencia en Seguridad · Costa Rica<br>© 2026 Metrik Guard. Todos los derechos reservados.</div>
+  <ul class="footer-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Smooth tab scroll
+document.querySelectorAll('.s-tab').forEach(tab=>{
+  tab.addEventListener('click',e=>{
+    document.querySelectorAll('.s-tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+// FAQ toggle
+function toggleFaq(btn){
+  const ans=btn.nextElementSibling;
+  const icon=btn.querySelector('.faq-icon');
+  const isOpen=ans.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(a=>{a.classList.remove('open');a.previousElementSibling.querySelector('.faq-icon').textContent='+';});
+  if(!isOpen){ans.classList.add('open');icon.textContent='−';}
+}
+// Active tab on scroll
+const sections=['s01','s02','s03'];
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.getBoundingClientRect().top<200)current=id;
+  });
+  docum
