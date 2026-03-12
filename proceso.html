@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Proceso · Metrik Guard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0b1d35;--ink-2:#0e2642;--ink-3:#133055;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--accent-2:#3a9fff;--danger:#ff4757;--warn:#ffa502;--white:#f0f6ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(206,255,71,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(206,255,71,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:rgba(11,29,53,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.12em;color:var(--white);text-decoration:none;}
+.nav-logo span{color:var(--accent);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.nav-cta{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.6rem 1.4rem;text-decoration:none;transition:opacity .2s;}
+.nav-cta:hover{opacity:.85;}
+
+/* HERO */
+.page-hero{position:relative;padding:10rem 4rem 6rem;min-height:55vh;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;border-bottom:1px solid var(--border);z-index:1;overflow:hidden;}
+.hero-left{}
+.hero-right{display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:.5rem;}
+.breadcrumb{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;display:flex;align-items:center;gap:.6rem;}
+.breadcrumb a{color:var(--text-dim);text-decoration:none;}
+.breadcrumb a:hover{color:var(--accent);}
+.breadcrumb span{color:var(--accent);}
+.page-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,7vw,7.5rem);line-height:.9;letter-spacing:.02em;color:var(--white);margin-bottom:1.5rem;}
+.page-title em{font-style:normal;color:var(--accent);}
+.page-intro{color:var(--text-dim);font-size:1.05rem;line-height:1.85;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 100% 50%,rgba(0,130,255,.06) 0%,transparent 70%);pointer-events:none;}
+
+/* PHASE BAR */
+.phase-bar{position:sticky;top:72px;z-index:90;background:var(--ink-2);border-bottom:1px solid var(--border);display:flex;gap:0;}
+.ph-tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:1rem;border-right:1px solid var(--border);cursor:pointer;text-decoration:none;transition:background .2s;border-bottom:3px solid transparent;}
+.ph-tab:last-child{border-right:none;}
+.ph-tab:hover{background:rgba(206,255,71,.04);}
+.ph-tab.active{border-bottom-color:var(--accent);background:rgba(206,255,71,.05);}
+.ph-days{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);}
+.ph-name{font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;color:var(--text);margin-top:.15rem;}
+.ph-tab.active .ph-days{color:var(--accent);}
+.ph-tab.active .ph-name{color:var(--white);}
+
+/* PHASE SECTIONS */
+.phase{position:relative;z-index:1;padding:7rem 4rem;border-bottom:1px solid var(--border);}
+.phase:nth-child(even){background:var(--ink-2);}
+
+.phase-head{display:flex;align-items:baseline;gap:2rem;margin-bottom:4rem;}
+.phase-num{font-family:'Bebas Neue',sans-serif;font-size:7rem;line-height:1;color:rgba(206,255,71,.1);letter-spacing:.02em;flex-shrink:0;}
+.phase-meta{}
+.ph-period{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem;}
+.ph-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4vw,3.8rem);line-height:.95;letter-spacing:.03em;color:var(--white);}
+.ph-obj{font-size:1rem;color:var(--text-dim);margin-top:.8rem;max-width:600px;line-height:1.8;}
+
+/* TIMELINE STEPS */
+.timeline{display:flex;flex-direction:column;gap:0;position:relative;padding-left:2rem;margin-bottom:4rem;}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--border);}
+.t-step{position:relative;padding:2rem 0 2rem 3rem;}
+.t-step::before{content:'';position:absolute;left:-5px;top:2.4rem;width:10px;height:10px;border-radius:50%;background:var(--border);border:2px solid var(--border);transition:background .3s,border-color .3s;}
+.t-step:hover::before{background:var(--accent);border-color:var(--accent);}
+.t-step-head{display:flex;align-items:center;gap:1rem;margin-bottom:.6rem;}
+.t-day{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:rgba(206,255,71,.08);border:1px solid rgba(206,255,71,.2);padding:.2rem .6rem;}
+.t-step h3{font-family:'DM Sans',sans-serif;font-weight:500;font-size:1.05rem;color:var(--white);}
+.t-step p{font-size:.9rem;color:var(--text-dim);line-height:1.8;max-width:600px;}
+
+/* DELIVERABLES ROW */
+.deliv-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);}
+.d-card{background:var(--ink);padding:1.8rem 1.5rem;transition:background .3s;}
+.d-card:hover{background:rgba(206,255,71,.03);}
+.d-card .d-type{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.6rem;}
+.d-card h4{font-size:.95rem;font-weight:500;color:var(--white);margin-bottom:.4rem;}
+.d-card p{font-size:.82rem;color:var(--text-dim);line-height:1.6;}
+
+/* KPI INDICATORS */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-top:1px;}
+.kpi-card{background:var(--ink-2);padding:1.5rem;}
+.kpi-card .k-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.4rem;}
+.kpi-card .k-val{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--accent);letter-spacing:.02em;line-height:1;}
+
+/* RESPONSIBILITY MATRIX */
+.matrix{border:1px solid var(--border);margin-top:4rem;overflow:hidden;}
+.matrix-head{display:grid;grid-template-columns:2fr 1fr 1fr;background:var(--ink-2);border-bottom:1px solid var(--border);}
+.mh-cell{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.13em;text-transform:uppercase;color:var(--text-dim);padding:1rem 1.5rem;}
+.matrix-row{display:grid;grid-template-columns:2fr 1fr 1fr;border-bottom:1px solid var(--border);transition:background .2s;}
+.matrix-row:last-child{border-bottom:none;}
+.matrix-row:hover{background:rgba(206,255,71,.03);}
+.mc{padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);display:flex;align-items:center;}
+.mc.accent{color:var(--accent);}
+.mc.dim{color:var(--text-dim);}
+.dot-mg{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:.5rem;}
+.dot-cl{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent-2);margin-right:.5rem;}
+
+/* BUTTON */
+.btn-p{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);border:none;padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:opacity .2s,transform .2s;display:inline-block;}
+.btn-p:hover{opacity:.88;transform:translateY(-1px);}
+.btn-g{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block;}
+.btn-g:hover{border-color:var(--accent);color:var(--accent);}
+
+.cta-strip{position:relative;z-index:1;padding:5rem 4rem;background:rgba(206,255,71,.04);border-top:1px solid rgba(206,255,71,.15);display:flex;align-items:center;justify-content:space-between;gap:3rem;flex-wrap:wrap;}
+.cta-strip h3{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:.03em;}
+.cta-strip p{color:var(--text-dim);font-size:.95rem;margin-top:.5rem;}
+.cta-btns{display:flex;gap:1rem;}
+
+footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;}
+.footer-logo span{color:var(--accent);}
+.footer-info{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;}
+.footer-links{display:flex;gap:2rem;list-style:none;}
+.footer-links a{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--accent);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.fu{animation:fadeUp .8s ease forwards;}.fu-1{animation-delay:.1s;opacity:0;}.fu-2{animation-delay:.25s;opacity:0;}.fu-3{animation-delay:.4s;opacity:0;}
+
+@media(max-width:900px){
+  nav{padding:1.2rem 2rem;}.nav-links{display:none;}
+  .page-hero{grid-template-columns:1fr;padding:8rem 2rem 4rem;}
+  .phase{padding:5rem 2rem;}
+  .deliv-row,.kpi-row{grid-template-columns:1fr 1fr;}
+  .matrix-head,.matrix-row{grid-template-columns:2fr 1fr;}
+  .ph-tab .ph-name{display:none;}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+  .cta-strip{flex-direction:column;padding:4rem 2rem;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html" style="display:flex;align-items:center"><svg width="28" height="44" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:10px;flex-shrink:0">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <ul class="nav-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html" class="active">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#contacto">Solicitar diagnóstico</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>Proceso</span></div>
+    <h1 class="page-title fu fu-2">CÓMO<br><em>TRABAJA</em><br>METRIK GUARD</h1>
+  </div>
+  <div class="hero-right fu fu-3">
+    <p class="page-intro">Un proceso estructurado en tres fases y 90 días. Desde el primer contacto hasta la operación estabilizada con métricas, cada semana tiene un entregable concreto.</p>
+    <div style="display:flex;gap:2rem;margin-top:2rem;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--white);line-height:1;">3</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);">Fases</div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--white);line-height:1;">90</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);">Días al resultado</div>
+      </div>
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--accent);line-height:1;">12+</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);">Entregables</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE BAR -->
+<div class="phase-bar">
+  <a class="ph-tab active" href="#fase1"><div class="ph-days">Días 0–30</div><div class="ph-name">Fundaciones</div></a>
+  <a class="ph-tab" href="#fase2"><div class="ph-days">Días 31–60</div><div class="ph-name">Implementación</div></a>
+  <a class="ph-tab" href="#fase3"><div class="ph-days">Días 61–90</div><div class="ph-name">Optimización</div></a>
+  <a class="ph-tab" href="#continuo"><div class="ph-days">Mes 4+</div><div class="ph-name">PMO Continuo</div></a>
+</div>
+
+<!-- ── FASE 1 ── -->
+<section class="phase" id="fase1">
+  <div class="phase-head">
+    <div class="phase-num">1</div>
+    <div class="phase-meta">
+      <div class="ph-period">Días 0 – 30 · Fase 1</div>
+      <h2 class="ph-title">Fundaciones y<br>Diagnóstico</h2>
+      <p class="ph-obj">Entendemos su realidad, establecemos métricas base y entregamos el primer diagnóstico con hallazgos priorizados. Al final de esta fase, usted tiene un mapa claro de su situación y un plan de acción.</p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 1–3</span><h3>Reunión exploratoria y kick-off</h3></div>
+      <p>Primera sesión de trabajo: entendemos su contexto, proveedores actuales, incidentes recientes y expectativas. Firmamos acuerdo de confidencialidad. Definimos alcance y cronograma exacto del diagnóstico.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 4–8</span><h3>Diagnóstico de campo</h3></div>
+      <p>Inspección presencial de instalaciones, puntos de control y tecnología existente. Revisión de bitácoras, contratos y documentación. Entrevistas con guardas, supervisores y administración. Observación nocturna si aplica.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 9–14</span><h3>Análisis y elaboración del informe</h3></div>
+      <p>Consolidamos hallazgos, priorizamos riesgos por probabilidad e impacto, identificamos quick wins sin costo adicional y construimos el roadmap 0–90 días. Preparamos el informe ejecutivo para junta.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 15</span><h3>Presentación de diagnóstico</h3></div>
+      <p>Sesión formal con equipo directivo: presentamos mapa de riesgos, semáforo de vulnerabilidades y plan de acción. Priorizamos en conjunto y definimos los quick wins a implementar de inmediato.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 16–30</span><h3>Baseline de KPIs y preparación del PMO</h3></div>
+      <p>Establecemos las métricas de punto de partida: tiempos de respuesta actuales, cumplimiento de rondas, frecuencia de incidentes. Configuramos el dashboard v0. Preparamos el arranque del PMO mensual.</p>
+    </div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;">Entregables · Fase 1</div>
+  <div class="deliv-row">
+    <div class="d-card"><div class="d-type">Documento</div><h4>Kit de Diagnóstico</h4><p>Informe completo con hallazgos, mapa de riesgos y semáforo.</p></div>
+    <div class="d-card"><div class="d-type">Herramienta</div><h4>Dashboard v0</h4><p>Tablero de KPIs con baseline establecido para medir progreso.</p></div>
+    <div class="d-card"><div class="d-type">Plan</div><h4>Roadmap 0–90d</h4><p>Plan de acción priorizado con responsables y plazos.</p></div>
+    <div class="d-card"><div class="d-type">Presentación</div><h4>Informe Ejecutivo</h4><p>Documento listo para presentar ante la junta directiva.</p></div>
+  </div>
+  <div class="kpi-row">
+    <div class="kpi-card"><div class="k-label">KPI de control</div><div class="k-val">Kit completo</div></div>
+    <div class="kpi-card"><div class="k-label">KPI de control</div><div class="k-val"># Reuniones</div></div>
+    <div class="kpi-card"><div class="k-label">KPI de control</div><div class="k-val">Diagnóstico ✓</div></div>
+    <div class="kpi-card"><div class="k-label">KPI de control</div><div class="k-val">Baseline KPIs</div></div>
+  </div>
+</section>
+
+<!-- ── FASE 2 ── -->
+<section class="phase" id="fase2">
+  <div class="phase-head">
+    <div class="phase-num">2</div>
+    <div class="phase-meta">
+      <div class="ph-period">Días 31 – 60 · Fase 2</div>
+      <h2 class="ph-title">Implementación y<br>Arranque PMO</h2>
+      <p class="ph-obj">Ejecutamos los quick wins, implementamos los protocolos mínimos y realizamos la primera auditoría formal al proveedor. Al final de esta fase, el sistema de seguridad ya opera con métricas.</p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 31–35</span><h3>Implementación de quick wins</h3></div>
+      <p>Ejecutamos las mejoras identificadas en el diagnóstico que no requieren inversión adicional: ajustes de horarios de rondas, corrección de puntos ciegos, actualización de listas de acceso, señalización.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 36–45</span><h3>Protocolos mínimos</h3></div>
+      <p>Diseñamos e implementamos los tres protocolos críticos: control de visitas, manejo de paquetería y respuesta a incidentes nocturnos. Se distribuyen al personal y al proveedor.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 46–50</span><h3>Primera auditoría al proveedor</h3></div>
+      <p>Auditoría formal presencial: verificamos cumplimiento de rondas, revisamos bitácoras del mes, evaluamos desempeño del personal, identificamos hallazgos y generamos plan de acción correctiva.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 51–55</span><h3>Capacitación inicial del personal</h3></div>
+      <p>Taller presencial con guardas y supervisores: presentamos los protocolos, resolvemos dudas y realizamos un simulacro de incidente. Documentamos participación y desempeño.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 56–60</span><h3>Primer reporte ejecutivo mensual</h3></div>
+      <p>Entregamos el primer reporte formal del PMO: KPIs del mes, hallazgos de auditoría, cumplimiento de protocolos, acciones correctivas y comparativa vs baseline. Presentación ante junta directiva.</p>
+    </div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;">Entregables · Fase 2</div>
+  <div class="deliv-row">
+    <div class="d-card"><div class="d-type">Operacional</div><h4>Protocolos v1</h4><p>Manuales operativos para visitas, paquetería e incidentes.</p></div>
+    <div class="d-card"><div class="d-type">Auditoría</div><h4>Reporte #1</h4><p>Primer informe de auditoría con hallazgos y correctivas.</p></div>
+    <div class="d-card"><div class="d-type">Herramienta</div><h4>Dashboard v1</h4><p>Tablero actualizado con datos del primer mes de operación.</p></div>
+    <div class="d-card"><div class="d-type">Presentación</div><h4>Minuta Ejecutiva</h4><p>Minuta para junta directiva con resultados y próximos pasos.</p></div>
+  </div>
+</section>
+
+<!-- ── FASE 3 ── -->
+<section class="phase" id="fase3">
+  <div class="phase-head">
+    <div class="phase-num">3</div>
+    <div class="phase-meta">
+      <div class="ph-period">Días 61 – 90 · Fase 3</div>
+      <h2 class="ph-title">Optimización<br>y Escala</h2>
+      <p class="ph-obj">Estabilizamos el modelo, ejecutamos auditorías sorpresa y construimos el caso de éxito documentado. Al día 90, usted tiene un sistema de seguridad gestionado, medible y reproducible.</p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 61–65</span><h3>Auditoría sorpresa</h3></div>
+      <p>Sin aviso previo al operativo. Verificamos si los protocolos se aplican en ausencia de supervisión anunciada. Los hallazgos revelan el estado real de cumplimiento.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 66–75</span><h3>Ajuste de KPIs y protocolos</h3></div>
+      <p>Con dos meses de datos, ajustamos las métricas que no reflejan la realidad, refinamos los protocolos según el feedback del equipo y actualizamos el dashboard para mayor claridad.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 76–82</span><h3>Recomendaciones de inversión</h3></div>
+      <p>Con base en los datos reales, preparamos las recomendaciones priorizadas de inversión en tecnología, personal o infraestructura. Cada recomendación viene justificada con datos y ROI estimado.</p>
+    </div>
+    <div class="t-step">
+      <div class="t-step-head"><span class="t-day">Día 83–90</span><h3>Roadmap 6–12 meses y caso de éxito</h3></div>
+      <p>Construimos el plan estratégico del siguiente año y documentamos el caso de éxito (antes/después) con métricas reales. Este documento sirve como referencia para nuevos clientes y para la junta.</p>
+    </div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1rem;">Entregables · Fase 3</div>
+  <div class="deliv-row">
+    <div class="d-card"><div class="d-type">Auditoría</div><h4>Reporte #2</h4><p>Segundo informe con tendencia de dos meses y correctivas cerradas.</p></div>
+    <div class="d-card"><div class="d-type">Plan</div><h4>Roadmap 6–12m</h4><p>Hoja de ruta estratégica para el siguiente año con inversiones priorizadas.</p></div>
+    <div class="d-card"><div class="d-type">Marketing</div><h4>Caso de Éxito</h4><p>Documento antes/después con métricas reales para referidos.</p></div>
+    <div class="d-card"><div class="d-type">Comercial</div><h4>Kit de venta v2</h4><p>Materiales actualizados con datos reales de su operación.</p></div>
+  </div>
+</section>
+
+<!-- ── PMO CONTINUO ── -->
+<section class="phase" id="continuo" style="background:var(--ink-2);">
+  <div class="phase-head">
+    <div class="phase-num" style="color:rgba(0,130,255,.15);">∞</div>
+    <div class="phase-meta">
+      <div class="ph-period" style="color:var(--accent-2);">Mes 4 en adelante · PMO Continuo</div>
+      <h2 class="ph-title">Mejora<br>Continua</h2>
+      <p class="ph-obj">A partir del mes 4, el PMO opera en modo estabilizado: auditorías regulares, reporting mensual, ajuste de KPIs y mejora continua de protocolos. El sistema se vuelve más preciso con cada mes de datos.</p>
+    </div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;">Ritmo mensual estándar</div>
+  <div class="matrix">
+    <div class="matrix-head">
+      <div class="mh-cell">Actividad</div>
+      <div class="mh-cell">Metrik Guard</div>
+      <div class="mh-cell">Cliente</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc">Auditoría mensual al proveedor</div>
+      <div class="mc accent"><span class="dot-mg"></span>Ejecuta</div>
+      <div class="mc dim">Recibe informe</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc">Revisión de bitácoras e incidentes</div>
+      <div class="mc accent"><span class="dot-mg"></span>Ejecuta</div>
+      <div class="mc dim">—</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc">Verificación presencial de rondas</div>
+      <div class="mc accent"><span class="dot-mg"></span>Ejecuta</div>
+      <div class="mc dim">—</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc">Actualización del dashboard de KPIs</div>
+      <div class="mc accent"><span class="dot-mg"></span>Ejecuta</div>
+      <div class="mc dim">Acceso en tiempo real</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc">Reporte ejecutivo mensual</div>
+      <div class="mc accent"><span class="dot-mg"></span>Entrega</div>
+      <div class="mc dim">Presenta a junta</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc">Seguimiento de acciones correctivas</div>
+      <div class="mc accent"><span class="dot-mg"></span>Monitorea</div>
+      <div class="mc dim"><span class="dot-cl"></span>Autoriza e implementa</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc">Decisiones de inversión en seguridad</div>
+      <div class="mc dim">Recomienda con datos</div>
+      <div class="mc dim"><span class="dot-cl"></span>Decide</div>
+    </div>
+    <div class="matrix-row">
+      <div class="mc">Licitaciones de proveedores</div>
+      <div class="mc accent"><span class="dot-mg"></span>Apoya y asesora</div>
+      <div class="mc dim"><span class="dot-cl"></span>Aprueba</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div>
+    <h3>El proceso empieza con una conversación.</h3>
+    <p>30 minutos. Sin costo. Le explicamos exactamente qué esperar en cada fase.</p>
+  </div>
+  <div class="cta-btns">
+    <a class="btn-p" href="/cdn-cgi/l/email-protection#b5dddad9d4f5d8d0c1c7dcded2c0d4c7d19bd6dad8">Agendar reunión exploratoria</a>
+    <a class="btn-g" href="kpis.html">Ver KPIs →</a>
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="index.html" style="display:flex;align-items:center"><svg width="20" height="32" viewBox="0 0 56 88" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-right:8px;opacity:0.7">
+  <polygon points="28,0 56,22 28,44 0,22" fill="#ceff47"/>
+  <polygon points="28,8 46,22 28,36 10,22" fill="#0b1d35"/>
+  <circle cx="28" cy="22" r="8" fill="#ceff47"/>
+  <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
+  <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
+</svg>METRIK GUARD</a>
+  <div class="footer-info">Inteligencia en Seguridad · Costa Rica<br>© 2026 Metrik Guard. Todos los derechos reservados.</div>
+  <ul class="footer-links">
+    <li><a href="servicios.html">Servicios</a></li>
+    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="kpis.html">KPIs</a></li>
+    <li><a href="clientes.html">Clientes</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Phase tab active state on scroll
+const phases=['fase1','fase2','fase3','continuo'];
+window.addEventListener('scroll',()=>{
+  let current='';
+  phases.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.getBoundingClientRect().top<200)current=id;
+  });
+  docume
