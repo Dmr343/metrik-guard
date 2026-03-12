@@ -116,6 +116,20 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 .footer-links a{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
 .footer-links a:hover{color:var(--accent);}
 
+/* DISAMBIGUATION BAND */
+.disambiguation{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:0;border-bottom:1px solid var(--border);background:var(--ink-2);}
+.dis-item{display:flex;align-items:center;gap:.8rem;padding:1.4rem 2.5rem;border-right:1px solid var(--border);font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.08em;flex:1;min-width:200px;}
+.dis-item:last-child{border-right:none;}
+.dis-no{color:var(--danger);font-size:.9rem;flex-shrink:0;}
+.dis-ok{color:var(--accent);font-size:.9rem;flex-shrink:0;}
+.dis-item span:last-child{color:var(--text-dim);line-height:1.4;}
+
+/* PMO CALLOUT */
+.pmo-callout{background:rgba(206,255,71,.04);border:1px solid rgba(206,255,71,.2);padding:2.5rem;margin-bottom:4rem;}
+.pmo-callout-label{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+.pmo-callout p{font-size:.92rem;color:var(--text);line-height:1.85;}
+.pmo-callout strong{color:var(--white);font-weight:500;}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 .fu{animation:fadeUp .8s ease forwards;}
 .fu-1{animation-delay:.1s;opacity:0;}
@@ -153,6 +167,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
     <li><a href="proceso.html">Proceso</a></li>
     <li><a href="kpis.html">KPIs</a></li>
     <li><a href="clientes.html">Clientes</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
   </ul>
   <a class="nav-cta" href="index.html#contacto">Solicitar diagnóstico</a>
 </nav>
@@ -162,8 +177,17 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   <div class="hero-bg"></div>
   <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>Servicios</span></div>
   <h1 class="page-title fu fu-2">NUESTROS<br><em>SERVICIOS</em></h1>
-  <p class="page-intro fu fu-3">Tres servicios diseñados para trabajar en secuencia o de forma independiente. Cada uno entrega valor medible desde la primera semana.</p>
+  <p class="page-intro fu fu-3">Cuatro servicios de asesoría e inteligencia en seguridad, diseñados para trabajar en secuencia o de forma independiente. Somos consultores independientes — no una empresa de guardas ni de cámaras.</p>
   <div class="hero-scroll-hint">Explorar servicios</div>
+</div>
+
+<!-- DISAMBIGUATION BAND -->
+<div class="disambiguation">
+  <div class="dis-item"><span class="dis-no">✕</span><span>No operamos ni contratamos guardas de seguridad</span></div>
+  <div class="dis-item"><span class="dis-no">✕</span><span>No instalamos cámaras ni sistemas de alarma</span></div>
+  <div class="dis-item"><span class="dis-ok">✓</span><span>Auditamos y gobernamos su sistema de seguridad</span></div>
+  <div class="dis-item"><span class="dis-ok">✓</span><span>Investigamos, documentamos y elaboramos peritajes</span></div>
+  <div class="dis-item"><span class="dis-ok">✓</span><span>Somos su asesoría de inteligencia en seguridad</span></div>
 </div>
 
 <!-- SERVICE TABS -->
@@ -171,6 +195,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   <a class="s-tab active" href="#s01">01 · Diagnóstico</a>
   <a class="s-tab" href="#s02">02 · Security PMO</a>
   <a class="s-tab" href="#s03">03 · Protocolos</a>
+  <a class="s-tab" href="#s04">04 · Investigación</a>
 </div>
 
 <!-- ────────────────── SERVICE 01 ────────────────── -->
@@ -307,6 +332,12 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
     </div>
   </div>
 
+  <!-- PMO CALLOUT -->
+  <div class="pmo-callout">
+    <div class="pmo-callout-label">¿Qué es una Security PMO?</div>
+    <p>Piénselo como <strong>el departamento interno de gobernanza de seguridad que su empresa no tiene</strong> — pero sin contratar a nadie de tiempo completo. Metrik Guard actúa como una oficina externa e independiente que supervisa, audita y <strong>exige resultados verificables</strong> a su proveedor de seguridad, exactamente igual que lo haría un equipo interno dedicado. Usted obtiene estructura, metodología y rendición de cuentas; su proveedor sabe que tiene un fiscalizador profesional. Si prefiere el lenguaje más directo: <strong>Auditoría y Gobierno de Seguridad Externalizado</strong>.</p>
+  </div>
+
   <!-- PRICING TIERS -->
   <div style="font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;">Planes de servicio</div>
   <div class="tiers">
@@ -435,6 +466,99 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   </div>
 </section>
 
+<!-- ────────────────── SERVICE 04 ────────────────── -->
+<section class="svc-section" id="s04">
+  <div class="svc-num">04</div>
+
+  <div class="svc-header">
+    <div>
+      <div class="label">Servicio 04 · Especializado</div>
+      <h2 class="svc-title">Investigaciones<br>Privadas y Peritajes</h2>
+      <p class="svc-desc">Cuando una auditoría no es suficiente. Realizamos investigaciones privadas especializadas — sustracción interna, due diligence de personal, verificación de antecedentes y vigilancia — y elaboramos peritajes técnicos en seguridad con validez para procesos legales, administrativos o aseguradoras. Todo con metodología documentada, cadena de custodia y confidencialidad absoluta.</p>
+      <div class="svc-tags">
+        <span class="tag a">Proyecto cerrado</span>
+        <span class="tag">Confidencial</span>
+        <span class="tag">Validez legal</span>
+        <span class="tag">Metodología certificada</span>
+      </div>
+    </div>
+    <div>
+      <div style="background:var(--ink-2);border:1px solid var(--border);padding:2.5rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;">¿Cuándo se necesita?</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:1rem;">
+          <li style="font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;"><span style="position:absolute;left:0;color:var(--danger);">!</span> Sospecha de sustracción o fraude interno</li>
+          <li style="font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;"><span style="position:absolute;left:0;color:var(--danger);">!</span> Necesita evidencia técnica para una demanda</li>
+          <li style="font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;"><span style="position:absolute;left:0;color:var(--warn);">!</span> Verificar historial de un socio, proveedor o empleado</li>
+          <li style="font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;"><span style="position:absolute;left:0;color:var(--warn);">!</span> Reclamación ante aseguradora por incidente de seguridad</li>
+          <li style="font-size:.9rem;color:var(--text);padding-left:1.5rem;position:relative;"><span style="position:absolute;left:0;color:var(--accent);">→</span> Auditoría post-incidente con respaldo documental</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div style="font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);margin-bottom:1.5rem;">Entregables incluidos</div>
+  <div class="svc-deliverables">
+    <div class="deliv-item">
+      <span class="deliv-icon">🔍</span>
+      <h4>Informe de Investigación</h4>
+      <p>Documento técnico detallado con metodología aplicada, hallazgos, evidencias recolectadas y conclusiones. Redactado para uso legal o administrativo.</p>
+    </div>
+    <div class="deliv-item">
+      <span class="deliv-icon">🧾</span>
+      <h4>Peritaje Técnico</h4>
+      <p>Dictamen pericial en seguridad física o electrónica, con cadena de custodia documentada. Apto para presentación ante juzgados, aseguradoras o juntas directivas.</p>
+    </div>
+    <div class="deliv-item">
+      <span class="deliv-icon">📁</span>
+      <h4>Expediente Confidencial</h4>
+      <p>Carpeta de evidencias organizada cronológicamente: registros, fotografías, videos, entrevistas y análisis documental con protocolos de manejo seguro.</p>
+    </div>
+  </div>
+
+  <div class="includes-grid">
+    <div class="inc-col">
+      <h4>Tipos de investigación que realizamos</h4>
+      <ul class="inc-list">
+        <li>Investigación de sustracción o fraude interno</li>
+        <li>Due diligence de personas (socios, ejecutivos, proveedores)</li>
+        <li>Verificación de antecedentes laborales y penales</li>
+        <li>Vigilancia y seguimiento con documentación</li>
+        <li>Análisis de incidentes de seguridad post-hecho</li>
+        <li>Investigación de fugas de información interna</li>
+        <li>Verificación de testimonios en contexto de seguridad</li>
+      </ul>
+    </div>
+    <div class="inc-col">
+      <h4>Tipos de peritaje que elaboramos</h4>
+      <ul class="inc-list">
+        <li>Peritaje de sistemas de videovigilancia</li>
+        <li>Evaluación pericial de protocolos de seguridad</li>
+        <li>Dictamen técnico para reclamaciones a aseguradoras</li>
+        <li>Análisis pericial de incidentes físicos o electrónicos</li>
+        <li>Informe técnico como perito experto en procesos legales</li>
+        <li class="no">Investigaciones fuera del marco legal costarricense</li>
+        <li class="no">Acceso a sistemas o datos sin autorización expresa</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="faq" style="margin-top:4rem;">
+    <div class="faq-title">Preguntas frecuentes · Investigación y Peritajes</div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto tiempo dura una investigación? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Depende del alcance definido. Una verificación de antecedentes puede tomar 3 a 5 días hábiles. Una investigación de fraude interno con seguimiento activo puede tomar de 2 a 6 semanas. Definimos plazos y alcance al inicio del proyecto, sin sorpresas.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿El informe tiene validez para un proceso judicial? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Sí, cuando se contrata bajo la modalidad de peritaje formal. El documento se elabora con cadena de custodia, metodología documentada y está diseñado para ser presentado ante autoridades judiciales, administrativas o aseguradoras en Costa Rica.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">¿Qué nivel de confidencialidad manejan? <span class="faq-icon">+</span></button>
+      <div class="faq-a"><p>Total. Firmamos acuerdos de confidencialidad antes de iniciar cualquier investigación. Los hallazgos se entregan exclusivamente al cliente contratante. Nunca divulgamos casos, métodos ni información de partes involucradas.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA STRIP -->
 <div class="cta-strip">
   <div>
@@ -461,6 +585,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
     <li><a href="proceso.html">Proceso</a></li>
     <li><a href="kpis.html">KPIs</a></li>
     <li><a href="clientes.html">Clientes</a></li>
+    <li><a href="nosotros.html">Nosotros</a></li>
   </ul>
 </footer>
 
@@ -481,7 +606,7 @@ function toggleFaq(btn){
   if(!isOpen){ans.classList.add('open');icon.textContent='−';}
 }
 // Active tab on scroll
-const sections=['s01','s02','s03'];
+const sections=['s01','s02','s03','s04'];
 window.addEventListener('scroll',()=>{
   let current='';
   sections.forEach(id=>{
