@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Solicitud recibida · Metrik Guard</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0b1d35;--ink-2:#0e2642;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--white:#f0f6ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center;overflow:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(206,255,71,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(206,255,71,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.content{position:relative;z-index:1;max-width:560px;}
+.check{width:72px;height:72px;border:2px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 2.5rem;font-size:1.8rem;color:var(--accent);}
+.label{font-family:'DM Mono',monospace;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:.8rem;}
+.label::before,.label::after{content:'';display:block;width:24px;height:1px;background:var(--accent);}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);letter-spacing:.03em;color:var(--white);margin-bottom:1.5rem;line-height:.95;}
+p{color:var(--text-dim);font-size:1rem;line-height:1.8;margin-bottom:1rem;}
+.time-note{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:2rem 0;}
+.actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2.5rem;}
+.btn-p{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.9rem 2rem;text-decoration:none;transition:opacity .2s;}
+.btn-p:hover{opacity:.85;}
+.btn-g{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:.9rem 2rem;text-decoration:none;transition:border-color .2s,color .2s;}
+.btn-g:hover{border-color:var(--accent);color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="content">
+  <div class="check">✓</div>
+  <div class="label">Solicitud recibida</div>
+  <h1>Nos pondremos<br>en contacto</h1>
+  <p>Su solicitud de diagnóstico fue recibida exitosamente. Revisamos cada solicitud personalmente y le responderemos para coordinar una conversación inicial.</p>
+  <p>Revise también su carpeta de spam por si acaso.</p>
+  <div class="time-note">Tiempo de respuesta: menos de 24 horas hábiles</div>
+  <div class="actions">
+    <a class="btn-p" href="index.html">Volver al inicio</a>
+    <a class="btn-g" href="servicios.html">Explorar servicios</a>
+  </div>
+</div>
+</body>
+</html>
