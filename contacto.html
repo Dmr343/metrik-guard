@@ -175,7 +175,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
     <div class="contact-form" id="form-container">
       <div class="form-title">Formulario de diagnóstico</div>
 
-      <form id="diagForm" onsubmit="submitForm(event)" novalidate>
+      <form id="diagForm" action="/submit" method="POST" onsubmit="return validateForm(event)">
 
         <!-- DATOS PERSONALES -->
         <div class="form-row">
@@ -264,13 +264,8 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 
       </form>
 
-      <!-- SUCCESS MESSAGE -->
-      <div class="form-success" id="successMsg">
-        <span class="success-icon">✓</span>
-        <div class="success-title">Solicitud recibida</div>
-        <p class="success-body">Nos pondremos en contacto dentro de las próximas 24 horas hábiles para coordinar su diagnóstico. Revise su correo electrónico.</p>
-        <a href="index.html" style="font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;">← Volver al inicio</a>
-      </div>
+      <!-- Mensaje de error si viene redirigido con ?error= -->
+      <div id="errorBanner" style="display:none;margin-top:1.5rem;padding:1rem 1.5rem;border:1px solid var(--danger);font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.08em;color:var(--danger);"></div>
     </div>
 
   </div>
@@ -295,46 +290,51 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 </footer>
 
 <script>
-function submitForm(e) {
-  e.preventDefault();
-  const form = document.getElementById('diagForm');
-  const nombre = document.getElementById('nombre').value.trim();
-  const telefono = document.getElementById('telefono').value.trim();
-  const correo = document.getElementById('correo').value.trim();
-  const provincia = document.getElementById('provincia').value;
+// ── Validación del lado del cliente antes de enviar al servidor ──
+function validateForm(e) {
+  const required = ['nombre', 'telefono', 'correo', 'provincia'];
+  let valid = true;
 
-  // Basic validation
-  if (!nombre || !telefono || !correo || !provincia) {
-    const fields = [
-      {val: nombre, id: 'nombre', label: 'Nombre'},
-      {val: telefono, id: 'telefono', label: 'Teléfono'},
-      {val: correo, id: 'correo', label: 'Correo'},
-      {val: provincia, id: 'provincia', label: 'Provincia'}
-    ];
-    fields.forEach(f => {
-      const el = document.getElementById(f.id);
-      if (!f.val) {
-        el.style.borderColor = 'var(--danger)';
-        el.addEventListener('input', () => el.style.borderColor = '', {once: true});
-      }
-    });
-    return;
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.style.borderColor = 'var(--danger)';
+      el.addEventListener('input', () => el.style.borderColor = '', {once: true});
+      valid = false;
+    }
+  });
+
+  if (!valid) return false;
+
+  const correoEl = document.getElementById('correo');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoEl.value.trim())) {
+    correoEl.style.borderColor = 'var(--danger)';
+    correoEl.focus();
+    return false;
   }
 
-  // Email validation
-  const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailReg.test(correo)) {
-    const el = document.getElementById('correo');
-    el.style.borderColor = 'var(--danger)';
-    el.focus();
-    return;
-  }
-
-  // Show success (in production, replace with actual form submission)
-  form.style.display = 'none';
-  document.querySelector('.form-title').style.display = 'none';
-  document.getElementById('successMsg').classList.add('visible');
+  // Deshabilitar botón para evitar doble envío
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Enviando…';
+  btn.disabled = true;
+  return true;
 }
+
+// ── Mostrar mensaje de error si el servidor redirigió con ?error= ──
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const error = params.get('error');
+  const banner = document.getElementById('errorBanner');
+  const messages = {
+    campos:    'Por favor complete todos los campos obligatorios.',
+    email:     'El correo electrónico ingresado no es válido.',
+    servidor:  'Ocurrió un error al enviar su solicitud. Intente nuevamente o escríbanos directamente a hola@metrikguard.com',
+  };
+  if (error && messages[error]) {
+    banner.textContent = messages[error];
+    banner.style.display = 'block';
+  }
+})();
 </script>
 
 </body>
