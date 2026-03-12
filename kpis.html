@@ -4,6 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>KPIs · Metrik Guard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
 :root{--ink:#0b1d35;--ink-2:#0e2642;--ink-3:#133055;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--accent-2:#3a9fff;--danger:#ff4757;--warn:#ffa502;--white:#f0f6ff;}
@@ -20,6 +22,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a:hover,.nav-links a.active{color:var(--accent);}
 .nav-cta{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.6rem 1.4rem;text-decoration:none;transition:opacity .2s;}
 .nav-cta:hover{opacity:.85;}
+.lang-toggle{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:.4rem .8rem;cursor:pointer;transition:color .2s,border-color .2s;margin-right:.8rem;}
+.lang-toggle:hover{color:var(--accent);border-color:var(--accent);}
+.hamburger{display:none;}
 
 /* HERO */
 .page-hero{position:relative;padding:10rem 4rem 6rem;border-bottom:1px solid var(--border);z-index:1;overflow:hidden;}
@@ -133,11 +138,11 @@ section.alt{background:var(--ink-2);}
 .cta-strip h3{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--white);letter-spacing:.03em;}
 .cta-strip p{color:var(--text-dim);font-size:.95rem;margin-top:.5rem;}
 .cta-btns{display:flex;gap:1rem;}
-footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;border-top:1px solid var(--border);position:relative;z-index:1;}
 .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;}
 .footer-logo span{color:var(--accent);}
 .footer-info{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;}
-.footer-links{display:flex;gap:2rem;list-style:none;}
+.footer-links{display:flex;gap:2rem;list-style:none;justify-content:flex-end;}
 .footer-links a{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
 .footer-links a:hover{color:var(--accent);}
 
@@ -146,14 +151,48 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 
 @media(max-width:900px){
   nav{padding:1.2rem 2rem;}.nav-links{display:none;}
+  .nav-cta{display:none;}
   .page-hero,.hero-layout{display:block;padding:8rem 2rem 4rem;}
   .hero-layout .dashboard-preview{margin-top:3rem;}
   section{padding:5rem 2rem;}
   .gauges{grid-template-columns:1fr 1fr;}
   .outcomes{grid-template-columns:1fr;}
+  /* Benchmark: ocultar 4ª columna (alto riesgo) y mostrar 3 cols */
   .bench-head,.bench-row{grid-template-columns:2fr 1fr 1fr;}
-  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+  .bench-head .bh:nth-child(4),.bench-row .bc:nth-child(4){display:none;}
+  /* Tabla KPI: ocultar descripción, solo nombre y frecuencia */
+  .kpi-category{overflow-x:auto;}
+  .kpi-table td:nth-child(2){display:none;}
+  .kpi-table td:first-child{width:70%;}
+  .kpi-table td:last-child{width:30%;}
+  /* Input font size iOS */
+  .form-input,.form-select,.form-textarea{font-size:1rem;}
+  footer{grid-template-columns:1fr;gap:1.5rem;text-align:center;padding:2rem;}
+  .footer-links{justify-content:center;}
   .cta-strip{flex-direction:column;padding:4rem 2rem;}
+  /* Dashboard grid: 2 cols on mobile */
+  .dash-grid{grid-template-columns:1fr 1fr;}
+  /* Hero ticker: wrap */
+  .hero-ticker{flex-wrap:wrap;gap:1.5rem;overflow-x:auto;}
+  .tick-num{font-size:clamp(2rem,6vw,3.5rem);}
+  /* Gauge size */
+  .gauge-ring{width:min(120px,38vw);height:min(120px,38vw);}
+  .gauge-ring svg{width:100%;height:100%;}
+  /* Hamburger */
+  .hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:.4rem;width:36px;height:36px;}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--text);transition:transform .3s,opacity .3s;}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11,29,53,.98);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;transform:translateX(100%);transition:transform .35s ease;padding:2rem;}
+  .mobile-menu.open{transform:translateX(0);}
+  .mobile-menu a{font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+  .mobile-menu a:hover{color:var(--accent);}
+  .mobile-menu .m-cta{font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:1rem 2.5rem;text-decoration:none;margin-top:1rem;}
+}
+
+@media(max-width:480px){
+  .gauges{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -168,33 +207,46 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
 </svg>METRIK GUARD</a>
   <ul class="nav-links">
-    <li><a href="servicios.html">Servicios</a></li>
-    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="servicios.html" data-i18n="nav.servicios">Servicios</a></li>
+    <li><a href="proceso.html" data-i18n="nav.proceso">Proceso</a></li>
     <li><a href="kpis.html" class="active">KPIs</a></li>
-    <li><a href="clientes.html">Clientes</a></li>
-    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="clientes.html" data-i18n="nav.clientes">Clientes</a></li>
+    <li><a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a></li>
   </ul>
-  <a class="nav-cta" href="contacto.html">Solicitar diagnóstico</a>
+  <button class="lang-toggle" id="langToggle" onclick="toggleLang()">EN</button>
+  <a class="nav-cta" href="contacto.html" data-i18n="nav.cta">Solicitar diagnóstico</a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="servicios.html" data-i18n="nav.servicios">Servicios</a>
+  <a href="proceso.html" data-i18n="nav.proceso">Proceso</a>
+  <a href="kpis.html">KPIs</a>
+  <a href="clientes.html" data-i18n="nav.clientes">Clientes</a>
+  <a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a>
+  <a href="contacto.html" class="m-cta" data-i18n="nav.cta">Solicitar diagnóstico</a>
+</div>
 
 <!-- HERO -->
 <div class="page-hero">
   <div class="hero-bg"></div>
-  <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>KPIs & Métricas</span></div>
+  <div class="breadcrumb fu fu-1"><a href="index.html" data-i18n="kpis.breadcrumb.home">Inicio</a> / <span data-i18n="kpis.breadcrumb.current">KPIs & Métricas</span></div>
   <div class="hero-layout">
     <div class="fu fu-2">
-      <h1 class="page-title">MÉTRICAS<br>QUE <em>IMPORTAN</em></h1>
-      <p class="page-intro">En Metrik Guard no entregamos opiniones. Entregamos datos. Más de 20 KPIs operativos que transforman su seguridad en un sistema medible y mejorable.</p>
+      <h1 class="page-title" data-i18n="kpis.page.title">MÉTRICAS QUE IMPORTAN</h1>
+      <p class="page-intro" data-i18n="kpis.page.intro">En Metrik Guard no entregamos opiniones. Entregamos datos. Más de 20 KPIs operativos que transforman su seguridad en un sistema medible y mejorable.</p>
       <div class="hero-ticker">
-        <div class="tick"><div class="tick-num">20<span>+</span></div><div class="tick-label">KPIs activos</div></div>
-        <div class="tick"><div class="tick-num"><span>–</span>40<span>%</span></div><div class="tick-label">Incidentes / 90d</div></div>
-        <div class="tick"><div class="tick-num">4</div><div class="tick-label">Categorías</div></div>
+        <div class="tick"><div class="tick-num">20<span>+</span></div><div class="tick-label" data-i18n="kpis.ticker.kpis">KPIs activos</div></div>
+        <div class="tick"><div class="tick-num"><span>–</span>40<span>%</span></div><div class="tick-label" data-i18n="kpis.ticker.incidents">Incidentes / 90d</div></div>
+        <div class="tick"><div class="tick-num">4</div><div class="tick-label" data-i18n="kpis.ticker.categories">Categorías</div></div>
       </div>
     </div>
     <div class="dashboard-preview fu fu-3">
       <div class="dash-header">
         <div class="dash-title">Dashboard · Condominio Modelo</div>
-        <div class="live-dot">En vivo</div>
+        <div class="live-dot" data-i18n="kpis.live">En vivo</div>
       </div>
       <div class="dash-grid">
         <div class="dash-stat">
@@ -246,8 +298,8 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 <!-- GAUGES: RESULTADOS TÍPICOS 90 DÍAS -->
 <section>
   <div class="section-head">
-    <div class="label">Resultados típicos · 90 días</div>
-    <h2 class="section-title">Lo que cambia cuando<br>se mide la seguridad</h2>
+    <div class="label" data-i18n="kpis.results.label">Resultados típicos · 90 días</div>
+    <h2 class="section-title" data-i18n="kpis.results.title">Lo que cambia cuando se mide la seguridad</h2>
     <p class="section-intro">Datos representativos de clientes en operación. Los resultados varían según el estado inicial, pero la dirección es consistente: a mayor medición, mayor cumplimiento.</p>
   </div>
 
@@ -260,7 +312,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
         </svg>
         <div class="gauge-center"><div class="gauge-num">60<span style="font-size:1rem;color:var(--accent);">%</span></div><div class="gauge-unit">reducción</div></div>
       </div>
-      <div class="gauge-label">Reducción de incidentes recurrentes</div>
+      <div class="gauge-label" data-i18n="kpis.gauge1">Reducción de incidentes recurrentes</div>
     </div>
     <div class="gauge-wrap">
       <div class="gauge-ring">
@@ -270,7 +322,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
         </svg>
         <div class="gauge-center"><div class="gauge-num">90<span style="font-size:1rem;color:var(--accent-2);">%</span></div><div class="gauge-unit">cumplimiento</div></div>
       </div>
-      <div class="gauge-label">Cumplimiento de rondas programadas</div>
+      <div class="gauge-label" data-i18n="kpis.gauge2">Cumplimiento de rondas programadas</div>
     </div>
     <div class="gauge-wrap">
       <div class="gauge-ring">
@@ -280,7 +332,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
         </svg>
         <div class="gauge-center"><div class="gauge-num">80<span style="font-size:1rem;color:var(--accent);">%</span></div><div class="gauge-unit">acción correctiva</div></div>
       </div>
-      <div class="gauge-label">Acciones correctivas cerradas en plazo</div>
+      <div class="gauge-label" data-i18n="kpis.gauge3">Acciones correctivas cerradas en plazo</div>
     </div>
     <div class="gauge-wrap">
       <div class="gauge-ring">
@@ -290,7 +342,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
         </svg>
         <div class="gauge-center"><div class="gauge-num">85<span style="font-size:1rem;color:var(--warn);">%</span></div><div class="gauge-unit">protocolo</div></div>
       </div>
-      <div class="gauge-label">Protocolos cumplidos vs línea base</div>
+      <div class="gauge-label" data-i18n="kpis.gauge4">Protocolos cumplidos vs línea base</div>
     </div>
   </div>
 </section>
@@ -298,13 +350,13 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 <!-- KPI CATALOG -->
 <section class="alt">
   <div class="section-head">
-    <div class="label">Catálogo de métricas</div>
-    <h2 class="section-title">Los KPIs que<br>medimos por usted</h2>
+    <div class="label" data-i18n="kpis.catalog.label">Catálogo de métricas</div>
+    <h2 class="section-title" data-i18n="kpis.catalog.title">Los KPIs que medimos por usted</h2>
     <p class="section-intro">Organizados en cuatro categorías. Cada KPI tiene una frecuencia de medición, un responsable y un umbral de alerta definido desde el diagnóstico.</p>
   </div>
 
   <div class="kpi-category">
-    <div class="cat-title">Categoría A · KPIs Operativos de Respuesta</div>
+    <div class="cat-title" data-i18n="kpis.cat.a">Categoría A · KPIs Operativos de Respuesta</div>
     <table class="kpi-table">
       <tr>
         <td>Tiempo de respuesta a incidentes</td>
@@ -330,7 +382,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   </div>
 
   <div class="kpi-category">
-    <div class="cat-title">Categoría B · KPIs de Cumplimiento Operativo</div>
+    <div class="cat-title" data-i18n="kpis.cat.b">Categoría B · KPIs de Cumplimiento Operativo</div>
     <table class="kpi-table">
       <tr>
         <td>% Cumplimiento de rondas programadas</td>
@@ -356,7 +408,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   </div>
 
   <div class="kpi-category">
-    <div class="cat-title">Categoría C · KPIs de Eficacia y Tendencia</div>
+    <div class="cat-title" data-i18n="kpis.cat.c">Categoría C · KPIs de Eficacia y Tendencia</div>
     <table class="kpi-table">
       <tr>
         <td>Incidentes por 100 unidades/mes</td>
@@ -382,7 +434,7 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   </div>
 
   <div class="kpi-category">
-    <div class="cat-title">Categoría D · KPIs de Gobernanza del Proveedor</div>
+    <div class="cat-title" data-i18n="kpis.cat.d">Categoría D · KPIs de Gobernanza del Proveedor</div>
     <table class="kpi-table">
       <tr>
         <td>Cumplimiento de SLA del proveedor</td>
@@ -416,17 +468,17 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 <!-- BENCHMARK -->
 <section>
   <div class="section-head">
-    <div class="label">Benchmarks de referencia</div>
-    <h2 class="section-title">¿Su seguridad está<br>por encima o por debajo?</h2>
+    <div class="label" data-i18n="kpis.bench.label">Benchmarks de referencia</div>
+    <h2 class="section-title" data-i18n="kpis.bench.title">¿Su seguridad está por encima o por debajo?</h2>
     <p class="section-intro">Rangos de referencia para condominios y PYMEs en Costa Rica. El diagnóstico posiciona exactamente dónde está usted.</p>
   </div>
 
   <div class="bench">
     <div class="bench-head">
-      <div class="bh">Métrica</div>
-      <div class="bh">Bajo riesgo</div>
-      <div class="bh">Riesgo medio</div>
-      <div class="bh">Alto riesgo</div>
+      <div class="bh" data-i18n="kpis.bench.metric">Métrica</div>
+      <div class="bh" data-i18n="kpis.bench.low">Bajo riesgo</div>
+      <div class="bh" data-i18n="kpis.bench.mid">Riesgo medio</div>
+      <div class="bh" data-i18n="kpis.bench.high">Alto riesgo</div>
     </div>
     <div class="bench-row">
       <div class="bc">Cumplimiento de rondas</div>
@@ -470,28 +522,28 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 <!-- OUTCOMES -->
 <section class="alt">
   <div class="section-head">
-    <div class="label">Impacto documentado</div>
+    <div class="label" data-i18n="kpis.impact.label">Impacto documentado</div>
     <h2 class="section-title">Qué cambia cuando<br>tiene métricas reales</h2>
   </div>
   <div class="outcomes">
     <div class="outcome" data-icon="📊">
       <div class="out-num">–<span>40</span>%</div>
-      <div class="out-title">Reducción de incidentes recurrentes</div>
+      <div class="out-title" data-i18n="kpis.outcome1.title">Reducción de incidentes recurrentes</div>
       <div class="out-desc">El solo hecho de medir y publicar métricas mejora el desempeño del proveedor. Lo que no se mide, no mejora. Lo que sí se mide, mejora por sí solo.</div>
     </div>
     <div class="outcome" data-icon="💰">
       <div class="out-num"><span>+</span>ROI</div>
-      <div class="out-title">Justificación de inversión en seguridad</div>
+      <div class="out-title" data-i18n="kpis.outcome2.title">Justificación de inversión en seguridad</div>
       <div class="out-desc">Con datos históricos puede demostrar a su junta que la inversión en seguridad rinde resultados. Y puede justificar cambios de proveedor o aumentos de presupuesto con evidencia concreta.</div>
     </div>
     <div class="outcome" data-icon="🏛️">
       <div class="out-num">100<span>%</span></div>
-      <div class="out-title">Reportes listos para junta directiva</div>
+      <div class="out-title" data-i18n="kpis.outcome3.title">Reportes listos para junta directiva</div>
       <div class="out-desc">Cada mes, su junta recibe un documento ejecutivo con métricas, hallazgos y recomendaciones. Cero improvisación. Cero tiempo perdido preparando información de último minuto.</div>
     </div>
     <div class="outcome" data-icon="🔒">
       <div class="out-num">0</div>
-      <div class="out-title">Conflictos de interés</div>
+      <div class="out-title" data-i18n="kpis.outcome4.title">Conflictos de interés</div>
       <div class="out-desc">Somos completamente independientes de su proveedor de guardas, cámaras o alarmas. No vendemos hardware ni personal. Nuestro único interés es que su sistema funcione bien.</div>
     </div>
   </div>
@@ -500,12 +552,12 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 <!-- CTA -->
 <div class="cta-strip">
   <div>
-    <h3>¿Quiere ver su propio dashboard?</h3>
-    <p>El diagnóstico establece su baseline en menos de 15 días. Luego los datos empiezan a hablar.</p>
+    <h3 data-i18n="kpis.cta.title">¿Quiere ver su propio dashboard?</h3>
+    <p data-i18n="kpis.cta.sub">El diagnóstico establece su baseline en menos de 15 días. Luego los datos empiezan a hablar.</p>
   </div>
   <div class="cta-btns">
-    <a class="btn-p" href="contacto.html">Solicitar diagnóstico</a>
-    <a class="btn-g" href="clientes.html">Ver clientes →</a>
+    <a class="btn-p" href="contacto.html" data-i18n="kpis.cta.btn1">Solicitar diagnóstico</a>
+    <a class="btn-g" href="clientes.html" data-i18n="kpis.cta.btn2">Ver clientes →</a>
   </div>
 </div>
 
@@ -517,15 +569,34 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
   <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
 </svg>METRIK GUARD</a>
-  <div class="footer-info">Inteligencia en Seguridad · Costa Rica<br>© 2026 Metrik Guard. Todos los derechos reservados.</div>
+  <div class="footer-info"><span data-i18n="footer.tagline">Inteligencia en Seguridad · Costa Rica</span><br>© 2026 Metrik Guard. <span data-i18n="footer.rights">Todos los derechos reservados.</span></div>
   <ul class="footer-links">
-    <li><a href="servicios.html">Servicios</a></li>
-    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="servicios.html" data-i18n="nav.servicios">Servicios</a></li>
+    <li><a href="proceso.html" data-i18n="nav.proceso">Proceso</a></li>
     <li><a href="kpis.html">KPIs</a></li>
-    <li><a href="clientes.html">Clientes</a></li>
-    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="clientes.html" data-i18n="nav.clientes">Clientes</a></li>
+    <li><a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a></li>
   </ul>
 </footer>
 
+<script src="i18n.js"></script>
+<script>
+function toggleLang(){
+  const current=localStorage.getItem('mg-lang')||'es';
+  setLang(current==='es'?'en':'es');
+}
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';
+});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow='';
+}));
+</script>
 </body>
 </html>

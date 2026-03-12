@@ -4,6 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Nosotros · Metrik Guard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
 :root{--ink:#0b1d35;--ink-2:#0e2642;--ink-3:#133055;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--accent-2:#3a9fff;--danger:#ff4757;--warn:#ffa502;--white:#f0f6ff;}
@@ -21,6 +23,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a:hover,.nav-links a.active{color:var(--accent);}
 .nav-cta{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.6rem 1.4rem;text-decoration:none;transition:opacity .2s;}
 .nav-cta:hover{opacity:.85;}
+.lang-toggle{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:.4rem .8rem;cursor:pointer;transition:color .2s,border-color .2s;margin-right:.8rem;}
+.lang-toggle:hover{color:var(--accent);border-color:var(--accent);}
+.hamburger{display:none;}
 
 /* HERO */
 .page-hero{position:relative;padding:10rem 4rem 6rem;min-height:50vh;display:flex;flex-direction:column;justify-content:flex-end;border-bottom:1px solid var(--border);overflow:hidden;z-index:1;}
@@ -59,7 +64,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .partner-card:hover{background:rgba(206,255,71,.04);}
 .partner-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
 .partner-card:hover::after{transform:scaleX(1);}
-.partner-avatar{width:72px;height:72px;border:1px solid var(--border);margin-bottom:2rem;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--accent);background:var(--ink-3);}
+.partner-avatar{width:88px;height:88px;border:1px solid var(--border);margin-bottom:2rem;overflow:hidden;flex-shrink:0;}
+.partner-avatar img{width:100%;height:100%;object-fit:cover;object-position:top center;}
 .partner-name{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;color:var(--white);margin-bottom:.3rem;}
 .partner-role{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
 .partner-bio{font-size:.88rem;color:var(--text-dim);line-height:1.75;margin-bottom:1.5rem;}
@@ -95,7 +101,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .btn-g{font-family:'DM Mono',monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:1rem 2.2rem;cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block;}
 .btn-g:hover{border-color:var(--accent);color:var(--accent);}
 
-footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;border-top:1px solid var(--border);position:relative;z-index:1;}
 .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;}
 .footer-logo span{color:var(--accent);}
 .footer-info{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;}
@@ -112,12 +118,26 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 @media(max-width:900px){
   nav{padding:1.2rem 2rem;}
   .nav-links{display:none;}
+  .nav-cta{display:none;}
   .page-hero{padding:8rem 2rem 4rem;}
-  .manifesto,.team-section,.not-guards,.cta-strip{padding:5rem 2rem;}
+  .manifesto,.team-section,.not-guards{padding:5rem 2rem;}
+  .cta-strip{flex-direction:column;padding:4rem 2rem;}
   .manifesto-grid{grid-template-columns:1fr;gap:3rem;}
   .team-grid{grid-template-columns:1fr;}
   .ng-grid{grid-template-columns:1fr;gap:3rem;}
-  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+  footer{grid-template-columns:1fr;gap:1.5rem;text-align:center;padding:2rem;}
+  .footer-links{justify-content:center;}
+  /* Hamburger */
+  .hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:.4rem;width:36px;height:36px;}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--text);transition:transform .3s,opacity .3s;}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11,29,53,.98);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;transform:translateX(100%);transition:transform .35s ease;padding:2rem;}
+  .mobile-menu.open{transform:translateX(0);}
+  .mobile-menu a{font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+  .mobile-menu a:hover{color:var(--accent);}
+  .mobile-menu .m-cta{font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:1rem 2.5rem;text-decoration:none;margin-top:1rem;}
 }
 </style>
 </head>
@@ -132,14 +152,27 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
 </svg>METRIK GUARD</a>
   <ul class="nav-links">
-    <li><a href="servicios.html">Servicios</a></li>
-    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="servicios.html" data-i18n="nav.servicios">Servicios</a></li>
+    <li><a href="proceso.html" data-i18n="nav.proceso">Proceso</a></li>
     <li><a href="kpis.html">KPIs</a></li>
-    <li><a href="clientes.html">Clientes</a></li>
-    <li><a href="nosotros.html" class="active">Nosotros</a></li>
+    <li><a href="clientes.html" data-i18n="nav.clientes">Clientes</a></li>
+    <li><a href="nosotros.html" class="active" data-i18n="nav.nosotros">Nosotros</a></li>
   </ul>
-  <a class="nav-cta" href="contacto.html">Solicitar diagnóstico</a>
+  <button class="lang-toggle" id="langToggle" onclick="toggleLang()">EN</button>
+  <a class="nav-cta" href="contacto.html" data-i18n="nav.cta">Solicitar diagnóstico</a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="servicios.html" data-i18n="nav.servicios">Servicios</a>
+  <a href="proceso.html" data-i18n="nav.proceso">Proceso</a>
+  <a href="kpis.html">KPIs</a>
+  <a href="clientes.html" data-i18n="nav.clientes">Clientes</a>
+  <a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a>
+  <a href="contacto.html" class="m-cta" data-i18n="nav.cta">Solicitar diagnóstico</a>
+</div>
 
 <!-- HERO -->
 <div class="page-hero">
@@ -196,42 +229,51 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 
   <div class="team-grid">
 
-    <!-- SOCIO 1 -->
+    <!-- TANIA MOLINA -->
     <div class="partner-card">
-      <div class="partner-avatar">S1</div>
-      <div class="partner-name">Nombre Apellido</div>
-      <div class="partner-role">Socio Fundador · Director de Auditoría</div>
-      <p class="partner-bio">Especialista en auditoría de sistemas de seguridad física y gestión de riesgos operativos. Más de [X] años evaluando proveedores, diseñando protocolos y dirigiendo diagnósticos integrales para condominios y empresas en Costa Rica.</p>
+      <div class="partner-avatar">
+        <img src="Tania%20Molina%20Rojas.jpeg" alt="Tania Molina Rojas" loading="lazy"/>
+      </div>
+      <div class="partner-name">Tania Molina Rojas</div>
+      <div class="partner-role" data-i18n="nosotros.partner1.role">Socia · Seguridad, Cumplimiento y Gestión del Riesgo</div>
+      <p class="partner-bio">Tania lidera la dimensión operativa y de seguridad de Metrik Guard con una visión forjada en más de 18 años de experiencia en los tres niveles donde la seguridad se juega: dentro de las organizaciones, en los organismos que las certifican y en las redes internacionales que marcan los estándares. Su valor no reside en lo que ha hecho, sino en cómo lo integra: criterio técnico, autoridad gremial y pensamiento estratégico al servicio de soluciones que realmente protegen y habilitan.</p>
       <div class="partner-skills">
-        <span class="skill-tag">Auditoría de seguridad</span>
-        <span class="skill-tag">Gestión de riesgos</span>
-        <span class="skill-tag">Protocolos operativos</span>
+        <span class="skill-tag">Criminología aplicada</span>
+        <span class="skill-tag">Auditoría BASC</span>
+        <span class="skill-tag">Gestión del riesgo</span>
+        <span class="skill-tag">Seguridad organizacional</span>
       </div>
     </div>
 
-    <!-- SOCIO 2 -->
+    <!-- ENRIQUE BERROCAL -->
     <div class="partner-card">
-      <div class="partner-avatar">S2</div>
-      <div class="partner-name">Nombre Apellido</div>
-      <div class="partner-role">Socio Fundador · Director de Investigaciones</div>
-      <p class="partner-bio">Investigador privado certificado con experiencia en casos de fraude interno, due diligence corporativo y peritajes técnicos. Ha elaborado dictámenes periciales presentados en procesos judiciales y administrativos a nivel nacional.</p>
+      <div class="partner-avatar">
+        <img src="Enrique%20A.%20Berrocal%20Salazar.jpeg" alt="Enrique A. Berrocal Salazar" loading="lazy"/>
+      </div>
+      <div class="partner-name">Enrique A. Berrocal Salazar</div>
+      <div class="partner-role" data-i18n="nosotros.partner2.role">Socio · Finanzas, Estrategia Comercial y Legal</div>
+      <p class="partner-bio">Enrique lidera la dimensión financiera, comercial y legal de Metrik Guard con una visión que integra derecho, finanzas y estrategia de negocio en una sola perspectiva. Su valor no está en la especialización — está en la capacidad de leer la complejidad de forma integral y diseñar estructuras que la gestionen. En Metrik Guard, eso se traduce en el andamiaje que permite a los clientes operar con solidez, decidir con claridad y crecer sin fricciones.</p>
       <div class="partner-skills">
-        <span class="skill-tag">Investigación privada</span>
-        <span class="skill-tag">Peritajes técnicos</span>
-        <span class="skill-tag">Due diligence</span>
+        <span class="skill-tag">Derecho empresarial</span>
+        <span class="skill-tag">Finanzas estratégicas</span>
+        <span class="skill-tag">Estrategia comercial</span>
+        <span class="skill-tag">Estructuración legal</span>
       </div>
     </div>
 
-    <!-- SOCIO 3 -->
+    <!-- DANIEL BERROCAL -->
     <div class="partner-card">
-      <div class="partner-avatar">S3</div>
-      <div class="partner-name">Nombre Apellido</div>
-      <div class="partner-role">Socio Fundador · Director de Operaciones y KPIs</div>
-      <p class="partner-bio">Responsable de la metodología de medición y los dashboards de desempeño que sustentan el modelo Security PMO. Combina formación en gestión de proyectos con experiencia operativa en seguridad corporativa y análisis de datos.</p>
+      <div class="partner-avatar">
+        <img src="Daniel%20Berrocal%20Pujol.jpeg" alt="Daniel Berrocal Pujol" loading="lazy"/>
+      </div>
+      <div class="partner-name">Daniel Berrocal Pujol</div>
+      <div class="partner-role" data-i18n="nosotros.partner3.role">Socio · Tecnología, Analítica y Eficiencia Organizacional</div>
+      <p class="partner-bio">Daniel lidera la dimensión tecnológica de Metrik Guard con una trayectoria que integra ingeniería, MBA del INCAE y especialidad en minería de datos. Ha dirigido transformaciones digitales de alcance regional en el sector financiero, consolidando una visión que conecta negocio, tecnología y analítica. Su aporte reside en convertir información y procesos en capacidades concretas de gestión, control y mejora continua — aplicadas al entorno de seguridad de cada cliente.</p>
       <div class="partner-skills">
-        <span class="skill-tag">Security PMO</span>
-        <span class="skill-tag">KPIs y métricas</span>
-        <span class="skill-tag">Gestión de proyectos</span>
+        <span class="skill-tag">MBA INCAE</span>
+        <span class="skill-tag">Minería de datos</span>
+        <span class="skill-tag">Transformación digital</span>
+        <span class="skill-tag">Analítica de negocio</span>
       </div>
     </div>
 
@@ -292,15 +334,37 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
   <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
 </svg>METRIK GUARD</a>
-  <div class="footer-info">Inteligencia en Seguridad · Costa Rica<br>© 2026 Metrik Guard. Todos los derechos reservados.</div>
-  <ul class="footer-links">
-    <li><a href="servicios.html">Servicios</a></li>
-    <li><a href="proceso.html">Proceso</a></li>
+  <div class="footer-info">
+    <span data-i18n="footer.tagline">Inteligencia en Seguridad · Costa Rica</span><br>
+    © 2026 Metrik Guard. <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+  </div>
+  <ul class="footer-links" style="justify-content:flex-end;">
+    <li><a href="servicios.html" data-i18n="nav.servicios">Servicios</a></li>
+    <li><a href="proceso.html" data-i18n="nav.proceso">Proceso</a></li>
     <li><a href="kpis.html">KPIs</a></li>
-    <li><a href="clientes.html">Clientes</a></li>
-    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="clientes.html" data-i18n="nav.clientes">Clientes</a></li>
+    <li><a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a></li>
   </ul>
 </footer>
 
+<script src="i18n.js"></script>
+<script>
+function toggleLang(){
+  const current=localStorage.getItem('mg-lang')||'es';
+  setLang(current==='es'?'en':'es');
+}
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';
+});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow='';
+}));
+</script>
 </body>
 </html>

@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Metrik Guard | Inteligencia en Seguridad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
 <style>
   :root {
@@ -104,6 +106,10 @@
   }
 
   .nav-cta:hover { opacity: 0.85; }
+
+  .lang-toggle{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:.4rem .8rem;cursor:pointer;transition:color .2s,border-color .2s;margin-right:.8rem;}
+  .lang-toggle:hover{color:var(--accent);border-color:var(--accent);}
+  .hamburger{display:none;}
 
   /* ── HERO ── */
   #hero {
@@ -683,11 +689,14 @@
   /* ── FOOTER ── */
   footer {
     padding: 3rem 4rem;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    gap: 2rem;
     border-top: 1px solid var(--border);
   }
+
+  .footer-links{display:flex;gap:2rem;list-style:none;justify-content:flex-end;}
 
   .footer-logo {
     font-family: 'Bebas Neue', sans-serif;
@@ -741,9 +750,15 @@
   @media (max-width: 900px) {
     nav { padding: 1.2rem 2rem; }
     .nav-links { display: none; }
+    .nav-cta { display: none; }
     section { padding: 5rem 2rem; }
     #hero { padding: 8rem 2rem 10rem; }
-    .hero-metrics { right: 2rem; bottom: 3rem; gap: 2rem; }
+    .hero-metrics { position: static; margin-top: 3rem; gap: 1.5rem; flex-wrap: wrap; justify-content: flex-start; }
+    .metric-item { text-align: left; }
+    .metric-num { font-size: clamp(1.8rem, 5vw, 2.8rem); }
+    .service-num { font-size: clamp(2rem, 6vw, 3.5rem); }
+    .kpi-big-num { font-size: clamp(2rem, 6vw, 3.5rem); }
+    .hero-mark { display: none; }
     .problem-grid { grid-template-columns: 1fr 1fr; }
     .problem-item { border-bottom: 1px solid var(--border); }
     .process-grid { grid-template-columns: 1fr; }
@@ -751,8 +766,24 @@
     .kpi-layout { grid-template-columns: 1fr; gap: 3rem; }
     .service-card { grid-template-columns: 60px 1fr; }
     .service-tags { display: none; }
-    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    footer { grid-template-columns: 1fr; gap: 1.5rem; text-align: center; padding: 2rem; }
+    .footer-links { justify-content: center; }
     #problem { padding: 5rem 2rem; }
+    /* Hamburger */
+    .hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:.4rem;width:36px;height:36px;}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--text);transition:transform .3s,opacity .3s;}
+    .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hamburger.open span:nth-child(2){opacity:0;}
+    .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11,29,53,.98);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;transform:translateX(100%);transition:transform .35s ease;padding:2rem;}
+    .mobile-menu.open{transform:translateX(0);}
+    .mobile-menu a{font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+    .mobile-menu a:hover{color:var(--accent);}
+    .mobile-menu .m-cta{font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:1rem 2.5rem;text-decoration:none;margin-top:1rem;}
+  }
+
+  @media(max-width:480px){
+    .problem-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -768,14 +799,27 @@
   <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
 </svg>METRIK GUARD</a>
   <ul class="nav-links">
-    <li><a href="servicios.html">Servicios</a></li>
-    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="servicios.html" data-i18n="nav.servicios">Servicios</a></li>
+    <li><a href="proceso.html" data-i18n="nav.proceso">Proceso</a></li>
     <li><a href="kpis.html">KPIs</a></li>
-    <li><a href="clientes.html">Clientes</a></li>
-    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="clientes.html" data-i18n="nav.clientes">Clientes</a></li>
+    <li><a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a></li>
   </ul>
-  <a class="nav-cta" href="contacto.html">Solicitar diagnóstico</a>
+  <button class="lang-toggle" id="langToggle" onclick="toggleLang()">EN</button>
+  <a class="nav-cta" href="contacto.html" data-i18n="nav.cta">Solicitar diagnóstico</a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="servicios.html" data-i18n="nav.servicios">Servicios</a>
+  <a href="proceso.html" data-i18n="nav.proceso">Proceso</a>
+  <a href="kpis.html">KPIs</a>
+  <a href="clientes.html" data-i18n="nav.clientes">Clientes</a>
+  <a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a>
+  <a href="contacto.html" class="m-cta" data-i18n="nav.cta">Solicitar diagnóstico</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -790,59 +834,59 @@
     <rect x="14" y="106" width="52" height="10" fill="#ceff47"/>
   </svg>
 </div>
-    <div class="hero-label fade-up fade-up-2">Inteligencia en Seguridad · Costa Rica</div>
-    <h1 class="hero-title fade-up fade-up-2">
+    <div class="hero-label fade-up fade-up-2" data-i18n="index.hero.label">Inteligencia en Seguridad · Costa Rica</div>
+    <h1 class="hero-title fade-up fade-up-2" data-i18n-html="index.hero.title">
       SEGURIDAD<br>
       <span class="accent">MEDIBLE.</span><br>
       <span class="outline">CONTROLADA.</span>
     </h1>
-    <p class="hero-sub fade-up fade-up-3">
+    <p class="hero-sub fade-up fade-up-3" data-i18n-html="index.hero.sub">
       Metrik Guard es la <strong>capa de gobierno de seguridad</strong> que su empresa necesita. Auditamos, medimos y optimizamos su sistema de seguridad con KPIs reales — sin reemplazar a sus proveedores.
     </p>
     <div class="hero-actions fade-up fade-up-4">
-      <a class="btn-primary" href="contacto.html">Agendar diagnóstico</a>
-      <a class="btn-ghost" href="servicios.html">Ver servicios</a>
+      <a class="btn-primary" href="contacto.html" data-i18n="index.hero.btn1">Agendar diagnóstico</a>
+      <a class="btn-ghost" href="servicios.html" data-i18n="index.hero.btn2">Ver servicios</a>
     </div>
   </div>
   <div class="hero-metrics">
     <div class="metric-item">
       <div class="metric-num">90<span>d</span></div>
-      <div class="metric-label">Resultados visibles</div>
+      <div class="metric-label" data-i18n="index.metric.results">Resultados visibles</div>
     </div>
     <div class="metric-item">
       <div class="metric-num">3</div>
-      <div class="metric-label">Servicios core</div>
+      <div class="metric-label" data-i18n="index.metric.services">Servicios core</div>
     </div>
     <div class="metric-item">
       <div class="metric-num"><span>+</span>15</div>
-      <div class="metric-label">KPIs operativos</div>
+      <div class="metric-label" data-i18n="index.metric.kpis">KPIs operativos</div>
     </div>
   </div>
 </section>
 
 <!-- PROBLEM BAND -->
 <section id="problem">
-  <div class="section-label">El problema</div>
-  <h2 class="section-title">¿Por qué su seguridad<br>no está funcionando?</h2>
+  <div class="section-label" data-i18n="index.problem.label">El problema</div>
+  <h2 class="section-title" data-i18n="index.problem.title">¿Por qué su seguridad<br>no está funcionando?</h2>
   <div class="problem-grid">
     <div class="problem-item">
       <span class="problem-icon">📊</span>
-      <h3>Sin métricas reales</h3>
+      <h3 data-i18n="index.problem.item1.h3">Sin métricas reales</h3>
       <p>Los proveedores entregan informes genéricos. Nadie mide tiempos de respuesta, cumplimiento de rondas ni tendencia de incidentes.</p>
     </div>
     <div class="problem-item">
       <span class="problem-icon">🔄</span>
-      <h3>Rotación constante</h3>
+      <h3 data-i18n="index.problem.item2.h3">Rotación constante</h3>
       <p>Alta rotación de personal de seguridad sin indicadores de desempeño claros ni mecanismos de control independientes.</p>
     </div>
     <div class="problem-item">
       <span class="problem-icon">🚨</span>
-      <h3>Reacción, no prevención</h3>
+      <h3 data-i18n="index.problem.item3.h3">Reacción, no prevención</h3>
       <p>Se actúa después del incidente. No existen protocolos estandarizados ni auditorías preventivas que reduzcan la exposición al riesgo.</p>
     </div>
     <div class="problem-item">
       <span class="problem-icon">💼</span>
-      <h3>Sin evidencia para la junta</h3>
+      <h3 data-i18n="index.problem.item4.h3">Sin evidencia para la junta</h3>
       <p>Los propietarios y juntas directivas exigen resultados. Sin dashboards ni reportes ejecutivos, justificar el gasto en seguridad es imposible.</p>
     </div>
   </div>
@@ -852,8 +896,8 @@
 <section id="servicios">
   <div class="services-header">
     <div>
-      <div class="section-label">Servicios</div>
-      <h2 class="section-title">Lo que hacemos</h2>
+      <div class="section-label" data-i18n="index.servicios.label">Servicios</div>
+      <h2 class="section-title" data-i18n="index.servicios.title">Lo que hacemos</h2>
     </div>
     <p class="section-intro">Somos consultores e investigadores en seguridad — <strong style="color:var(--white);font-weight:400;">no una empresa de guardas ni de cámaras</strong>. Gobernamos, auditamos, investigamos y mejoramos su sistema de seguridad con metodología, datos y evidencias.</p>
   </div>
@@ -863,7 +907,7 @@
     <div class="service-card">
       <div class="service-num">01</div>
       <div class="service-body">
-        <h3>Diagnóstico Integral de Seguridad</h3>
+        <h3 data-i18n="index.svc1.title">Diagnóstico Integral de Seguridad</h3>
         <p>Inspección presencial, revisión documental, entrevistas al equipo y análisis de incidentes históricos. Entregamos un mapa de riesgos priorizado, semáforo de vulnerabilidades, quick wins accionables de inmediato y un roadmap a 90 días. La base de cualquier sistema de seguridad bien gestionado.</p>
       </div>
       <div class="service-tags">
@@ -876,7 +920,7 @@
     <div class="service-card">
       <div class="service-num">02</div>
       <div class="service-body">
-        <h3>Security PMO — Auditoría Continua</h3>
+        <h3 data-i18n="index.svc2.title">Security PMO — Auditoría Continua</h3>
         <p>Supervisión mensual de su proveedor de seguridad: auditorías programadas y sorpresa, verificación de rondas, revisión de bitácoras, control de protocolos y reporte ejecutivo para su junta directiva. Usted toma decisiones basadas en datos, no en promesas. Tres niveles: Básico, Estándar y Avanzado.</p>
       </div>
       <div class="service-tags">
@@ -889,7 +933,7 @@
     <div class="service-card">
       <div class="service-num">03</div>
       <div class="service-body">
-        <h3>Protocolos y Capacitación</h3>
+        <h3 data-i18n="index.svc3.title">Protocolos y Capacitación</h3>
         <p>Diseñamos y documentamos protocolos operativos: control de visitas, manejo de paquetería, respuesta a emergencias y gestión de incidentes. Capacitamos al personal clave y ejecutamos simulacros. Porque un buen protocolo convierte la seguridad en un proceso repetible, no en improvisación.</p>
       </div>
       <div class="service-tags">
@@ -902,7 +946,7 @@
     <div class="service-card">
       <div class="service-num">04</div>
       <div class="service-body">
-        <h3>Investigaciones Privadas y Peritajes</h3>
+        <h3 data-i18n="index.svc4.title">Investigaciones Privadas y Peritajes</h3>
         <p>Investigamos casos de sustracción interna, fraude, due diligence de personas y verificación de antecedentes. Elaboramos peritajes técnicos en seguridad con cadena de custodia y validez para procesos legales, administrativos o ante aseguradoras. Confidencialidad absoluta y metodología documentada.</p>
       </div>
       <div class="service-tags">
@@ -917,8 +961,8 @@
 
 <!-- PROCESS -->
 <section id="proceso">
-  <div class="section-label">Proceso</div>
-  <h2 class="section-title">Cómo trabajamos</h2>
+  <div class="section-label" data-i18n="index.proceso.label">Proceso</div>
+  <h2 class="section-title" data-i18n="index.proceso.title">Cómo trabajamos</h2>
   <p class="section-intro">Un flujo claro y predecible. Desde el primer contacto hasta la mejora continua, cada paso genera un entregable concreto.</p>
 
   <div class="process-grid">
@@ -957,8 +1001,8 @@
 
 <!-- KPIs -->
 <section id="kpis">
-  <div class="section-label">Métricas</div>
-  <h2 class="section-title">Lo que medimos<br>para usted</h2>
+  <div class="section-label" data-i18n="index.kpis.label">Métricas</div>
+  <h2 class="section-title" data-i18n="index.kpis.title">Lo que medimos<br>para usted</h2>
   <div class="kpi-layout">
     <div class="kpi-list">
       <div class="kpi-row">
@@ -1018,8 +1062,8 @@
 
 <!-- SEGMENTS -->
 <section id="segmentos">
-  <div class="section-label">¿Para quién?</div>
-  <h2 class="section-title">Nuestros clientes</h2>
+  <div class="section-label" data-i18n="index.segmentos.label">¿Para quién?</div>
+  <h2 class="section-title" data-i18n="index.segmentos.title">Nuestros clientes</h2>
   <p class="section-intro">Trabajamos con dos perfiles que comparten el mismo problema: seguridad sin gobierno, sin métricas y sin control.</p>
 
   <div class="seg-grid">
@@ -1054,11 +1098,11 @@
 
 <!-- CTA -->
 <section id="contacto">
-  <div class="cta-pre">¿Listo para medir su seguridad?</div>
-  <h2 class="section-title">El primer paso es<br>un diagnóstico.</h2>
+  <div class="cta-pre" data-i18n="index.cta.pre">¿Listo para medir su seguridad?</div>
+  <h2 class="section-title" data-i18n="index.cta.title">El primer paso es<br>un diagnóstico.</h2>
   <p>Conversemos 30 minutos. Le mostramos exactamente qué medir, cómo auditarlo y qué resultados puede esperar en 90 días.</p>
   <div class="cta-group">
-    <a class="btn-primary" href="contacto.html">Solicitar diagnóstico</a>
+    <a class="btn-primary" href="contacto.html" data-i18n="index.cta.btn">Solicitar diagnóstico</a>
     <a class="btn-ghost" href="https://www.metrikguard.com" target="_blank">www.metrikguard.com</a>
   </div>
 </section>
@@ -1073,17 +1117,36 @@
   <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
 </svg>METRIK GUARD</a>
   <div class="footer-info">
-    Inteligencia en Seguridad · Costa Rica<br>
-    © 2026 Metrik Guard. Todos los derechos reservados.
+    <span data-i18n="footer.tagline">Inteligencia en Seguridad · Costa Rica</span><br>
+    © 2026 Metrik Guard. <span data-i18n="footer.rights">Todos los derechos reservados.</span>
   </div>
   <ul class="footer-links">
-    <li><a href="servicios.html">Servicios</a></li>
-    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="servicios.html" data-i18n="nav.servicios">Servicios</a></li>
+    <li><a href="proceso.html" data-i18n="nav.proceso">Proceso</a></li>
     <li><a href="kpis.html">KPIs</a></li>
-    <li><a href="clientes.html">Clientes</a></li>
-    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="clientes.html" data-i18n="nav.clientes">Clientes</a></li>
+    <li><a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a></li>
   </ul>
 </footer>
 
+<script src="i18n.js"></script>
+<script>
+function toggleLang(){
+  const current=localStorage.getItem('mg-lang')||'es';
+  setLang(current==='es'?'en':'es');
+}
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';
+});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow='';
+}));
+</script>
 </body>
 </html>

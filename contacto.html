@@ -4,6 +4,8 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Contacto · Metrik Guard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
 :root{--ink:#0b1d35;--ink-2:#0e2642;--ink-3:#133055;--border:#1a3d5c;--text:#d4e4f2;--text-dim:#7a9ab8;--accent:#ceff47;--accent-2:#3a9fff;--danger:#ff4757;--warn:#ffa502;--white:#f0f6ff;}
@@ -21,6 +23,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a:hover,.nav-links a.active{color:var(--accent);}
 .nav-cta{font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:.6rem 1.4rem;text-decoration:none;transition:opacity .2s;}
 .nav-cta:hover{opacity:.85;}
+.lang-toggle{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);background:transparent;border:1px solid var(--border);padding:.4rem .8rem;cursor:pointer;transition:color .2s,border-color .2s;margin-right:.8rem;}
+.lang-toggle:hover{color:var(--accent);border-color:var(--accent);}
+.hamburger{display:none;}
 
 /* HERO */
 .page-hero{position:relative;padding:10rem 4rem 6rem;border-bottom:1px solid var(--border);overflow:hidden;z-index:1;}
@@ -83,7 +88,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .success-title{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--white);letter-spacing:.03em;margin-bottom:1rem;}
 .success-body{color:var(--text-dim);font-size:1rem;line-height:1.8;max-width:400px;margin:0 auto 2rem;}
 
-footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);position:relative;z-index:1;}
+footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:2rem;border-top:1px solid var(--border);position:relative;z-index:1;}
 .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.1em;color:var(--text-dim);text-decoration:none;}
 .footer-logo span{color:var(--accent);}
 .footer-info{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:var(--text-dim);text-align:center;}
@@ -97,15 +102,30 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
 .fu-2{animation-delay:.25s;opacity:0;}
 .fu-3{animation-delay:.4s;opacity:0;}
 
-@media(max-width:960px){
+@media(max-width:900px){
   nav{padding:1.2rem 2rem;}
   .nav-links{display:none;}
+  .nav-cta{display:none;}
   .page-hero{padding:8rem 2rem 4rem;}
   .contact-section{padding:5rem 2rem;}
   .contact-grid{grid-template-columns:1fr;gap:3rem;}
   .form-row{grid-template-columns:1fr;}
   .contact-form{padding:2.5rem 1.5rem;}
-  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+  /* iOS: evitar zoom automático en inputs */
+  .form-input,.form-select,.form-textarea{font-size:1rem;}
+  footer{grid-template-columns:1fr;gap:1.5rem;text-align:center;padding:2rem;}
+  .footer-links{justify-content:center;}
+  /* Hamburger */
+  .hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;background:transparent;border:none;cursor:pointer;padding:.4rem;width:36px;height:36px;}
+  .hamburger span{display:block;width:22px;height:2px;background:var(--text);transition:transform .3s,opacity .3s;}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  .mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(11,29,53,.98);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;transform:translateX(100%);transition:transform .35s ease;padding:2rem;}
+  .mobile-menu.open{transform:translateX(0);}
+  .mobile-menu a{font-family:'DM Mono',monospace;font-size:1rem;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color .2s;}
+  .mobile-menu a:hover{color:var(--accent);}
+  .mobile-menu .m-cta{font-family:'DM Mono',monospace;font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;color:#0b1d35;background:var(--accent);padding:1rem 2.5rem;text-decoration:none;margin-top:1rem;}
 }
 </style>
 </head>
@@ -120,14 +140,27 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
 </svg>METRIK GUARD</a>
   <ul class="nav-links">
-    <li><a href="servicios.html">Servicios</a></li>
-    <li><a href="proceso.html">Proceso</a></li>
+    <li><a href="servicios.html" data-i18n="nav.servicios">Servicios</a></li>
+    <li><a href="proceso.html" data-i18n="nav.proceso">Proceso</a></li>
     <li><a href="kpis.html">KPIs</a></li>
-    <li><a href="clientes.html">Clientes</a></li>
-    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="clientes.html" data-i18n="nav.clientes">Clientes</a></li>
+    <li><a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a></li>
   </ul>
-  <a class="nav-cta" href="contacto.html" class="active">Solicitar diagnóstico</a>
+  <button class="lang-toggle" id="langToggle" onclick="toggleLang()">EN</button>
+  <a class="nav-cta active" href="contacto.html" data-i18n="nav.cta">Solicitar diagnóstico</a>
+  <button class="hamburger" id="hamburger" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="servicios.html" data-i18n="nav.servicios">Servicios</a>
+  <a href="proceso.html" data-i18n="nav.proceso">Proceso</a>
+  <a href="kpis.html">KPIs</a>
+  <a href="clientes.html" data-i18n="nav.clientes">Clientes</a>
+  <a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a>
+  <a href="contacto.html" class="m-cta" data-i18n="nav.cta">Solicitar diagnóstico</a>
+</div>
 
 <!-- HERO -->
 <div class="page-hero">
@@ -279,16 +312,38 @@ footer{padding:3rem 4rem;display:flex;justify-content:space-between;align-items:
   <rect x="21" y="44" width="14" height="36" fill="#ceff47"/>
   <rect x="11" y="78" width="34" height="6" fill="#ceff47"/>
 </svg>METRIK GUARD</a>
-  <div class="footer-info">Inteligencia en Seguridad · Costa Rica<br>© 2026 Metrik Guard. Todos los derechos reservados.</div>
-  <ul class="footer-links">
-    <li><a href="servicios.html">Servicios</a></li>
-    <li><a href="proceso.html">Proceso</a></li>
+  <div class="footer-info">
+    <span data-i18n="footer.tagline">Inteligencia en Seguridad · Costa Rica</span><br>
+    © 2026 Metrik Guard. <span data-i18n="footer.rights">Todos los derechos reservados.</span>
+  </div>
+  <ul class="footer-links" style="justify-content:flex-end;">
+    <li><a href="servicios.html" data-i18n="nav.servicios">Servicios</a></li>
+    <li><a href="proceso.html" data-i18n="nav.proceso">Proceso</a></li>
     <li><a href="kpis.html">KPIs</a></li>
-    <li><a href="clientes.html">Clientes</a></li>
-    <li><a href="nosotros.html">Nosotros</a></li>
+    <li><a href="clientes.html" data-i18n="nav.clientes">Clientes</a></li>
+    <li><a href="nosotros.html" data-i18n="nav.nosotros">Nosotros</a></li>
   </ul>
 </footer>
 
+<script src="i18n.js"></script>
+<script>
+function toggleLang(){
+  const current=localStorage.getItem('mg-lang')||'es';
+  setLang(current==='es'?'en':'es');
+}
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow=mobileMenu.classList.contains('open')?'hidden':'';
+});
+mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow='';
+}));
+</script>
 <script>
 // ── Validación del lado del cliente antes de enviar al servidor ──
 function validateForm(e) {
