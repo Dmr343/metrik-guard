@@ -297,7 +297,7 @@ const translations = {
     'contacto.submit': 'Enviar solicitud de diagnóstico →',
     'contacto.err.campos': 'Por favor complete todos los campos obligatorios.',
     'contacto.err.email': 'El correo electrónico ingresado no es válido.',
-    'contacto.err.servidor': 'Ocurrió un error al enviar su solicitud. Intente nuevamente o escríbanos directamente a hola@metrikguard.com',
+    'contacto.err.servidor': 'Ocurrió un error al enviar su solicitud. Intente nuevamente o escríbanos directamente a info@metrikguard.com',
 
     /* ── GRACIAS ── */
     'gracias.label': 'Solicitud recibida',
@@ -611,7 +611,7 @@ const translations = {
     'contacto.submit': 'Submit diagnosis request →',
     'contacto.err.campos': 'Please complete all required fields.',
     'contacto.err.email': 'The email address entered is not valid.',
-    'contacto.err.servidor': 'An error occurred while submitting your request. Please try again or write to us at hola@metrikguard.com',
+    'contacto.err.servidor': 'An error occurred while submitting your request. Please try again or write to us at info@metrikguard.com',
 
     /* ── GRACIAS ── */
     'gracias.label': 'Request received',
