@@ -1,0 +1,10 @@
+.git
+.gitignore
+.claude
+node_modules
+auditoria-mobile.md
+brand-guide.html
+*.docx
+_redirects
+_headers
+functions/

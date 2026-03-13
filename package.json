@@ -1,0 +1,12 @@
+{
+  "name": "metrik-guard",
+  "version": "1.0.0",
+  "description": "Metrik Guard — sitio web estático con servidor de formulario",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
