@@ -308,6 +308,13 @@ const translations = {
     'contacto.label.servicio': 'Servicio de interés',
     'contacto.label.mensaje': 'Descripción breve de su situación',
     'contacto.submit': 'Enviar solicitud de diagnóstico →',
+    'contacto.ph.nombre': 'Su nombre y apellidos',
+    'contacto.ph.empresa': 'Nombre del condominio o empresa',
+    'contacto.ph.telefono': '+506 0000-0000',
+    'contacto.ph.correo': 'correo@empresa.com',
+    'contacto.ph.canton': 'Cantón',
+    'contacto.ph.distrito': 'Distrito (opcional)',
+    'contacto.ph.mensaje': 'Cuéntenos brevemente qué está pasando o qué quiere mejorar en su sistema de seguridad. No es necesario dar detalles confidenciales en este punto.',
     'contacto.sidebar.label': 'Primer paso',
     'contacto.sidebar.title': 'Una conversación,<br>no una venta.',
     'contacto.sidebar.body': 'Le escuchamos, entendemos su situación y le decimos con honestidad si podemos ayudarle. Si el diagnóstico aplica a su caso, le explicamos exactamente qué esperar. <strong>Sin presión, sin compromisos.</strong>',
@@ -660,6 +667,13 @@ const translations = {
     'contacto.label.servicio': 'Service of interest',
     'contacto.label.mensaje': 'Brief description of your situation',
     'contacto.submit': 'Submit diagnosis request →',
+    'contacto.ph.nombre': 'Your full name',
+    'contacto.ph.empresa': 'Condominium or company name',
+    'contacto.ph.telefono': '+506 0000-0000',
+    'contacto.ph.correo': 'email@company.com',
+    'contacto.ph.canton': 'Canton',
+    'contacto.ph.distrito': 'District (optional)',
+    'contacto.ph.mensaje': 'Briefly describe what is happening or what you would like to improve in your security system. No need to share confidential details at this point.',
     'contacto.sidebar.label': 'First step',
     'contacto.sidebar.title': 'A conversation,<br>not a sales pitch.',
     'contacto.sidebar.body': 'We listen to you, understand your situation, and honestly tell you if we can help. If the diagnosis applies to your case, we explain exactly what to expect. <strong>No pressure, no commitments.</strong>',
@@ -721,6 +735,14 @@ function setLang(lang) {
     const key = el.getAttribute('data-i18n-html');
     if (t[key] !== undefined) {
       el.innerHTML = t[key];
+    }
+  });
+
+  /* Apply placeholder translations */
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (t[key] !== undefined) {
+      el.placeholder = t[key];
     }
   });
 

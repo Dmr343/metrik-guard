@@ -214,22 +214,22 @@ footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-i
         <div class="form-row">
           <div class="form-group">
             <label class="form-label" for="nombre"><span data-i18n="contacto.label.nombre">Nombre completo</span> <span>*</span></label>
-            <input class="form-input" type="text" id="nombre" name="nombre" placeholder="Su nombre y apellidos" required/>
+            <input class="form-input" type="text" id="nombre" name="nombre" placeholder="Su nombre y apellidos" data-i18n-placeholder="contacto.ph.nombre" required/>
           </div>
           <div class="form-group">
             <label class="form-label" for="empresa" data-i18n="contacto.label.empresa">Organización</label>
-            <input class="form-input" type="text" id="empresa" name="empresa" placeholder="Nombre del condominio o empresa"/>
+            <input class="form-input" type="text" id="empresa" name="empresa" placeholder="Nombre del condominio o empresa" data-i18n-placeholder="contacto.ph.empresa"/>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label class="form-label" for="telefono"><span data-i18n="contacto.label.telefono">Teléfono</span> <span>*</span></label>
-            <input class="form-input" type="tel" id="telefono" name="telefono" placeholder="+506 0000-0000" required/>
+            <input class="form-input" type="tel" id="telefono" name="telefono" placeholder="+506 0000-0000" data-i18n-placeholder="contacto.ph.telefono" required/>
           </div>
           <div class="form-group">
             <label class="form-label" for="correo"><span data-i18n="contacto.label.correo">Correo electrónico</span> <span>*</span></label>
-            <input class="form-input" type="email" id="correo" name="correo" placeholder="correo@empresa.com" required/>
+            <input class="form-input" type="email" id="correo" name="correo" placeholder="correo@empresa.com" data-i18n-placeholder="contacto.ph.correo" required/>
           </div>
         </div>
 
@@ -263,13 +263,13 @@ footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-i
           </div>
           <div class="form-group">
             <label class="form-label" for="canton" data-i18n="contacto.label.canton">Cantón</label>
-            <input class="form-input" type="text" id="canton" name="canton" placeholder="Cantón"/>
+            <input class="form-input" type="text" id="canton" name="canton" placeholder="Cantón" data-i18n-placeholder="contacto.ph.canton"/>
           </div>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="distrito" data-i18n="contacto.label.distrito">Distrito</label>
-          <input class="form-input" type="text" id="distrito" name="distrito" placeholder="Distrito (opcional)"/>
+          <input class="form-input" type="text" id="distrito" name="distrito" placeholder="Distrito (opcional)" data-i18n-placeholder="contacto.ph.distrito"/>
           <span class="form-note" data-i18n="contacto.note.distrito">La ubicación nos ayuda a estimar la logística del diagnóstico presencial.</span>
         </div>
 
@@ -290,7 +290,7 @@ footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-i
 
         <div class="form-group">
           <label class="form-label" for="mensaje" data-i18n="contacto.label.mensaje">Descripción breve de su situación</label>
-          <textarea class="form-textarea" id="mensaje" name="mensaje" placeholder="Cuéntenos brevemente qué está pasando o qué quiere mejorar en su sistema de seguridad. No es necesario dar detalles confidenciales en este punto."></textarea>
+          <textarea class="form-textarea" id="mensaje" name="mensaje" placeholder="Cuéntenos brevemente qué está pasando o qué quiere mejorar en su sistema de seguridad. No es necesario dar detalles confidenciales en este punto." data-i18n-placeholder="contacto.ph.mensaje"></textarea>
         </div>
 
         <button class="form-submit" type="submit" data-i18n="contacto.submit">Enviar solicitud de diagnóstico →</button>
