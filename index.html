@@ -122,7 +122,7 @@
   .partner-avatar img { width:100%;height:100%;object-fit:cover;object-position:top center; }
   .partner-name { font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;color:var(--white);margin-bottom:.3rem; }
   .partner-role { font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border); }
-  .partner-bio { font-size:.95rem;color:var(--text-dim);line-height:1.75;margin-bottom:1.5rem; }
+  .partner-bio { font-size:1.02rem;color:var(--text-dim);line-height:1.75;margin-bottom:1.5rem; }
   .partner-skills { display:flex;flex-wrap:wrap;gap:.5rem; }
   .skill-tag { font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);border:1px solid var(--border);padding:.25rem .65rem; }
   .partner-email { display:block;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.12em;color:var(--text-dim);text-decoration:none;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);transition:color .2s; }
@@ -402,7 +402,7 @@
 
   .service-body p {
     color: var(--text-dim);
-    font-size: 1.02rem;
+    font-size: 1.08rem;
     max-width: 600px;
     line-height: 1.8;
   }
@@ -478,7 +478,7 @@
   }
 
   .process-step p {
-    font-size: 0.95rem;
+    font-size: 1.02rem;
     color: var(--text-dim);
     line-height: 1.7;
   }
@@ -541,6 +541,15 @@
     text-align: right;
   }
 
+  .kpi-list-header {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+  }
+
   .kpi-visual {
     background: var(--ink-2);
     border: 1px solid var(--border);
@@ -575,7 +584,7 @@
   .kpi-big-num .acc { color: var(--accent); }
 
   .kpi-big-label {
-    font-size: 0.86rem;
+    font-size: 0.92rem;
     color: var(--text-dim);
     margin-top: 0.3rem;
     line-height: 1.4;
@@ -640,7 +649,7 @@
   }
 
   .seg-card p {
-    font-size: 0.98rem;
+    font-size: 1.04rem;
     color: var(--text-dim);
     line-height: 1.8;
     margin-bottom: 1.8rem;
@@ -918,9 +927,9 @@
         <p data-i18n="index.svc1.p">Inspección presencial, revisión documental y análisis de incidentes históricos. Entregamos mapa de riesgos priorizado, quick wins accionables y roadmap a 90 días.</p>
       </div>
       <div class="service-tags">
-        <span class="tag">Tarifa fija</span>
-        <span class="tag">Entrega 5–10 días</span>
-        <span class="tag">Informe ejecutivo</span>
+        <span class="tag" data-i18n="index.svc1.tag1">Tarifa fija</span>
+        <span class="tag" data-i18n="index.svc1.tag2">Entrega 5–10 días</span>
+        <span class="tag" data-i18n="index.svc1.tag3">Informe ejecutivo</span>
       </div>
     </div>
 
@@ -931,9 +940,9 @@
         <p data-i18n="index.svc2.p">Supervisión mensual de su proveedor: auditorías programadas y sorpresa, verificación de rondas y reporte ejecutivo para su junta directiva. Decisiones basadas en datos, no en promesas.</p>
       </div>
       <div class="service-tags">
-        <span class="tag">Fee mensual</span>
-        <span class="tag">Dashboard KPIs</span>
-        <span class="tag">3 niveles</span>
+        <span class="tag" data-i18n="index.svc2.tag1">Fee mensual</span>
+        <span class="tag" data-i18n="index.svc2.tag2">Dashboard KPIs</span>
+        <span class="tag" data-i18n="index.svc2.tag3">3 niveles</span>
       </div>
     </div>
 
@@ -944,9 +953,9 @@
         <p data-i18n="index.svc3.p">Diseñamos protocolos operativos, capacitamos al personal clave y ejecutamos simulacros. Convierte la seguridad en un proceso repetible y documentado, no en improvisación.</p>
       </div>
       <div class="service-tags">
-        <span class="tag">Opcional</span>
-        <span class="tag">Talleres presenciales</span>
-        <span class="tag">Manuales</span>
+        <span class="tag" data-i18n="index.svc3.tag1">Opcional</span>
+        <span class="tag" data-i18n="index.svc3.tag2">Talleres presenciales</span>
+        <span class="tag" data-i18n="index.svc3.tag3">Manuales</span>
       </div>
     </div>
 
@@ -957,9 +966,9 @@
         <p data-i18n="index.svc4.p">Investigamos sustracción interna, fraude y antecedentes de personas. Elaboramos peritajes con cadena de custodia válidos para procesos legales, administrativos o ante aseguradoras.</p>
       </div>
       <div class="service-tags">
-        <span class="tag">Proyecto cerrado</span>
-        <span class="tag">Confidencial</span>
-        <span class="tag">Validez legal</span>
+        <span class="tag" data-i18n="index.svc4.tag1">Proyecto cerrado</span>
+        <span class="tag" data-i18n="index.svc4.tag2">Confidencial</span>
+        <span class="tag" data-i18n="index.svc4.tag3">Validez legal</span>
       </div>
     </div>
 
@@ -1012,6 +1021,7 @@
   <h2 class="section-title" data-i18n="index.kpis.title">Lo que medimos<br>para usted</h2>
   <div class="kpi-layout">
     <div class="kpi-list">
+      <div class="kpi-list-header" data-i18n="index.kpi.list.header">Indicadores de referencia · ejemplo</div>
       <div class="kpi-row">
         <span class="kpi-name" data-i18n="index.kpi1.name">Tiempo de respuesta a incidentes</span>
         <div class="kpi-bar-wrap"><div class="kpi-bar" style="width:88%"></div></div>

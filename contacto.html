@@ -165,9 +165,9 @@ footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-i
 <!-- HERO -->
 <div class="page-hero">
   <div class="hero-bg"></div>
-  <div class="breadcrumb fu fu-1"><a href="index.html">Inicio</a> / <span>Contacto</span></div>
-  <h1 class="page-title fu fu-2">SOLICITAR<br><em>DIAGNÓSTICO</em></h1>
-  <p class="page-intro fu fu-3">Complete el formulario y le contactaremos en menos de 24 horas hábiles para coordinar una conversación de 30 minutos sin costo ni compromiso.</p>
+  <div class="breadcrumb fu fu-1"><a href="index.html" data-i18n="contacto.breadcrumb.home">Inicio</a> / <span data-i18n="contacto.breadcrumb.current">Contacto</span></div>
+  <h1 class="page-title fu fu-2" data-i18n-html="contacto.page.title">SOLICITAR<br><em>DIAGNÓSTICO</em></h1>
+  <p class="page-intro fu fu-3" data-i18n="contacto.page.intro">Complete el formulario y le contactaremos en menos de 24 horas hábiles para coordinar una conversación de 30 minutos sin costo ni compromiso.</p>
 </div>
 
 <!-- CONTACT SECTION -->
@@ -176,80 +176,80 @@ footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-i
 
     <!-- INFO SIDEBAR -->
     <div class="contact-info">
-      <div class="label">Primer paso</div>
-      <h2 class="info-title">Una conversación,<br>no una venta.</h2>
-      <p class="info-body">Le escuchamos, entendemos su situación y le decimos con honestidad si podemos ayudarle. Si el diagnóstico aplica a su caso, le explicamos exactamente qué esperar. <strong>Sin presión, sin compromisos.</strong></p>
+      <div class="label" data-i18n="contacto.sidebar.label">Primer paso</div>
+      <h2 class="info-title" data-i18n-html="contacto.sidebar.title">Una conversación,<br>no una venta.</h2>
+      <p class="info-body" data-i18n-html="contacto.sidebar.body">Le escuchamos, entendemos su situación y le decimos con honestidad si podemos ayudarle. Si el diagnóstico aplica a su caso, le explicamos exactamente qué esperar. <strong>Sin presión, sin compromisos.</strong></p>
 
       <div class="contact-details">
         <div class="detail-row">
           <span class="detail-icon">Email</span>
-          <div class="detail-text"><strong>Correo</strong>info@metrikguard.com</div>
+          <div class="detail-text"><strong data-i18n="contacto.detail.email.label">Correo</strong>info@metrikguard.com</div>
         </div>
         <div class="detail-row">
           <span class="detail-icon">País</span>
-          <div class="detail-text"><strong>Ubicación</strong>Costa Rica · Atención en toda LATAM</div>
+          <div class="detail-text"><strong data-i18n="contacto.detail.country.label">Ubicación</strong><span data-i18n="contacto.detail.country.val">Costa Rica · Atención en toda LATAM</span></div>
         </div>
         <div class="detail-row">
           <span class="detail-icon">Horario</span>
-          <div class="detail-text"><strong>Disponibilidad</strong>Lunes a viernes, 8:00 – 18:00 (CST)</div>
+          <div class="detail-text"><strong data-i18n="contacto.detail.hours.label">Disponibilidad</strong><span data-i18n="contacto.detail.hours.val">Lunes a viernes, 8:00 – 18:00 (CST)</span></div>
         </div>
         <div class="detail-row">
           <span class="detail-icon">Respuesta</span>
-          <div class="detail-text"><strong>Tiempo de respuesta</strong>Menos de 24 horas hábiles</div>
+          <div class="detail-text"><strong data-i18n="contacto.detail.response.label">Tiempo de respuesta</strong><span data-i18n="contacto.detail.response.val">Menos de 24 horas hábiles</span></div>
         </div>
       </div>
 
       <div class="promise-box">
-        <p>Toda la información que comparta en este formulario es <strong>estrictamente confidencial</strong> y se utilizará únicamente para coordinar su diagnóstico inicial.</p>
+        <p data-i18n-html="contacto.promise">Toda la información que comparta en este formulario es <strong>estrictamente confidencial</strong> y se utilizará únicamente para coordinar su diagnóstico inicial.</p>
       </div>
     </div>
 
     <!-- FORM -->
     <div class="contact-form" id="form-container">
-      <div class="form-title">Formulario de diagnóstico</div>
+      <div class="form-title" data-i18n="contacto.form.title">Formulario de diagnóstico</div>
 
       <form id="diagForm" action="/submit" method="POST" onsubmit="return validateForm(event)">
 
         <!-- DATOS PERSONALES -->
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="nombre">Nombre completo <span>*</span></label>
+            <label class="form-label" for="nombre"><span data-i18n="contacto.label.nombre">Nombre completo</span> <span>*</span></label>
             <input class="form-input" type="text" id="nombre" name="nombre" placeholder="Su nombre y apellidos" required/>
           </div>
           <div class="form-group">
-            <label class="form-label" for="empresa">Organización</label>
+            <label class="form-label" for="empresa" data-i18n="contacto.label.empresa">Organización</label>
             <input class="form-input" type="text" id="empresa" name="empresa" placeholder="Nombre del condominio o empresa"/>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="telefono">Teléfono <span>*</span></label>
+            <label class="form-label" for="telefono"><span data-i18n="contacto.label.telefono">Teléfono</span> <span>*</span></label>
             <input class="form-input" type="tel" id="telefono" name="telefono" placeholder="+506 0000-0000" required/>
           </div>
           <div class="form-group">
-            <label class="form-label" for="correo">Correo electrónico <span>*</span></label>
+            <label class="form-label" for="correo"><span data-i18n="contacto.label.correo">Correo electrónico</span> <span>*</span></label>
             <input class="form-input" type="email" id="correo" name="correo" placeholder="correo@empresa.com" required/>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="tipo">Tipo de organización</label>
+          <label class="form-label" for="tipo" data-i18n="contacto.label.tipo">Tipo de organización</label>
           <select class="form-select" id="tipo" name="tipo">
-            <option value="" disabled selected>Seleccione una opción</option>
-            <option value="condominio">Condominio o Residencial</option>
-            <option value="pyme">PYME</option>
-            <option value="empresa">Empresa mediana o grande</option>
-            <option value="otro">Otro</option>
+            <option value="" disabled selected data-i18n="contacto.select.tipo.default">Seleccione una opción</option>
+            <option value="condominio" data-i18n="contacto.select.tipo.condominio">Condominio o Residencial</option>
+            <option value="pyme" data-i18n="contacto.select.tipo.pyme">PYME</option>
+            <option value="empresa" data-i18n="contacto.select.tipo.empresa">Empresa mediana o grande</option>
+            <option value="otro" data-i18n="contacto.select.tipo.otro">Otro</option>
           </select>
         </div>
 
         <!-- UBICACIÓN -->
-        <div class="form-divider">Ubicación</div>
+        <div class="form-divider" data-i18n="contacto.divider.ubicacion">Ubicación</div>
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="provincia">Provincia <span>*</span></label>
+            <label class="form-label" for="provincia"><span data-i18n="contacto.label.provincia">Provincia</span> <span>*</span></label>
             <select class="form-select" id="provincia" name="provincia" required onchange="actualizarCantones()">
               <option value="" disabled selected>Seleccione provincia</option>
               <option value="san-jose">San José</option>
@@ -262,38 +262,38 @@ footer{padding:3rem 4rem;display:grid;grid-template-columns:1fr auto 1fr;align-i
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label" for="canton">Cantón</label>
+            <label class="form-label" for="canton" data-i18n="contacto.label.canton">Cantón</label>
             <input class="form-input" type="text" id="canton" name="canton" placeholder="Cantón"/>
           </div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="distrito">Distrito</label>
+          <label class="form-label" for="distrito" data-i18n="contacto.label.distrito">Distrito</label>
           <input class="form-input" type="text" id="distrito" name="distrito" placeholder="Distrito (opcional)"/>
-          <span class="form-note">La ubicación nos ayuda a estimar la logística del diagnóstico presencial.</span>
+          <span class="form-note" data-i18n="contacto.note.distrito">La ubicación nos ayuda a estimar la logística del diagnóstico presencial.</span>
         </div>
 
         <!-- CONTEXTO -->
-        <div class="form-divider">Su situación</div>
+        <div class="form-divider" data-i18n="contacto.divider.situacion">Su situación</div>
 
         <div class="form-group">
-          <label class="form-label" for="servicio">Servicio de interés</label>
+          <label class="form-label" for="servicio" data-i18n="contacto.label.servicio">Servicio de interés</label>
           <select class="form-select" id="servicio" name="servicio">
-            <option value="" disabled selected>¿Qué le interesa explorar?</option>
-            <option value="diagnostico">Diagnóstico Integral de Seguridad</option>
-            <option value="pmo">Security PMO — Auditoría Continua</option>
-            <option value="protocolos">Protocolos y Capacitación</option>
-            <option value="investigacion">Investigaciones Privadas y Peritajes</option>
-            <option value="no-se">No estoy seguro / necesito orientación</option>
+            <option value="" disabled selected data-i18n="contacto.select.servicio.default">¿Qué le interesa explorar?</option>
+            <option value="diagnostico" data-i18n="contacto.select.servicio.diagnostico">Diagnóstico Integral de Seguridad</option>
+            <option value="pmo" data-i18n="contacto.select.servicio.pmo">Security PMO — Auditoría Continua</option>
+            <option value="protocolos" data-i18n="contacto.select.servicio.protocolos">Protocolos y Capacitación</option>
+            <option value="investigacion" data-i18n="contacto.select.servicio.investigacion">Investigaciones Privadas y Peritajes</option>
+            <option value="no-se" data-i18n="contacto.select.servicio.nose">No estoy seguro / necesito orientación</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="mensaje">Descripción breve de su situación</label>
+          <label class="form-label" for="mensaje" data-i18n="contacto.label.mensaje">Descripción breve de su situación</label>
           <textarea class="form-textarea" id="mensaje" name="mensaje" placeholder="Cuéntenos brevemente qué está pasando o qué quiere mejorar en su sistema de seguridad. No es necesario dar detalles confidenciales en este punto."></textarea>
         </div>
 
-        <button class="form-submit" type="submit">Enviar solicitud de diagnóstico →</button>
+        <button class="form-submit" type="submit" data-i18n="contacto.submit">Enviar solicitud de diagnóstico →</button>
 
       </form>
 
