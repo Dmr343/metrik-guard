@@ -1,5 +1,9 @@
 FROM node:22-alpine
 
+LABEL org.opencontainers.image.source=https://github.com/Dmr343/metrik-guard
+LABEL org.opencontainers.image.description="Metrik Guard — sitio web de seguridad empresarial"
+LABEL org.opencontainers.image.licenses=MIT
+
 WORKDIR /app
 
 # Instalar dependencias primero (aprovecha la caché de Docker)
